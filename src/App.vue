@@ -1,28 +1,15 @@
 <template>
   <div id="app">
     <img src="./assets/logo.png">
-    <hello></hello>
+
+    <div>
+      <router-link to="/">Main</router-link>
+      <router-link to="/component1">Component 1</router-link>
+      <router-link to="/component2">Component 2</router-link>
+      <router-link to="/hello">Hello</router-link>
+    </div>
+
+    <router-view></router-view>
+
   </div>
 </template>
-
-<script>
-import Hello from './components/Hello'
-
-export default {
-  name: 'app',
-  components: {
-    Hello
-  }
-}
-</script>
-
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
