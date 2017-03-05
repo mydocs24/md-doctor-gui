@@ -10,6 +10,30 @@ body {
   background-color: $body-bg;
 }
 
+a {
+  color: $teal !important;
+  cursor: pointer;
+  &:hover,
+  &:focus,
+  &:active {
+    color: $blue !important;
+  }
+}
+
 .input-sm {
   font-size: $font-size-sm;
+}
+
+.offset-bottom {
+  margin-bottom: $offset-bottom;
+}
+
+.icon {
+  &.chevron.down:before {
+    content: "\2191";
+  }
+
+  &.chevron.up:before {
+    content: '\2193';
+  }
 }

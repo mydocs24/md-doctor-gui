@@ -1,51 +1,98 @@
 <template>
-    <div class="ui container">
-        <div class="row">
+    <div>
+        <div class="row offset-bottom">
             <div class="col-sm-12">
                 <filter-bar></filter-bar>
             </div>
         </div>
-
         <div class="row">
             <div class="col-sm-12">
-                <vuetable ref="vuetable"
-                          api-url="http://vuetable.ratiw.net/api/users"
-                          :fields="fields"
-                          pagination-path=""
-                          :per-page="20"
-                          :sort-order="sortOrder"
-                          detail-row-component="my-detail-row"
-                          :appendParams="moreParams"
-                          @vuetable:pagination-data="onPaginationData"
-                          @vuetable:cell-clicked="onCellClicked"
-                ></vuetable>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="vuetable-pagination ui basic segment grid">
-                    <vuetable-pagination-info ref="paginationInfo"
-                    ></vuetable-pagination-info>
-                    <vuetable-pagination ref="pagination"
-                                         @vuetable-pagination:change-page="onChangePage"
-                    ></vuetable-pagination>
+                <div class="card">
+                    <div class="card-block">
+                        <div class="card-title">
+                            <h5>My Cases</h5>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12 case-control small">
+                                <a title="selected only one item">Copy</a>
+                                <a title="could be only on selected with status new">Sign</a>
+                                <a title="could be only on selected with status signed">Send</a>
+                            </div>
+                        </div>
+                        <vuetable ref="vuetable"
+                                  class="table table-bordered table-hover offset-bottom"
+                                  api-url="http://vuetable.ratiw.net/api/users"
+                                  :fields="fields"
+                                  pagination-path=""
+                                  :per-page="20"
+                                  :sort-order="sortOrder"
+                                  detail-row-component="my-detail-row"
+                                  :appendParams="moreParams"
+                                  @vuetable:pagination-data="onPaginationData"
+                                  @vuetable:cell-clicked="onCellClicked"
+                        ></vuetable>
+                        <div class="row">
+                            <div class="col-sm-12 pagination-block">
+                                <vuetable-pagination
+                                        ref="pagination"
+                                        class="pagination"
+                                        :css="css"
+                                        @vuetable-pagination:change-page="onChangePage"
+                                ></vuetable-pagination>
+                                <vuetable-pagination-info
+                                        ref="paginationInfo"
+                                ></vuetable-pagination-info>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         <hr>
         <div class="row">
             <div class="col-sm-12">
-                Total: 2000 &euro;
+                <div class="total">
+                    Total: 2000 &euro;
+                </div>
             </div>
         </div>
     </div>
 </template>
 
+<style lang="scss">
+    @import "../../sass/variables";
+
+    .page-item {
+        cursor: pointer;
+    }
+    .pagination-block {
+        float: right;
+    }
+    .pagination {
+        margin-bottom: 0;
+    }
+    .vuetable-pagination-info {
+        float: right;
+        font-size: $font-size-sm;
+        color: $gray-lighter;
+    }
+
+    .case-control {
+        text-align: right;
+    }
+
+    .total {
+        float: right;;
+        font-size: $font-size-lg;
+        font-weight: $font-weight-bold;
+    }
+</style>
+
 <script>
 import accounting from 'accounting'
 import moment from 'moment'
 import Vuetable from 'vuetable-2/src/components/Vuetable'
-import VuetablePagination from 'vuetable-2/src/components/VuetablePagination'
+import VuetablePagination from './VuetablePagination'
 import VuetablePaginationInfo from 'vuetable-2/src/components/VuetablePaginationInfo'
 import CustomActions from './CustomActions'
 import DetailRow from './DetailRow'
@@ -67,41 +114,20 @@ export default {
     return {
       fields: [
         {
-          name: '__sequence',
-          title: '#',
-          titleClass: 'center aligned',
-          dataClass: 'right aligned'
-        },
-        {
-          name: '__checkbox',
-          titleClass: 'center aligned',
-          dataClass: 'center aligned'
-        },
-        {
-          name: 'name',
-          sortField: 'name'
-        },
-        {
-          name: 'email',
-          sortField: 'email'
-        },
-        {
-          name: 'age',
-          sortField: 'birthdate',
-          titleClass: 'center aligned',
-          dataClass: 'center aligned'
-        },
-        {
           name: 'birthdate',
           sortField: 'birthdate',
           titleClass: 'center aligned',
           dataClass: 'center aligned',
-          callback: 'formatDate|DD-MM-YYYY'
+          callback: 'formatDate|DD.MM.YYYY'
         },
         {
           name: 'nickname',
           sortField: 'nickname',
           callback: 'allcap'
+        },
+        {
+          name: 'name',
+          sortField: 'name'
         },
         {
           name: 'gender',
@@ -111,27 +137,27 @@ export default {
           callback: 'genderLabel'
         },
         {
-          name: 'salary',
-          sortField: 'salary',
-          titleClass: 'center aligned',
-          dataClass: 'right aligned',
-          callback: 'formatNumber'
-        },
-        {
-          name: '__component:custom-actions',
-          title: 'Actions',
+          name: '__checkbox',
           titleClass: 'center aligned',
           dataClass: 'center aligned'
         }
       ],
       sortOrder: [
         {
-          field: 'email',
-          sortField: 'email',
+          field: 'birthdate',
+          sortField: 'birthdate',
           direction: 'asc'
         }
       ],
-      moreParams: {}
+      moreParams: {},
+      css: {
+        linkClass: 'page-link',
+        wrapperClass: 'pagination',
+        disabledClass: 'disabled',
+        pageClass: 'page-item',
+        activeClass: 'active'
+      },
+      infoClass: 'pagination-info'
     }
   },
   methods: {

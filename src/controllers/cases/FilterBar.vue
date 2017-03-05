@@ -6,30 +6,39 @@
                     {{ showFilters ? '&times; Hide' : '&darr; Show' }} filters</span>
             </div>
         </div>
-        <div class="row filters" v-if="showFilters">
-            <div class="col-sm-12">
-                <div class="form">
-                    <div class="form-group">
-                        <div class="col-sm-12">
-                            <label class="label" for="filter-text">Search for</label>
-                            <input type="text" v-model="filterText" id="filter-text" class="form-control input-sm"
-                                   @keyup.enter="doFilter" placeholder="name, nickname, or email">
+        <div class="card filters" v-if="showFilters">
+            <div class="card-block">
+                <h6 class="card-title">Filters</h6>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="form">
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <label class="label" for="filter-text">Search for</label>
+                                        <input type="text" v-model="filterText" id="filter-text" class="form-control input-sm"
+                                               @keyup.enter="doFilter" placeholder="name, nickname, or email">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label class="label" for="from-date">From</label>
+                                        <input id="from-date" class="form-control input-sm"
+                                               placeholder="Date From">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="label" for="to-date">To</label>
+                                        <input id="to-date" class="form-control input-sm"
+                                               placeholder="Date To">
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="btn btn-info btn-sm" @click="doFilter">Go</button>
+                            <button class="btn btn-sm" @click="resetFilter">Reset</button>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="col-sm-6">
-                            <label class="label" for="from-date">From</label>
-                            <input id="from-date" class="form-control input-sm"
-                                placeholder="Date From">
-                        </div>
-                        <div class="col-sm-6">
-                            <label class="label" for="to-date">To</label>
-                            <input id="to-date" class="form-control input-sm"
-                                   placeholder="Date To">
-                        </div>
-                    </div>
-                    <button class="btn btn-info btn-sm" @click="doFilter">Go</button>
-                    <button class="btn btn-sm" @click="resetFilter">Reset</button>
                 </div>
             </div>
         </div>
@@ -49,7 +58,7 @@
         cursor: pointer;
     }
 
-    .filters {
+    /*.filters {
         position: relative;
         display: -webkit-box;
         display: -ms-flexbox;
@@ -61,7 +70,7 @@
         background-color: #fff;
         border: 1px solid rgba(0, 0, 0, 0.125);
         border-radius: 0.25rem;
-    }
+    }*/
 </style>
 
 <script>
