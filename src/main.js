@@ -3,12 +3,15 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import VueI18n from 'vue-i18n'
+import BootstrapVue from 'bootstrap-vue'
 
+Vue.use(BootstrapVue)
 Vue.use(VueRouter)
 Vue.use(VueI18n)
 
 // components
 import App from './App'
+import Dashboard from './controllers/Dashboard'
 import Hello from './controllers/Hello'
 import NotFoundComponent from './controllers/system/404'
 
@@ -18,7 +21,7 @@ const Bar = {template: '<div>bar</div>'}
 
 const routes = [
   // default component when page not found
-  { path: '/' },
+  { path: '/', component: Dashboard },
   { path: '/component1', component: Foo },
   { path: '/component2', component: Bar },
   { path: '/hello', component: Hello },

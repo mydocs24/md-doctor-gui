@@ -1,0 +1,15 @@
+/*!
+ * Copyright (c) 2017. Blog-Tree.com
+ *
+ * @author Alexander Zagovorichev <zagovorichev@gmail.com>
+ */
+
+@import "variables";
+
+body {
+  background-color: $body-bg;
+}
+
+.input-sm {
+  font-size: $font-size-sm;
+}

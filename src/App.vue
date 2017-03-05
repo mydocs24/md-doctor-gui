@@ -1,6 +1,5 @@
 <template>
-  <div id="app">
-    <img src="./assets/logo.png">
+  <div id="app" class="container">
 
     <div>
       <router-link to="/">Main</router-link>
@@ -13,3 +12,9 @@
 
   </div>
 </template>
+
+<style lang="scss">
+@import '../node_modules/bootstrap/scss/bootstrap';
+@import "sass/variables";
+@import "sass/style";
+</style>
