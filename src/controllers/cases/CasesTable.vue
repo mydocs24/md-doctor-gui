@@ -12,11 +12,11 @@
                         <div class="card-title">
                             <h5>My Cases</h5>
                         </div>
-                        <div class="row">
-                            <div class="col-sm-12 case-control small">
-                                <a title="selected only one item">Copy</a>
-                                <a title="could be only on selected with status new">Sign</a>
-                                <a title="could be only on selected with status signed">Send</a>
+                        <div class="row case-control">
+                            <div class="col-sm-12 small">
+                                <a class="item" title="selected only one item">Copy</a>
+                                <a class="item" title="could be only on selected with status new">Sign</a>
+                                <a class="item" title="could be only on selected with status signed">Send</a>
                             </div>
                         </div>
                         <vuetable ref="vuetable"
@@ -71,6 +71,7 @@
     .pagination {
         margin-bottom: 0;
     }
+
     .vuetable-pagination-info {
         float: right;
         font-size: $font-size-sm;
@@ -79,6 +80,10 @@
 
     .case-control {
         text-align: right;
+        padding-bottom: .5rem;
+        .item {
+            margin-right: .5rem;
+        }
     }
 
     .total {
