@@ -1,26 +1,21 @@
 <template>
   <div id="app">
 
-    <b-navbar toggleable type="inverse" variant="mydoc">
+    <b-navbar toggleable type="inverse" variant="mydoc" class="sticky-top">
 
       <b-nav-toggle target="nav_collapse"/>
 
-      <router-link to="/">Main</router-link>
+      <div class="container">
+        <router-link to="/" class="navbar-brand">MeDoctor</router-link>
 
-      <b-collapse isNav id="nav_collapse">
-        <b-nav isNavBar>
-          <b-nav-item>
-            <router-link to="/component1">Component 1</router-link>
-          </b-nav-item>
-          <b-nav-item>
-            <router-link to="/component2">Component 2</router-link>
-          </b-nav-item>
-          <b-nav-item>
-            <router-link to="/hello">Hello</router-link>
-          </b-nav-item>
-        </b-nav>
-      </b-collapse>
-
+        <b-collapse isNav id="nav_collapse">
+          <b-nav isNavBar>
+            <router-link to="/component1" class="nav-link">Component 1</router-link>
+            <router-link to="/component2" class="nav-link">Component 2</router-link>
+            <router-link to="/hello" class="nav-link">Hello</router-link>
+          </b-nav>
+        </b-collapse>
+      </div>
     </b-navbar>
 
     <div class="container main">
@@ -41,5 +36,20 @@
 
   .main {
     margin-top: $offset-bottom;
+  }
+
+  .navbar-inverse {
+    .navbar-nav {
+      .nav-link {
+        color: rgba(255, 255, 255, 0.5);
+        &.router-link-active {
+          color: $white;
+        }
+      }
+    }
+    .navbar-brand,
+    .router-link-active {
+      color: $white;
+    }
   }
 </style>

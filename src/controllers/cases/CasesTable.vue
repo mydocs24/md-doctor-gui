@@ -14,9 +14,9 @@
                         </div>
                         <div class="row case-control">
                             <div class="col-sm-12 small">
-                                <a class="item" title="selected only one item">Copy</a>
-                                <a class="item" title="could be only on selected with status new">Sign</a>
-                                <a class="item" title="could be only on selected with status signed">Send</a>
+                                <a class="item link" title="selected only one item">Copy</a>
+                                <a class="item link" title="could be only on selected with status new">Sign</a>
+                                <a class="item link" title="could be only on selected with status signed">Send</a>
                             </div>
                         </div>
                         <vuetable ref="vuetable"
@@ -78,6 +78,16 @@
         color: $gray-lighter;
     }
 
+    a:not([href]):not([tabindex]) {
+        color: $teal;
+        cursor: pointer;
+        &:hover,
+        &:focus,
+        &:active {
+            color: $blue;
+        }
+    }
+
     .case-control {
         text-align: right;
         padding-bottom: .5rem;
@@ -90,6 +100,7 @@
         float: right;;
         font-size: $font-size-lg;
         font-weight: $font-weight-bold;
+        margin-bottom: $offset-bottom;
     }
 </style>
 
