@@ -10,13 +10,13 @@ body {
   background-color: $body-bg;
 }
 
-a {
-  color: $teal !important;
+.link {
+  color: $teal;
   cursor: pointer;
   &:hover,
   &:focus,
   &:active {
-    color: $blue !important;
+    color: $blue;
   }
 }
 
