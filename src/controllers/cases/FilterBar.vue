@@ -16,7 +16,8 @@
                                 <div class="row">
                                     <div class="col-sm-12">
                                         <label class="label" for="filter-text">Search for</label>
-                                        <input type="text" v-model="filterText" id="filter-text" class="form-control input-sm"
+                                        <input type="text" v-model="filterText" id="filter-text"
+                                               class="form-control input-sm"
                                                @keyup.enter="doFilter" placeholder="name, nickname, or email">
                                     </div>
                                 </div>
@@ -24,14 +25,14 @@
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <label class="label" for="from-date">From</label>
-                                        <input id="from-date" class="form-control input-sm"
-                                               placeholder="Date From">
+                                        <label for="start-picker" class="col-sm-3 control-label">
+                                            From
+                                        </label>
+                                        <date-picker :date="startTime" :option="option" id="start-picker"></date-picker>
                                     </div>
                                     <div class="col-sm-6">
-                                        <label class="label" for="to-date">To</label>
-                                        <input id="to-date" class="form-control input-sm"
-                                               placeholder="Date To">
+                                        <label class="col-sm-3 control-label" for="end-picker">To</label>
+                                        <date-picker :date="endTime" :option="option" id="end-picker"></date-picker>
                                     </div>
                                 </div>
                             </div>
@@ -57,28 +58,46 @@
         color: $gray-light;
         cursor: pointer;
     }
-
-    /*.filters {
-        position: relative;
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: flex;
-        -webkit-box-orient: vertical;
-        -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-        flex-direction: column;
-        background-color: #fff;
-        border: 1px solid rgba(0, 0, 0, 0.125);
-        border-radius: 0.25rem;
-    }*/
 </style>
 
 <script>
+import DatePicker from 'vue-datepicker'
+
 export default {
+  components: {
+    DatePicker
+  },
   data () {
     return {
       filterText: '',
-      showFilters: false
+      showFilters: false,
+      startTime: {
+        time: ''
+      },
+      endTime: {
+        time: ''
+      },
+      option: {
+        type: 'day',
+        week: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'],
+        month: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+        format: 'DD.MM.YYYY',
+        placeholder: '07.03.2017',
+        inputStyle: {
+          'display': 'inline-block',
+          'padding': '6px'
+        },
+        color: {
+          header: '#3097D1',
+          headerText: '#fff'
+        },
+        buttons: {
+          ok: 'Ok',
+          cancel: 'Cancel'
+        },
+        overlayOpacity: 0.5, // 0.5 as default
+        dismissible: true // as true as default
+      }
     }
   },
   methods: {
@@ -88,7 +107,16 @@ export default {
     resetFilter () {
       this.filterText = ''
       this.$events.fire('filter-reset')
+    },
+    onStartDatetimeChanged: function (newStart) {
+      var endPicker = this.$.endPicker.control
+      endPicker.minDate(newStart)
+    },
+    onEndDatetimeChanged: function (newEnd) {
+      var startPicker = this.$.startPicker.control
+      startPicker.maxDate(newEnd)
     }
   }
 }
+
 </script>
