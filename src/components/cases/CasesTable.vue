@@ -7,6 +7,7 @@
         </div>
         <div class="row">
             <div class="col-sm-12">
+                <top-progress ref="topProgress" color="orange"></top-progress>
                 <div class="card">
                     <div class="card-block">
                         <div class="card-title">
@@ -20,15 +21,18 @@
                             </div>
                         </div>
                         <vuetable ref="vuetable"
-                                  api-url="http://vuetable.ratiw.net/api/users"
-                                  :fields="fields"
-                                  pagination-path=""
-                                  :per-page="20"
-                                  :sort-order="sortOrder"
-                                  detail-row-component="my-detail-row"
-                                  :appendParams="moreParams"
-                                  @vuetable:pagination-data="onPaginationData"
-                                  @vuetable:cell-clicked="onCellClicked"
+                          api-url="http://127.0.0.1:8001/doctor/accidents"
+                          :fields="fields"
+                          pagination-path=""
+                          :per-page="20"
+                          :sort-order="sortOrder"
+                          detail-row-component="my-detail-row"
+                          :appendParams="moreParams"
+                          @vuetable:pagination-data="onPaginationData"
+                          @vuetable:cell-clicked="onCellClicked"
+                          @vuetable:load-error="onLoadError"
+                          @vuetable:loaded="onLoaded"
+                          @vuetable:loading="onLoading"
                         ></vuetable>
                         <div class="row">
                             <div class="col-sm-12 pagination-block">
@@ -114,6 +118,7 @@ import DetailRow from './DetailRow'
 import FilterBar from './FilterBar'
 import Vue from 'vue'
 import VueEvents from 'vue-events'
+import topProgress from 'vue-top-progress'
 
 Vue.use(VueEvents)
 export default {
@@ -123,7 +128,8 @@ export default {
     VuetablePaginationInfo,
     FilterBar,
     'my-detail-row': DetailRow,
-    CustomActions
+    CustomActions,
+    topProgress
   },
   data () {
     return {
@@ -203,6 +209,17 @@ export default {
     onCellClicked (data, field, event) {
       console.log('cellClicked: ', field.name)
       this.$refs.vuetable.toggleDetailRow(data.id)
+    },
+    onLoaded () {
+      this.$refs.topProgress.done()
+    },
+    onLoadError (response) {
+      this.$refs.topProgress.error = 1
+      console.log('error')
+    },
+    onLoading () {
+      this.$refs.topProgress.error = false
+      this.$refs.topProgress.start()
     }
   },
   events: {

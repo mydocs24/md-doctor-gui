@@ -66,7 +66,7 @@
     }
 </style>
 <script>
-import CasesTable from './cases/CasesTable'
+import CasesTable from '../components/cases/CasesTable'
 
 export default {
 
