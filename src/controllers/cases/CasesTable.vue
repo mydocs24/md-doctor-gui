@@ -20,7 +20,6 @@
                             </div>
                         </div>
                         <vuetable ref="vuetable"
-                                  class="table table-bordered table-hover offset-bottom"
                                   api-url="http://vuetable.ratiw.net/api/users"
                                   :fields="fields"
                                   pagination-path=""
@@ -117,14 +116,14 @@ import Vue from 'vue'
 import VueEvents from 'vue-events'
 
 Vue.use(VueEvents)
-Vue.component('custom-actions', CustomActions)
-Vue.component('my-detail-row', DetailRow)
-Vue.component('filter-bar', FilterBar)
 export default {
   components: {
     Vuetable,
     VuetablePagination,
-    VuetablePaginationInfo
+    VuetablePaginationInfo,
+    FilterBar,
+    'my-detail-row': DetailRow,
+    CustomActions
   },
   data () {
     return {
@@ -171,7 +170,8 @@ export default {
         wrapperClass: 'pagination',
         disabledClass: 'disabled',
         pageClass: 'page-item',
-        activeClass: 'active'
+        activeClass: 'active',
+        tableClass: 'table table-bordered table-hover offset-bottom'
       },
       infoClass: 'pagination-info'
     }
