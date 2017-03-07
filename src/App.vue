@@ -17,6 +17,7 @@
         </b-collapse>
       </div>
     </b-navbar>
+    <top-progress ref="topProgress"></top-progress>
 
     <div class="container main">
       <router-view></router-view>
@@ -53,3 +54,13 @@
     }
   }
 </style>
+
+<script>
+  import topProgress from 'vue-top-progress'
+
+  export default {
+    components: {
+      topProgress
+    }
+  }
+</script>
