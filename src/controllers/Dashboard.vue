@@ -15,7 +15,6 @@
                 <div class="card-block">
                     <h6>About
                         <small> · <a>Edit</a></small></h6>
-
                     <b>City</b>
                     <br><span class="val">Tenerife</span>
                     <br><b>Cases 2017</b>
@@ -50,7 +49,6 @@
     @import "../sass/variables";
 
     .doctor-info {
-        margin-top: $offset-doctor-info;
         margin-bottom: $offset-bottom;
     }
 

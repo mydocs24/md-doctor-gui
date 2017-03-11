@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="row offset-bottom">
+        <div v-if="showFilters" class="row offset-bottom">
             <div class="col-sm-12">
                 <filter-bar></filter-bar>
             </div>
@@ -11,7 +11,11 @@
                 <div class="card">
                     <div class="card-block">
                         <div class="card-title">
-                            <h5>My Cases</h5>
+                            <h5>
+                                My Cases
+                                <small class="filter-control" @click="showFilters = !showFilters">
+                                    {{ showFilters ? '&times; Hide' : '&darr; Show' }} filters</small>
+                            </h5>
                         </div>
                         <div class="row case-control">
                             <div class="col-sm-12 small">
@@ -21,7 +25,7 @@
                             </div>
                         </div>
                         <vuetable ref="vuetable"
-                          api-url="http://127.0.0.1:8001/doctor/accidents"
+                          api-url="http://mydoctor24.com/doctor/accidents"
                           :fields="fields"
                           pagination-path=""
                           :per-page="20"
@@ -133,6 +137,7 @@ export default {
   },
   data () {
     return {
+      showFilters: false,
       fields: [
         {
           name: 'birthdate',
@@ -215,7 +220,12 @@ export default {
     },
     onLoadError (response) {
       this.$refs.topProgress.error = 1
-      console.log('error')
+      console.log(response)
+      if (response.status === 401) {
+        console.log('unauthorized')
+      } else {
+        console.log(response.status, response.statusText)
+      }
     },
     onLoading () {
       this.$refs.topProgress.error = false

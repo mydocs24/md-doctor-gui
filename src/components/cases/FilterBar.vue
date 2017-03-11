@@ -1,12 +1,6 @@
 <template>
     <div class="filter-component">
-        <div class="row">
-            <div class="col-sm-12">
-                <span class="filter-control" @click="showFilters = !showFilters">
-                    {{ showFilters ? '&times; Hide' : '&darr; Show' }} filters</span>
-            </div>
-        </div>
-        <div class="card filters" v-if="showFilters">
+        <div class="card filters">
             <div class="card-block">
                 <h6 class="card-title">Filters</h6>
                 <div class="row">
@@ -70,7 +64,6 @@ export default {
   data () {
     return {
       filterText: '',
-      showFilters: false,
       startTime: {
         time: ''
       },
