@@ -19,9 +19,7 @@
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <label for="start-picker" class="col-sm-3 control-label">
-                                            From
-                                        </label>
+                                        <label for="start-picker" class="col-sm-3 control-label">From</label>
                                         <date-picker :date="startTime" :option="option" id="start-picker"></date-picker>
                                     </div>
                                     <div class="col-sm-6">
@@ -52,11 +50,14 @@
         color: $gray-light;
         cursor: pointer;
     }
+
+    .datepicker-overlay {
+        z-index: $zindex-modal !important;
+    }
 </style>
 
 <script>
 import DatePicker from 'vue-datepicker'
-
 export default {
   components: {
     DatePicker
@@ -95,10 +96,16 @@ export default {
   },
   methods: {
     doFilter () {
-      this.$events.fire('filter-set', this.filterText)
+      this.$events.fire('filter-set', {
+        filterText: this.filterText,
+        startTime: this.startTime,
+        endTime: this.endTime
+      })
     },
     resetFilter () {
       this.filterText = ''
+      this.startTime.time = ''
+      this.endTime.time = ''
       this.$events.fire('filter-reset')
     },
     onStartDatetimeChanged: function (newStart) {

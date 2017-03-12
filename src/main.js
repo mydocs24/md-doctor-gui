@@ -15,6 +15,9 @@ import Dashboard from './controllers/Dashboard'
 import Hello from './controllers/Hello'
 import NotFoundComponent from './controllers/system/404'
 
+// try faker
+import FakeHttp from './fake/http.vue'
+
 // routes
 const Foo = {template: '<div>foo</div>'}
 const Bar = {template: '<div>bar</div>'}
@@ -55,6 +58,6 @@ Object.keys(locales).forEach(function (lang) {
 new Vue({
   el: '#app',
   template: '<App/>',
-  components: { App },
+  components: { App, FakeHttp },
   router
 })

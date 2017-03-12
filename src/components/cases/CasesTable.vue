@@ -24,8 +24,10 @@
                                 <a class="item link" title="could be only on selected with status signed">Send</a>
                             </div>
                         </div>
-                        <vuetable ref="vuetable"
-                          api-url="http://mydoctor24.com/doctor/accidents"
+                        <vuetable
+                          ref="vuetable"
+                          api-url="doctor/accidents"
+                          :class="css.tableClass"
                           :fields="fields"
                           pagination-path=""
                           :per-page="20"
@@ -55,14 +57,23 @@
                 </div>
             </div>
         </div>
-        <hr>
         <div class="row">
-            <div class="col-sm-12">
+            <div class="col-sm-11 mx-auto">
+                <hr>
                 <div class="total">
                     Total: 2000 &euro;
                 </div>
             </div>
         </div>
+
+        <b-modal ref="errorModal" size="sm">
+            <h4 slot="modal-header">{{ errorModal.title }}</h4>
+            <div slot="modal-body">{{ errorModal.bodyText }}</div>
+            <span slot="modal-footer">
+                <button class="btn btn-danger" @click="onErrorModalClose()">Close</button>
+            </span>
+        </b-modal>
+
     </div>
 </template>
 
@@ -77,6 +88,19 @@
     }
     .pagination {
         margin-bottom: 0;
+    }
+
+    .vuetable {
+        tbody > tr {
+            cursor: pointer;
+        }
+        .vuetable-detail-row {
+            cursor: default;
+            background-color: #f5f8fa;
+            &:hover {
+                background-color: #f5f8fa;
+            }
+        }
     }
 
     .vuetable-pagination-info {
@@ -112,55 +136,57 @@
 </style>
 
 <script>
-import accounting from 'accounting'
 import moment from 'moment'
 import Vuetable from 'vuetable-2/src/components/Vuetable'
 import VuetablePagination from './VuetablePagination'
 import VuetablePaginationInfo from 'vuetable-2/src/components/VuetablePaginationInfo'
 import CustomActions from './CustomActions'
-import DetailRow from './DetailRow'
+import MyDetailRow from './DetailRow'
 import FilterBar from './FilterBar'
 import Vue from 'vue'
 import VueEvents from 'vue-events'
 import topProgress from 'vue-top-progress'
 
 Vue.use(VueEvents)
+
+Vue.component('my-detail-row', MyDetailRow)
+
 export default {
   components: {
     Vuetable,
     VuetablePagination,
     VuetablePaginationInfo,
     FilterBar,
-    'my-detail-row': DetailRow,
     CustomActions,
     topProgress
   },
   data () {
     return {
+      errorModal: {
+        title: '',
+        bodyText: ''
+      },
       showFilters: false,
       fields: [
         {
-          name: 'birthdate',
-          sortField: 'birthdate',
-          titleClass: 'center aligned',
-          dataClass: 'center aligned',
+          name: 'date',
+          sortField: 'date',
           callback: 'formatDate|DD.MM.YYYY'
         },
         {
-          name: 'nickname',
-          sortField: 'nickname',
-          callback: 'allcap'
+          name: 'refNum',
+          title: 'Referral Num',
+          sortField: 'refNum'
         },
         {
-          name: 'name',
-          sortField: 'name'
+          name: 'city',
+          sortField: 'status'
         },
         {
-          name: 'gender',
-          sortField: 'gender',
+          name: 'status',
+          sortField: 'status',
           titleClass: 'center aligned',
-          dataClass: 'center aligned',
-          callback: 'genderLabel'
+          dataClass: 'center aligned'
         },
         {
           name: '__checkbox',
@@ -170,8 +196,8 @@ export default {
       ],
       sortOrder: [
         {
-          field: 'birthdate',
-          sortField: 'birthdate',
+          field: 'date',
+          sortField: 'date',
           direction: 'asc'
         }
       ],
@@ -188,16 +214,8 @@ export default {
     }
   },
   methods: {
-    allcap (value) {
-      return value.toUpperCase()
-    },
-    genderLabel (value) {
-      return value === 'M'
-        ? '<span class="ui teal label"><i class="large man icon"></i>Male</span>'
-        : '<span class="ui pink label"><i class="large woman icon"></i>Female</span>'
-    },
-    formatNumber (value) {
-      return accounting.formatNumber(value, 2)
+    onErrorModalClose () {
+      this.$refs.errorModal.hide()
     },
     formatDate (value, fmt = 'D MMM YYYY') {
       return (value == null)
@@ -212,7 +230,6 @@ export default {
       this.$refs.vuetable.changePage(page)
     },
     onCellClicked (data, field, event) {
-      console.log('cellClicked: ', field.name)
       this.$refs.vuetable.toggleDetailRow(data.id)
     },
     onLoaded () {
@@ -222,10 +239,18 @@ export default {
       this.$refs.topProgress.error = 1
       console.log(response)
       if (response.status === 401) {
-        console.log('unauthorized')
+        this.errorModal.title = 'Authorization'
+        this.errorModal.bodyText = 'You can\'t load list while you are not authorized.'
+      } else if (response.status === 0) {
+        this.errorModal.title = 'Request Error'
+        this.errorModal.bodyText = 'Not a CORS response'
       } else {
+        this.errorModal.title = 'Request Error'
+        this.errorModal.bodyText = '"' + response.status + '" ' + response.statusText
         console.log(response.status, response.statusText)
       }
+
+      this.$refs.errorModal.show()
     },
     onLoading () {
       this.$refs.topProgress.error = false
@@ -233,10 +258,8 @@ export default {
     }
   },
   events: {
-    'filter-set' (filterText) {
-      this.moreParams = {
-        'filter': filterText
-      }
+    'filter-set' (params) {
+      this.moreParams = params
       Vue.nextTick(() => this.$refs.vuetable.refresh())
     },
     'filter-reset' () {
