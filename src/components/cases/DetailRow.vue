@@ -3,7 +3,8 @@
         <div class="row">
             <div class="col-sm-12 text-right">
                 <a @click="close()" class="close-link">&times; Close</a>
-                <a @click="proceed(rowData.id)" class="proceed-link">Proceed &rarr;</a>
+                <a @click="proceed(rowData.id)" class="sign-link">Sign</a>
+                <router-link :to="'doctor/accidents/'+rowData.id" class="proceed-link">Open &rarr;</router-link>
             </div>
         </div>
         <div class="row">

@@ -12,6 +12,7 @@ Vue.use(VueI18n)
 // components
 import App from './App'
 import Dashboard from './controllers/Dashboard'
+import Accident from './controllers/Accident'
 import Hello from './controllers/Hello'
 import NotFoundComponent from './controllers/system/404'
 
@@ -25,6 +26,7 @@ const Bar = {template: '<div>bar</div>'}
 const routes = [
   // default component when page not found
   { path: '/', component: Dashboard },
+  { path: '/doctor/accidents/:id', component: Accident },
   { path: '/component1', component: Foo },
   { path: '/component2', component: Bar },
   { path: '/hello', component: Hello },
@@ -41,7 +43,7 @@ const router = new VueRouter({
 var locales = {
   en: {
     message: {
-      hello: 'hello world'
+      open: 'Open'
     }
   }
 }
