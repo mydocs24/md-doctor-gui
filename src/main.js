@@ -43,6 +43,7 @@ const router = new VueRouter({
 var locales = {
   en: {
     message: {
+      hello: 'hello world',
       open: 'Open'
     }
   }
