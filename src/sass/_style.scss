@@ -41,3 +41,11 @@ body {
 .alert-warning {
   border-color: #e6d0a1;
 }
+
+.card {
+  .text-edit {
+    cursor: pointer;
+    font-weight: $font-weight-bold;
+    color: $gray-text;
+  }
+}

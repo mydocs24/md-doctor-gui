@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-
     <b-navbar toggleable type="inverse" variant="mydoc" class="sticky-top">
 
       <b-nav-toggle target="nav_collapse"/>
