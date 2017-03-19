@@ -11,8 +11,22 @@ Vue.use(VueI18n)
 
 // components
 import App from './App'
-import Dashboard from './controllers/Dashboard'
-import Accident from './controllers/Accident'
+
+// import Dashboard from './controllers/Dashboard'
+
+const Dashboard = resolve => {
+  require.ensure(['./controllers/Dashboard.vue'], () => {
+    resolve(require('./controllers/Dashboard.vue'))
+  })
+}
+
+const Accident = resolve => {
+  require.ensure(['./controllers/Accident.vue'], () => {
+    resolve(require('./controllers/Accident.vue'))
+  })
+}
+// import Accident from './controllers/Accident'
+
 import Hello from './controllers/Hello'
 import NotFoundComponent from './controllers/system/404'
 
