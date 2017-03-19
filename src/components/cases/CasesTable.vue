@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div v-if="showFilters" class="row offset-bottom">
+        <div v-if="showFilters" class="row mb-3">
             <div class="col-sm-12">
                 <filter-bar></filter-bar>
             </div>
@@ -171,7 +171,9 @@ export default {
         {
           name: 'date',
           sortField: 'date',
-          callback: 'formatDate|DD.MM.YYYY'
+          callback: 'formatDate|DD.MM.YYYY',
+          titleClass: 'hidden-sm-down',
+          dataClass: 'hidden-sm-down'
         },
         {
           name: 'refNum',
