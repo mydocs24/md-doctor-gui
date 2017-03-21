@@ -39,7 +39,7 @@
     },
     {
       method: 'PUT',
-      url: 'doctor/accidents/1',
+      url: 'doctor/accidents/17',
       response: {
         id: 17,
         date: '2017-03-12',
@@ -50,13 +50,29 @@
     },
     {
       method: 'GET',
-      url: 'doctor/accident/1/',
+      url: 'doctor/accidents/17',
       response: {
-        id: 1,
-        date: '2017-03-12',
-        refNum: 'ref-02-0001',
+        id: 17,
+        userName: 'Foster Abigail',
         city: 'Barcelona',
-        status: 'new'
+        address: 'Benidorm, Adolfa Uzuarez 162/4, 52',
+        status: 'new',
+        accident: {
+          parent_id: 0,
+          phones: '375255283638',
+          date: '2017-03-12',
+          refNum: 'ref-02-0001',
+          address: 'Benidorm, Adolfa Uzuarez 162/4, 52',
+          reason: 'Reason of the call. Call from the Assistant company AXA. Patient with some ill want to get medical appointment',
+          user: {
+            id: 1,
+            name: 'Foster Abigail',
+            phones: '375255283638',
+            address: 'Benidorm, Adolfa Uzuarez 162/4, 52'
+          },
+          passports: {},
+          insurances: {}
+        }
       }
     }
   ]
@@ -64,7 +80,7 @@
   Vue.http.headers.common['Access-Control-Allow-Origin'] = '*'
   Vue.http.interceptors.unshift((request, next) => {
     let route = routes.find((item) => {
-      return (request.method === item.method && request.url === item.url)
+      return request.method === item.method && request.url === item.url
     })
     if (!route) {
       // we're just going to return a 404 here, since we don't want our test suite making a real HTTP request

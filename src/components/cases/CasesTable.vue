@@ -239,7 +239,7 @@ export default {
     },
     onLoadError (response) {
       this.$refs.topProgress.error = 1
-      console.log(response)
+      // console.log(response)
       if (response.status === 401) {
         this.errorModal.title = 'Authorization'
         this.errorModal.bodyText = 'You can\'t load list while you are not authorized.'
@@ -249,7 +249,7 @@ export default {
       } else {
         this.errorModal.title = 'Request Error'
         this.errorModal.bodyText = '"' + response.status + '" ' + response.statusText
-        console.log(response.status, response.statusText)
+        // console.log(response.status, response.statusText)
       }
 
       this.$refs.errorModal.show()
