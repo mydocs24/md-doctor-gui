@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-if="doctorCase">
         <div class="row">
             <div class="col-sm-12 col-lg-9 mx-auto">
                 <top-progress ref="topProgress" color="orange"></top-progress>
@@ -19,7 +19,8 @@
                         <div class="card">
                             <div class="card-header">
                                 <div class="card-title">
-                                    <h6>Foster Abigail
+                                    <h6>
+                                        {{ doctorCase.userName }}
                                         <small> · <a>Edit</a></small>
                                     </h6>
                                 </div>
@@ -28,39 +29,39 @@
                                 <address>
                                     <div class="row">
                                         <div class="col-sm-12">
-                                            <a class="small" href="tel:+375255283638">+375255283638</a>
+                                            <a class="small" :href="'tel:'+doctorCase.accident.phones">{{ doctorCase.accident.phones }}</a>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-sm-12 lead">
-                                            Benidorm, Adolfa Uzuarez 162/4, 52
+                                            {{ doctorCase.address }}
                                         </div>
                                     </div>
                                 </address>
 
                                 <div class="row">
                                     <div class="col-sm-12 card-text text-muted">
-                                        Reason of the call. Call from the Assisstant company AXA. Patient with some ill
-                                        want to
-                                        get medical appointment
+                                        {{ doctorCase.accident.reason }}
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-4 col-lg-5 col-lg-6">
-                        <div class="text-success text-right">First appointment</div>
+                        <div :class="doctorCase.accident.parent_id ? 'text-warning' : 'text-success'" class="text-right">
+                            {{ doctorCase.accident.parent_id ? 'Second appointment' : 'First appointment' }}
+                        </div>
                         <div class="row justify-content-around">
                             <div class="col-6 col-sm-12 col-lg-6 flex-lg-last">
                                 <table class="table">
                                     <thead>
                                     <tr>
                                         <th>Passport</th>
-                                        <th><span class="badge badge-default">0</span></th>
+                                        <th><span class="badge badge-default">{{ doctorCase.accident.passports.length ? doctorCase.accident.passports.length : 0 }}</span></th>
                                     </tr>
                                     <tr>
                                         <th>Insurance</th>
-                                        <th><span class="badge badge-success">0</span></th>
+                                        <th><span class="badge badge-success">{{ doctorCase.accident.insurances.length ? doctorCase.accident.insurances.length : 0 }}</span></th>
                                     </tr>
                                     </thead>
                                 </table>
@@ -197,6 +198,10 @@
   import topProgress from 'vue-top-progress'
 
   export default {
+    components: {
+      VueCoreImageUpload,
+      topProgress
+    },
     data () {
       return {
         errorModal: {
@@ -204,68 +209,54 @@
           bodyText: ''
         },
         src: '',
-        accident: null,
+        doctorCase: null,
         items: [{
           text: 'Main',
           link: '/doctor'
-        }, {
-          text: 'Accident #',
-          active: true
         }],
         httpOptions: {
           type: Object,
-          default: function () {
+          'default': function () {
             return {}
           }
         }
       }
     },
-    beforeRouteEnter (to, from, next) {
-      this.$refs.topProgress.error = false
-      this.$refs.topProgress.start()
-      Vue.http.get(to.params.id, {}).then(
-        (accident) => {
-          this.$refs.topProgress.done()
-          next(vm => {
-            vm.accident = accident
-          })
-        },
-        (err) => {
-          this.$refs.topProgress.error = 1
-
-          console.log(err)
-          if (err.status === 401) {
-            this.errorModal.title = 'Authorization'
-            this.errorModal.bodyText = 'You can\'t load list while you are not authorized.'
-          } else if (err.status === 0) {
-            this.errorModal.title = 'Request Error'
-            this.errorModal.bodyText = 'Not a CORS response'
-          } else {
-            this.errorModal.title = 'Request Error'
-            this.errorModal.bodyText = '"' + err.status + '" ' + err.statusText
-            console.log(err.status, err.statusText)
-          }
-
-          this.$refs.errorModal.show()
-          next(false)
-        }
-      )
+    created: function () {
+      this.fetchData()
     },
     watch: {
-      $route () {
-        this.accident = null
-        Vue.http.get(this.$route.params.id, this.httpOptions).then(
-          (accident) => {
-            this.accident = accident
+      '$route': 'fetchData'
+    },
+    methods: {
+      fetchData () {
+        this.doctorCase = null
+        Vue.http.get('doctor/accidents/' + this.$route.params.id, this.httpOptions).then(
+          (response) => {
+            this.doctorCase = response.body
+            // put it into breadcrumbs
+            this.items.push({
+              text: this.doctorCase.accident.refNum,
+              active: true
+            })
           },
           (err) => {
             this.error = err.toString()
-            console.log(err)
+            if (err.status === 401) {
+              this.errorModal.title = 'Authorization'
+              this.errorModal.bodyText = 'You can\'t load list while you are not authorized.'
+            } else if (err.status === 0) {
+              this.errorModal.title = 'Request Error'
+              this.errorModal.bodyText = 'Not a CORS response'
+            } else {
+              this.errorModal.title = 'Request Error'
+              this.errorModal.bodyText = '"' + err.status + '" ' + err.statusText
+            }
+
+            this.$refs.errorModal.show()
           }
         )
-      }
-    },
-    methods: {
+      },
       onErrorModalClose () {
         this.$refs.errorModal.hide()
       },
@@ -294,10 +285,6 @@
       onLink (item) {
         console.log(item)
       }
-    },
-    components: {
-      VueCoreImageUpload,
-      topProgress
     }
   }
 </script>
