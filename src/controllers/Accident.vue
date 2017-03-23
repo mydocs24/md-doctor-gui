@@ -159,7 +159,7 @@
                     <div class="card-footer">
                         <div class="row">
                             <div class="col-6 text-center">
-                                <button class="btn btn-lg btn-warning">Reject</button>
+                                <button class="btn btn-lg btn-warning" @click="doReject()">Reject</button>
                             </div>
                             <div class="col-6 text-center">
                                 <button class="btn btn-lg btn-success">Accept</button>
@@ -183,6 +183,18 @@
             </span>
         </b-modal>
 
+        <b-modal ref="rejectCaseModal">
+            <h4 slot="modal-header">Reject case</h4>
+            <div slot="modal-body">
+                <textarea placeholder="Reject reason" class="form-control"
+                          v-model="rejectCommentary"
+                          @keyup.enter="doReject"
+                ></textarea>
+            </div>
+            <span slot="modal-footer">
+                <button class="btn btn-warning" @click="sendReject()">Reject</button>
+            </span>
+        </b-modal>
     </div>
 </template>
 
@@ -204,6 +216,7 @@
     },
     data () {
       return {
+        rejectCommentary: '',
         errorModal: {
           title: '',
           bodyText: ''
@@ -284,6 +297,15 @@
 
       onLink (item) {
         console.log(item)
+      },
+
+      doReject () {
+        console.log('will be done reject')
+        this.$refs.rejectCaseModal.show()
+      },
+
+      sendReject () {
+        this.$refs.rejectCaseModal.hide()
       }
     }
   }
