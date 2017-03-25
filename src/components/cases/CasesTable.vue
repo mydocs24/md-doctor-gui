@@ -153,12 +153,6 @@ Vue.use(VueEvents)
 Vue.component('my-detail-row', MyDetailRow)
 
 export default {
-  params: {
-    caseUrl: {
-      type: String,
-      default: ''
-    }
-  },
   components: {
     Vuetable,
     VuetablePagination,

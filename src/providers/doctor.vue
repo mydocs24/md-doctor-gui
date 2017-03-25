@@ -6,7 +6,7 @@
   import VueResource from 'vue-resource'
   Vue.use(VueResource)
 
-  const doctorUrl = 'doctor/med'
+  const doctorUrl = 'doctor/me'
 
   export default {
     components: {},
