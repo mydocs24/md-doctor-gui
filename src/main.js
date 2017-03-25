@@ -23,6 +23,12 @@ const Accident = resolve => {
     resolve(require('./controllers/Accident.vue'))
   })
 }
+
+const Profile = resolve => {
+  require.ensure(['./controllers/Profile.vue'], () => {
+    resolve(require('./controllers/Profile.vue'))
+  })
+}
 // import Accident from './controllers/Accident'
 
 import Hello from './controllers/Hello'
@@ -39,6 +45,7 @@ const routes = [
   // default component when page not found
   { path: '/', component: Dashboard },
   { path: '/doctor/accidents/:id', component: Accident },
+  { path: '/doctor/profile', component: Profile },
   { path: '/component1', component: Foo },
   { path: '/component2', component: Bar },
   { path: '/hello', component: Hello },
