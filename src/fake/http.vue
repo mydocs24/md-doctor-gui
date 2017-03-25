@@ -74,6 +74,14 @@
           insurances: {}
         }
       }
+    },
+    {
+      method: 'GET',
+      url: 'doctor/me',
+      response: {
+        name: 'Doctor Aibolit',
+        picture_url: 'https://scontent.fhen1-1.fna.fbcdn.net/v/t1.0-9/13007374_971838689558988_8853583067139950859_n.jpg?oh=1ac22b8094c9a93c13c4692c3fa809d0&oe=59300A59'
+      }
     }
   ]
 
