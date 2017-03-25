@@ -26,7 +26,7 @@
                         </div>
                         <vuetable
                           ref="vuetable"
-                          api-url="doctor/accidents"
+                          :api-url="caseUrl"
                           :class="css.tableClass"
                           :fields="fields"
                           pagination-path=""
@@ -146,12 +146,19 @@ import FilterBar from './FilterBar'
 import Vue from 'vue'
 import VueEvents from 'vue-events'
 import topProgress from 'vue-top-progress'
+import AccidentProvider from '../../providers/accident.vue'
 
 Vue.use(VueEvents)
 
 Vue.component('my-detail-row', MyDetailRow)
 
 export default {
+  params: {
+    caseUrl: {
+      type: String,
+      default: ''
+    }
+  },
   components: {
     Vuetable,
     VuetablePagination,
@@ -162,6 +169,7 @@ export default {
   },
   data () {
     return {
+      caseUrl: AccidentProvider.getUrl(),
       errorModal: {
         title: '',
         bodyText: ''
@@ -249,7 +257,6 @@ export default {
       } else {
         this.errorModal.title = 'Request Error'
         this.errorModal.bodyText = '"' + response.status + '" ' + response.statusText
-        // console.log(response.status, response.statusText)
       }
 
       this.$refs.errorModal.show()
