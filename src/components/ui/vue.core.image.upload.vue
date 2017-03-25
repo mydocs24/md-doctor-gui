@@ -276,7 +276,6 @@
           type: String,
           default: 'files'
         },
-
         crop: {
           type: Boolean,
           default: false
