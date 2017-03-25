@@ -149,7 +149,6 @@ import topProgress from 'vue-top-progress'
 import AccidentProvider from '../../providers/accident.vue'
 
 Vue.use(VueEvents)
-
 Vue.component('my-detail-row', MyDetailRow)
 
 export default {

@@ -3,13 +3,12 @@
         <div v-if="doctor" class="card card-about">
             <div class="card-block">
                 <h6>About
-                    <small> · <a>Edit</a></small>
+                    <small> · <router-link :to="'doctor/profile'">Edit</router-link></small>
                 </h6>
                 <b>City</b>
                 <br><span class="ml-1">{{ doctor.city }}</span>
             </div>
         </div>
-
         <feedback ref="feedback"></feedback>
     </div>
 </template>
