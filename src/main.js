@@ -72,18 +72,26 @@ var locales = {
         'new': 'New'
       }
     },
-    'date': 'Date',
-    'refNum': 'Referral Num',
-    'city': 'City',
-    'status': 'Status',
-    'total': 'Total',
-    'copy': 'Copy',
-    'sign': 'Sign',
-    'send': 'Send',
+    'Date': 'Date',
+    'Referral Num': 'Referral Num',
+    'city': 'city',
+    'Status': 'Status',
+    'Total': 'Total',
+    'Copy': 'Copy',
+    'Sign': 'Sign',
+    'Send': 'Send',
     'Show filters': 'Show filters',
     'Hide filters': 'Hide filters',
     'My Cases': 'My Cases',
-    'Close': 'Close'
+    'Close': 'Close',
+    'Loading...': 'Loading...',
+    'First Appointment': 'First Appointment',
+    'Reiterative Appointment': 'Reiterative Appointment',
+    'About': 'About',
+    'Edit': 'Edit',
+    'City': 'City',
+    'Reject': 'Reject',
+    'Accept': 'Accept'
   }
 }
 

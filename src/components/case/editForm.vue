@@ -73,10 +73,10 @@
         <div class="card-footer">
             <div class="row">
                 <div class="col-6 text-center">
-                    <button class="btn btn-lg btn-warning" @click="doReject()">Reject</button>
+                    <button class="btn btn-lg btn-warning" @click="doReject()">{{ $t('Reject') }}</button>
                 </div>
                 <div class="col-6 text-center">
-                    <button class="btn btn-lg btn-success">Accept</button>
+                    <button class="btn btn-lg btn-success">{{ $t('Accept') }}</button>
                 </div>
             </div>
         </div>
