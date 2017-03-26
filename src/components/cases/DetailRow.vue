@@ -1,9 +1,9 @@
 <template>
     <div class="case-details">
         <div class="row">
-            <div class="col-sm-12 text-right">
-                <a @click="close()" class="close-link">&times; Close</a>
-                <a @click="proceed(rowData.id)" class="sign-link">Sign</a>
+            <div class="col-sm-12 text-right control-links">
+                <a @click="onClose" class="close-link">&times; Close</a>
+                <a @click="onSign" class="sign-link">Sign</a>
                 <router-link :to="'doctor/accidents/'+rowData.id" class="proceed-link">Open &rarr;</router-link>
             </div>
         </div>
@@ -44,11 +44,8 @@
             font-size: $font-size-sm;
             font-weight: $font-weight-bold;
         }
-        .case-item {
-            padding-left: $offset-bottom;
-        }
-        .close-link {
-            margin-right: $offset-bottom;
+        .control-links {
+            font-size: $small-font-size;
         }
     }
 </style>
@@ -65,11 +62,11 @@ export default {
     }
   },
   methods: {
-    close () {
-      console.log('my-detail-row: on-click event')
+    onClose (event) {
+      this.$events.fire('vuetable:close-row', {id: this.rowData.id}, event)
     },
-    proceed (id) {
-      console.log(id)
+    onSign () {
+      console.log(this.rowData.id)
     }
   }
 }
