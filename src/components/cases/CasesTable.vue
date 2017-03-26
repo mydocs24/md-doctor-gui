@@ -39,6 +39,7 @@
                           @vuetable:load-error="onLoadError"
                           @vuetable:loaded="onLoaded"
                           @vuetable:loading="onLoading"
+                          @vuetable:close-row="onCloseRow"
                         ></vuetable>
                         <div class="row">
                             <div class="col-sm-12 pagination-block">
@@ -217,6 +218,9 @@ export default {
     }
   },
   methods: {
+    onCloseRow () {
+      console.log('here')
+    },
     onErrorModalClose () {
       this.$refs.errorModal.hide()
     },
@@ -268,6 +272,9 @@ export default {
       this.moreParams = {}
       this.$refs.vuetable.refresh()
       Vue.nextTick(() => this.$refs.vuetable.refresh())
+    },
+    'vuetable:close-row' (data) {
+      this.$refs.vuetable.hideDetailRow(data.id)
     }
   }
 }
