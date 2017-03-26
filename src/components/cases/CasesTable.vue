@@ -190,7 +190,8 @@ export default {
           name: 'status',
           sortField: 'status',
           titleClass: 'center aligned',
-          dataClass: 'center aligned'
+          dataClass: 'center aligned',
+          callback: 'statusBadge'
         },
         {
           name: '__checkbox',
@@ -228,6 +229,28 @@ export default {
       return (value == null)
         ? ''
         : moment(value, 'YYYY-MM-DD').format(fmt)
+    },
+    statusBadge (value) {
+      let badge = ''
+
+      switch (value) {
+        case 'closed':
+          badge = '<span class="badge badge-default">' + this.$t('case.status.closed') + '</span>'
+          break
+        case 'signed':
+          badge = '<span class="badge badge-primary">' + this.$t('case.status.signed') + '</span>'
+          break
+        case 'new':
+          badge = '<span class="badge badge-success">' + this.$t('case.status.new') + '</span>'
+          break
+        case 'sended':
+          badge = '<span class="badge badge-warning">' + this.$t('case.status.sended') + '</span>'
+          break
+        // new by default
+        default: badge = '<span class="badge badge-danger">' + value + '</span>'
+      }
+
+      return badge
     },
     onPaginationData (paginationData) {
       this.$refs.pagination.setPaginationData(paginationData)
