@@ -12,16 +12,16 @@
                     <div class="card-block">
                         <div class="card-title">
                             <h5>
-                                My Cases
+                                {{ $t('My Cases') }}
                                 <small class="filter-control" @click="showFilters = !showFilters">
-                                    {{ showFilters ? '&times; Hide' : '&darr; Show' }} filters</small>
+                                    {{ showFilters ? '&times; ' + $t('Hide filters') : '&darr; ' + $t('Show filters') }}</small>
                             </h5>
                         </div>
                         <div class="row case-control">
                             <div class="col-sm-12 small">
-                                <a class="item link" title="selected only one item">Copy</a>
-                                <a class="item link" title="could be only on selected with status new">Sign</a>
-                                <a class="item link" title="could be only on selected with status signed">Send</a>
+                                <a class="item link" title="selected only one item">{{ $t('copy') }}</a>
+                                <a class="item link" title="could be only on selected with status new">{{ $t('sign') }}</a>
+                                <a class="item link" title="could be only on selected with status signed">{{ $t('send') }}</a>
                             </div>
                         </div>
                         <vuetable
@@ -62,19 +62,11 @@
             <div class="col-sm-11 mx-auto">
                 <hr>
                 <div class="total">
-                    Total: 2000 &euro;
+                    {{ $t('total') }}: 2000 &euro;
                 </div>
             </div>
         </div>
-
-        <b-modal ref="errorModal" size="sm">
-            <h4 slot="modal-header">{{ errorModal.title }}</h4>
-            <div slot="modal-body">{{ errorModal.bodyText }}</div>
-            <span slot="modal-footer">
-                <button class="btn btn-danger" @click="onErrorModalClose()">Close</button>
-            </span>
-        </b-modal>
-
+        <feedback ref="feedback"></feedback>
     </div>
 </template>
 
@@ -148,6 +140,7 @@ import Vue from 'vue'
 import VueEvents from 'vue-events'
 import topProgress from 'vue-top-progress'
 import AccidentProvider from '../../providers/accident.vue'
+import Feedback from '../../components/ui/dialog/feedback.vue'
 
 Vue.use(VueEvents)
 Vue.component('my-detail-row', MyDetailRow)
@@ -159,19 +152,17 @@ export default {
     VuetablePaginationInfo,
     FilterBar,
     CustomActions,
-    topProgress
+    topProgress,
+    Feedback
   },
   data () {
     return {
       caseUrl: AccidentProvider.getUrl(),
-      errorModal: {
-        title: '',
-        bodyText: ''
-      },
       showFilters: false,
       fields: [
         {
           name: 'date',
+          title: this.$t('date'),
           sortField: 'date',
           callback: 'formatDate|DD.MM.YYYY',
           titleClass: 'hidden-sm-down',
@@ -179,15 +170,17 @@ export default {
         },
         {
           name: 'refNum',
-          title: 'Referral Num',
+          title: this.$t('refNum'),
           sortField: 'refNum'
         },
         {
           name: 'city',
+          title: this.$t('city'),
           sortField: 'status'
         },
         {
           name: 'status',
+          title: this.$t('status'),
           sortField: 'status',
           titleClass: 'center aligned',
           dataClass: 'center aligned',
@@ -220,7 +213,8 @@ export default {
   },
   methods: {
     onCloseRow () {
-      console.log('here')
+      // why I need that?
+      // close row doesn't work without
     },
     onErrorModalClose () {
       this.$refs.errorModal.hide()
@@ -265,21 +259,22 @@ export default {
     onLoaded () {
       this.$refs.topProgress.done()
     },
-    onLoadError (response) {
+    onLoadError (err) {
       this.$refs.topProgress.error = 1
-      // console.log(response)
-      if (response.status === 401) {
-        this.errorModal.title = 'Authorization'
-        this.errorModal.bodyText = 'You can\'t load list while you are not authorized.'
-      } else if (response.status === 0) {
-        this.errorModal.title = 'Request Error'
-        this.errorModal.bodyText = 'Not a CORS response'
+      let title
+      let text
+      if (err.status === 401) {
+        title = 'Authorization'
+        text = 'You can\'t load list while you are not authorized.'
+      } else if (err.status === 0) {
+        title = 'Request Error'
+        text = 'Not a CORS response'
       } else {
-        this.errorModal.title = 'Request Error'
-        this.errorModal.bodyText = '"' + response.status + '" ' + response.statusText
+        title = 'Request Error'
+        text = '"' + err.status + '" ' + err.statusText
       }
 
-      this.$refs.errorModal.show()
+      this.$refs.feedback.show(title, text)
     },
     onLoading () {
       this.$refs.topProgress.error = false

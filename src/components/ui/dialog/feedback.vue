@@ -3,7 +3,7 @@
         <h4 slot="modal-header">{{ title }}</h4>
         <div slot="modal-body">{{ text }}</div>
         <span slot="modal-footer">
-                <button :class="btnClass" class="btn" @click="onClose()">Close</button>
+                <button :class="btnClass" class="btn" @click="onClose()">{{ $t('Close') }}</button>
             </span>
     </b-modal>
 </template>
