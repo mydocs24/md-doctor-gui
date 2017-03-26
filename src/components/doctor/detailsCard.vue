@@ -5,8 +5,18 @@
                 <h6>About
                     <small> · <router-link :to="'doctor/profile'">Edit</router-link></small>
                 </h6>
-                <b>City</b>
-                <br><span class="ml-1">{{ doctor.city }}</span>
+                <div class="row">
+                    <div class="col-12">
+                        <b>City</b>
+                        <br><span class="ml-1">{{ doctor.city }}</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12">
+                        <b>Phone</b>
+                        <br><span class="ml-1">{{ doctor.phones }}</span>
+                    </div>
+                </div>
             </div>
         </div>
         <feedback ref="feedback"></feedback>

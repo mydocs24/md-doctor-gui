@@ -10,14 +10,14 @@
       method: 'GET',
       url: 'doctor/accidents',
       response: {
-        total: 2,
-        'per_page': 1,
+        total: 5,
+        'per_page': 15,
         'current_page': 1,
         'last_page': 1,
         'next_page_url': '#next_page',
         'prev_page_url': null,
         'from': 1,
-        'to': 15,
+        'to': 5,
         data: [{
           id: 17,
           date: '2017-03-12',
@@ -34,6 +34,36 @@
           refNum: 'ref-02-0001',
           city: 'Barcelona',
           status: 'new'
+        },
+        {
+          id: 5,
+          date: '2017-03-26',
+          refNum: 'ref-03-0001',
+          city: 'Alicante',
+          status: 'signed',
+          phone: '+380953055704',
+          address: 'Somewhere in Alicante, Middle streer 8',
+          symptoms: 'I want to see a doctor'
+        },
+        {
+          id: 3,
+          date: '2017-03-26',
+          refNum: 'ref-04-0005',
+          city: 'Madrid',
+          status: 'sended',
+          phone: '+10003756937',
+          address: 'Mega street, 1/2',
+          symptoms: 'Any symptoms should be here'
+        },
+        {
+          id: 4,
+          date: '2017-03-26',
+          refNum: 'ref-05-0005',
+          city: 'Madrid',
+          status: 'closed',
+          phone: '+10003756937',
+          address: 'Mega street, 1/2',
+          symptoms: 'Any symptoms should be here'
         }]
       }
     },
@@ -81,7 +111,8 @@
       response: {
         name: 'Doctor Aibolit',
         picture_url: 'https://scontent.fhen1-1.fna.fbcdn.net/v/t1.0-9/13007374_971838689558988_8853583067139950859_n.jpg?oh=1ac22b8094c9a93c13c4692c3fa809d0&oe=59300A59',
-        city: 'Tenerife'
+        city: 'Tenerife',
+        phones: '+375255283638'
       }
     }
   ]

@@ -2,7 +2,7 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-// import VueI18n from 'vue-i18n'
+import VueI18n from 'vue-i18n'
 import BootstrapVue from 'bootstrap-vue'
 
 Vue.use(BootstrapVue)
@@ -11,7 +11,6 @@ Vue.use(VueRouter)
 // components
 import App from './App'
 
-// import Dashboard from './controllers/Dashboard'
 const Dashboard = resolve => {
   require.ensure(['./controllers/Dashboard.vue'], () => {
     resolve(require('./controllers/Dashboard.vue'))
@@ -29,7 +28,6 @@ const Profile = resolve => {
     resolve(require('./controllers/Profile.vue'))
   })
 }
-// import Accident from './controllers/Accident'
 
 import Hello from './controllers/Hello'
 import NotFoundComponent from './controllers/system/404'
@@ -58,13 +56,21 @@ const router = new VueRouter({
 })
 
 // lang
-// Vue.use(VueI18n)
+Vue.use(VueI18n)
 // ready translated locales
-/* var locales = {
+var locales = {
   en: {
     message: {
       hello: 'hello world',
       open: 'Open'
+    },
+    'case': {
+      status: {
+        closed: 'Closed',
+        'signed': 'Signed',
+        sended: 'Sended',
+        'new': 'New'
+      }
     }
   }
 }
@@ -76,7 +82,7 @@ Vue.config.lang = 'en'
 Object.keys(locales).forEach(function (lang) {
   Vue.locale(lang, locales[lang])
 })
-*/
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
