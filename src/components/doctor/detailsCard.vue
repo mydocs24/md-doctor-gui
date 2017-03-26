@@ -2,12 +2,12 @@
     <div>
         <div v-if="doctor" class="card card-about">
             <div class="card-block">
-                <h6>About
-                    <small> · <router-link :to="'doctor/profile'">Edit</router-link></small>
+                <h6>{{ $t('About') }}
+                    <small> · <router-link :to="'doctor/profile'">{{ $t('Edit') }}</router-link></small>
                 </h6>
                 <div class="row">
                     <div class="col-12">
-                        <b>City</b>
+                        <b>{{ $t('City') }}</b>
                         <br><span class="ml-1">{{ doctor.city }}</span>
                     </div>
                 </div>

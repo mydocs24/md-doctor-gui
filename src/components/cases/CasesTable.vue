@@ -19,9 +19,9 @@
                         </div>
                         <div class="row case-control">
                             <div class="col-sm-12 small">
-                                <a class="item link" title="selected only one item">{{ $t('copy') }}</a>
-                                <a class="item link" title="could be only on selected with status new">{{ $t('sign') }}</a>
-                                <a class="item link" title="could be only on selected with status signed">{{ $t('send') }}</a>
+                                <a class="item link" title="selected only one item">{{ $t('Copy') }}</a>
+                                <a class="item link" title="could be only on selected with status new">{{ $t('Sign') }}</a>
+                                <a class="item link" title="could be only on selected with status signed">{{ $t('Send') }}</a>
                             </div>
                         </div>
                         <vuetable
@@ -62,7 +62,7 @@
             <div class="col-sm-11 mx-auto">
                 <hr>
                 <div class="total">
-                    {{ $t('total') }}: 2000 &euro;
+                    {{ $t('Total') }}: 2000 &euro;
                 </div>
             </div>
         </div>
@@ -162,7 +162,7 @@ export default {
       fields: [
         {
           name: 'date',
-          title: this.$t('date'),
+          title: this.$t('Date'),
           sortField: 'date',
           callback: 'formatDate|DD.MM.YYYY',
           titleClass: 'hidden-sm-down',
@@ -170,17 +170,17 @@ export default {
         },
         {
           name: 'refNum',
-          title: this.$t('refNum'),
+          title: this.$t('Referral Num'),
           sortField: 'refNum'
         },
         {
           name: 'city',
-          title: this.$t('city'),
+          title: this.$t('City'),
           sortField: 'status'
         },
         {
           name: 'status',
-          title: this.$t('status'),
+          title: this.$t('Status'),
           sortField: 'status',
           titleClass: 'center aligned',
           dataClass: 'center aligned',
