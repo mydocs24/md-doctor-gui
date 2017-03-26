@@ -64,6 +64,26 @@
           phone: '+10003756937',
           address: 'Mega street, 1/2',
           symptoms: 'Any symptoms should be here'
+        },
+        {
+          id: 10,
+          date: '2017-03-26',
+          refNum: 'ref-07-0005',
+          city: 'Barcelona',
+          status: 'processing',
+          phone: '+10003756937',
+          address: 'A-Mega street, 1/2',
+          symptoms: 'Any symptoms should be here'
+        },
+        {
+          id: 7,
+          date: '2017-03-26',
+          refNum: 'ref-01-0129',
+          city: 'Barcelona',
+          status: 'processing',
+          phone: '+10003756937',
+          address: 'A-Mega street, 1/2',
+          symptoms: 'Any symptoms should be here'
         }]
       }
     },
