@@ -19,9 +19,12 @@
                         </div>
                         <div class="row case-control">
                             <div class="col-sm-12 small">
-                                <a class="item link" title="selected only one item">{{ $t('Copy') }}</a>
-                                <a class="item link" title="could be only on selected with status new">{{ $t('Sign') }}</a>
-                                <a class="item link" title="could be only on selected with status signed">{{ $t('Send') }}</a>
+                                <a class="item link" title="selected only one item" v-if="showCopy">{{ $t('Copy') }}</a>
+                                <a class="item link" title="could be only on selected with status new"
+                                   v-if="showSign"
+                                   @click="onSign"
+                                >{{ $t('Sign') }}</a>
+                                <a class="item link" title="could be only on selected with status signed" v-if="showSend">{{ $t('Send') }}</a>
                             </div>
                         </div>
                         <vuetable
@@ -40,6 +43,8 @@
                           @vuetable:loaded="onLoaded"
                           @vuetable:loading="onLoading"
                           @vuetable:close-row="onCloseRow"
+                          @vuetable:checkbox-toggled="onCheckboxToggled"
+                          @vuetable:checkbox-toggled-all="onCheckboxToggledAll"
                         ></vuetable>
                         <div class="row">
                             <div class="col-sm-12 pagination-block">
@@ -67,6 +72,7 @@
             </div>
         </div>
         <feedback ref="feedback"></feedback>
+        <dialog-confirm ref="dialogConfirm"></dialog-confirm>
     </div>
 </template>
 
@@ -141,6 +147,7 @@ import VueEvents from 'vue-events'
 import topProgress from 'vue-top-progress'
 import AccidentProvider from '../../providers/accident.vue'
 import Feedback from '../../components/ui/dialog/feedback.vue'
+import DialogConfirm from '../../components/ui/dialog/confirm.vue'
 
 Vue.use(VueEvents)
 Vue.component('my-detail-row', MyDetailRow)
@@ -153,10 +160,14 @@ export default {
     FilterBar,
     CustomActions,
     topProgress,
-    Feedback
+    Feedback,
+    DialogConfirm
   },
   data () {
     return {
+      showCopy: false,
+      showSign: false,
+      showSend: false,
       caseUrl: AccidentProvider.getUrl(),
       showFilters: false,
       fields: [
@@ -212,6 +223,54 @@ export default {
     }
   },
   methods: {
+    onSign () {
+      let $vuetable = this.$refs.vuetable
+      let selected = $vuetable.tableData.filter(function (item) {
+        return $vuetable.selectedTo.indexOf(item[$vuetable.trackBy]) >= 0
+      })
+
+      this.$refs.dialogConfirm.show('Confirmation', 'You\'ll sign selected rows', function () {
+        console.log(selected)
+      })
+    },
+    onCheckboxToggledAll (checked) {
+      this.reloadCaseControls()
+    },
+    onCheckboxToggled (checked, row) {
+      this.reloadCaseControls()
+    },
+    /**
+     * Show controls (sign, send, copy) Depends on selected checkboxes
+     */
+    reloadCaseControls () {
+      this.showCopy = this.showSign = this.showSend = false
+      let $vuetable = this.$refs.vuetable
+      let selected = $vuetable.tableData.filter(function (item) {
+        return $vuetable.selectedTo.indexOf(item[$vuetable.trackBy]) >= 0
+      })
+
+      if (selected.length) {
+        /* if (selected.length === 1) {
+          this.showCopy = true
+        } */
+
+        let onlySigned = selected.filter(function (item) {
+          return item.status === 'signed'
+        })
+
+        let onlyProcessing = selected.filter(function (item) {
+          return item.status === 'processing'
+        })
+
+        if (selected.length === onlySigned.length) {
+          this.showSend = true
+        }
+
+        if (selected.length === onlyProcessing.length) {
+          this.showSign = true
+        }
+      }
+    },
     onCloseRow () {
       // why I need that?
       // close row doesn't work without
@@ -239,6 +298,9 @@ export default {
           break
         case 'sended':
           badge = '<span class="badge badge-warning">' + this.$t('case.status.sended') + '</span>'
+          break
+        case 'processing':
+          badge = '<span class="badge badge-info">' + this.$t('case.status.processing') + '</span>'
           break
         // new by default
         default: badge = '<span class="badge badge-danger">' + value + '</span>'

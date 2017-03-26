@@ -69,7 +69,8 @@ var locales = {
         closed: 'Closed',
         'signed': 'Signed',
         sended: 'Sended',
-        'new': 'New'
+        'new': 'New',
+        processing: 'In Progress'
       }
     },
     'Date': 'Date',
@@ -91,7 +92,8 @@ var locales = {
     'Edit': 'Edit',
     'City': 'City',
     'Reject': 'Reject',
-    'Accept': 'Accept'
+    'Accept': 'Accept',
+    'Decline': 'Decline'
   }
 }
 
