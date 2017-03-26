@@ -71,7 +71,19 @@ var locales = {
         sended: 'Sended',
         'new': 'New'
       }
-    }
+    },
+    'date': 'Date',
+    'refNum': 'Referral Num',
+    'city': 'City',
+    'status': 'Status',
+    'total': 'Total',
+    'copy': 'Copy',
+    'sign': 'Sign',
+    'send': 'Send',
+    'Show filters': 'Show filters',
+    'Hide filters': 'Hide filters',
+    'My Cases': 'My Cases',
+    'Close': 'Close'
   }
 }
 
