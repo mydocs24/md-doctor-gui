@@ -3,33 +3,34 @@
         <div class="row">
             <div class="col-sm-12 text-right control-links">
                 <a @click="onClose" class="close-link">&times; {{ $t('Close') }}</a>
-                <a @click="onSign" class="sign-link">Sign</a>
-                <router-link :to="'doctor/accidents/'+rowData.id" class="proceed-link">Open &rarr;</router-link>
+                <a @click="onSign" class="sign-link" v-if="rowData.status === 'processing'">{{ $t('Sign') }}</a>
+                <a @click="onSend" class="send-link" v-if="rowData.status === 'signed'">{{ $t('Send') }}</a>
+                <router-link :to="'doctor/accidents/'+rowData.id" class="proceed-link">{{$t('Open')}} &rarr;</router-link>
             </div>
         </div>
         <div class="row">
             <div class="col-sm-6">
-                <label>Referral</label>
+                <label>{{ $t('Referral Number') }}</label>
                 <h5 class="case-item">{{rowData.refNum}}</h5>
             </div>
             <div class="col-sm-6">
-                <label>City</label>
+                <label>{{$t('City')}}</label>
                 <p class="case-item">{{rowData.city}}</p>
             </div>
         </div>
         <div class="row">
             <div class="col-sm-6">
-                <label>Phone</label>
+                <label>{{$t('Phone')}}</label>
                 <p class="case-item">{{rowData.phone}}</p>
             </div>
             <div class="col-sm-6">
-                <label>Address</label>
+                <label>{{$t('Address')}}</label>
                 <p class="case-item">{{rowData.address}}</p>
             </div>
         </div>
         <div class="row">
             <div class="col-sm-12">
-                <label>Commentary</label>
+                <label>{{$t('Commentary')}}</label>
                 <p class="case-item">{{rowData.symptoms}}</p>
             </div>
         </div>
@@ -66,7 +67,10 @@ export default {
       this.$events.fire('vuetable:close-row', {id: this.rowData.id}, event)
     },
     onSign () {
-      console.log(this.rowData.id)
+      console.log('sign', this.rowData.id)
+    },
+    onSend () {
+      console.log('send', this.rowData.id)
     }
   }
 }
