@@ -23,7 +23,9 @@
                                    v-if="showSign"
                                    @click="onSign"
                                 >{{ $t('Sign') }}</a>
-                                <a class="item link" title="could be only on selected with status signed" v-if="showSend">{{ $t('Send') }}</a>
+                                <a class="item link" title="could be only on selected with status signed"
+                                   @click="onSend"
+                                   v-if="showSend">{{ $t('Send') }}</a>
                             </div>
                         </div>
                         <vuetable
@@ -41,7 +43,7 @@
                           @vuetable:load-error="onLoadError"
                           @vuetable:loaded="onLoaded"
                           @vuetable:loading="onLoading"
-                          @vuetable:close-row="onCloseRow"
+                          @vuerow:close="onCloseRow"
                           @vuetable:checkbox-toggled="onCheckboxToggled"
                           @vuetable:checkbox-toggled-all="onCheckboxToggledAll"
                         ></vuetable>
@@ -222,15 +224,33 @@ export default {
     }
   },
   methods: {
-    onSign () {
+    getSelected () {
       let $vuetable = this.$refs.vuetable
       let selected = $vuetable.tableData.filter(function (item) {
         return $vuetable.selectedTo.indexOf(item[$vuetable.trackBy]) >= 0
       })
 
-      this.$refs.dialogConfirm.show('Confirmation', 'You\'ll sign selected rows', function () {
+      return selected
+    },
+    showConfirmation (selected, msg) {
+      if (!selected) {
+        selected = this.getSelected()
+      }
+
+      let titles = []
+      for (let i in selected) {
+        titles.push(selected[i].refNum)
+      }
+
+      this.$refs.dialogConfirm.show(this.$t('Confirmation'), msg, function () {
         console.log(selected)
-      })
+      }, titles)
+    },
+    onSign (selected) {
+      this.showConfirmation(selected, this.$t('You\'ll sign selected cases'))
+    },
+    onSend (selected) {
+      this.showConfirmation(selected, this.$t('You\'ll send selected cases'))
     },
     onCheckboxToggledAll (checked) {
       this.reloadCaseControls()
@@ -348,8 +368,14 @@ export default {
       this.$refs.vuetable.refresh()
       Vue.nextTick(() => this.$refs.vuetable.refresh())
     },
-    'vuetable:close-row' (data) {
+    'vuerow:close' (data) {
       this.$refs.vuetable.hideDetailRow(data.id)
+    },
+    'vuerow:sign' (caseData) {
+      this.onSign(caseData)
+    },
+    'vuerow:send' (caseData) {
+      this.onSend(caseData)
     }
   }
 }
