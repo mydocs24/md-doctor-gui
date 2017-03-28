@@ -98,7 +98,10 @@ var locales = {
     'Referral Number': 'Referral Number',
     'Phone': 'Phone',
     'Address': 'Address',
-    'Commentary': 'Commentary'
+    'Commentary': 'Commentary',
+    'Confirmation': 'Confirmation',
+    'You\'ll sign selected cases': 'You\'ll sign selected cases',
+    'You\'ll send selected cases': 'You\'ll send selected cases'
   }
 }
 

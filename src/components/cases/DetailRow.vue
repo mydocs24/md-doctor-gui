@@ -64,13 +64,13 @@ export default {
   },
   methods: {
     onClose (event) {
-      this.$events.fire('vuetable:close-row', {id: this.rowData.id}, event)
+      this.$events.fire('vuerow:close', {id: this.rowData.id}, event)
     },
-    onSign () {
-      console.log('sign', this.rowData.id)
+    onSign (event) {
+      this.$events.fire('vuerow:sign', this.rowData, event)
     },
-    onSend () {
-      console.log('send', this.rowData.id)
+    onSend (event) {
+      this.$events.fire('vuerow:send', this.rowData, event)
     }
   }
 }
