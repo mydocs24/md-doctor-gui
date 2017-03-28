@@ -93,7 +93,12 @@ var locales = {
     'City': 'City',
     'Reject': 'Reject',
     'Accept': 'Accept',
-    'Decline': 'Decline'
+    'Decline': 'Decline',
+    'Open': 'Open',
+    'Referral Number': 'Referral Number',
+    'Phone': 'Phone',
+    'Address': 'Address',
+    'Commentary': 'Commentary'
   }
 }
 
