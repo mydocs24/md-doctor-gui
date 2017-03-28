@@ -2,7 +2,7 @@
     <div class="case-details">
         <div class="row">
             <div class="col-sm-12 text-right control-links">
-                <a @click="onClose" class="close-link">&times; Close</a>
+                <a @click="onClose" class="close-link">&times; {{ $t('Close') }}</a>
                 <a @click="onSign" class="sign-link">Sign</a>
                 <router-link :to="'doctor/accidents/'+rowData.id" class="proceed-link">Open &rarr;</router-link>
             </div>

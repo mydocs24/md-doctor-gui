@@ -19,7 +19,6 @@
                         </div>
                         <div class="row case-control">
                             <div class="col-sm-12 small">
-                                <a class="item link" title="selected only one item" v-if="showCopy">{{ $t('Copy') }}</a>
                                 <a class="item link" title="could be only on selected with status new"
                                    v-if="showSign"
                                    @click="onSign"
@@ -250,10 +249,6 @@ export default {
       })
 
       if (selected.length) {
-        /* if (selected.length === 1) {
-          this.showCopy = true
-        } */
-
         let onlySigned = selected.filter(function (item) {
           return item.status === 'signed'
         })

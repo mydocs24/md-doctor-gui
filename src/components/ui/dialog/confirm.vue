@@ -24,7 +24,7 @@
         this.success()
       },
       onClose () {
-        this.$refs.feedbackModal.hide()
+        this.$refs.confirmModal.hide()
       },
       show (title, text, success) {
         this.title = title
