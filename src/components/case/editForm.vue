@@ -7,16 +7,16 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-sm-7">
-                                    <label class="form-control-label" for="service">Select services</label>
+                                    <label class="label" for="service">{{ $t('Select services') }}</label>
                                     <select name="services[]" id="service" class="form-control">
                                         <option value="1">Service selection</option>
                                     </select>
                                     <div class="text-right">
-                                        <a>+ Add new Service</a>
+                                        <a>+ {{$t('Add new service')}}</a>
                                     </div>
                                 </div>
                                 <div class="col-sm-4">
-                                    <label class="form-control-label" for="case">Case Type</label>
+                                    <label class="label" for="case">{{ $t('Case type') }}</label>
                                     <select name="case" id="case" class="form-control">
                                         <option value="">Case 1</option>
                                         <option value="">Case 2</option>
@@ -27,7 +27,7 @@
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-sm-7">
-                                    <label for="survey" class="col-form-label">Survey</label>
+                                    <label for="survey" class="label">{{ $t('Survey') }}</label>
                                     <select name="survey" id="survey" class="form-control">
                                         <option value="1">Survey 1</option>
                                         <option value="1">Survey 2</option>
@@ -36,7 +36,7 @@
                                 </div>
                                 <div class="col-sm-5">
                                     <div class="mt-sm-5 text-right">
-                                        <a>+ Add survey</a>
+                                        <a>+ {{ $t('Add survey') }}</a>
                                     </div>
                                 </div>
                             </div>
@@ -46,10 +46,10 @@
                                 <div class="col-sm-12 mx-auto">
                                     <div class="row">
                                         <div class="col-4">
-                                            <label for="diagnostic" class="form-control-label">Diagnostic</label>
+                                            <label for="diagnostic" class="label">{{ $t('Diagnostic') }}</label>
                                         </div>
                                         <div class="col-8 text-right">
-                                            <a>Additional investigation</a>
+                                            <a>{{ $t('Additional investigation') }}</a>
                                         </div>
                                     </div>
                                     <textarea class="form-control" name="diagnostic" id="diagnostic"
@@ -61,7 +61,7 @@
                             <div class="row mt-4">
                                 <div class="col-sm-8 mx-auto">
                                     <div class="total">
-                                        Total: 2000 &euro;
+                                        {{ $t('Total') }}: 2000 &euro;
                                     </div>
                                 </div>
                             </div>
@@ -83,6 +83,15 @@
     </div>
 </template>
 <style lang="scss">
+    @import "../../sass/variables";
+
+    .form {
+        .label {
+            font-weight: $font-weight-bold;
+            color: $gray-light;
+            margin-bottom: 0;
+        }
+    }
 </style>
 <script>
   export default {
