@@ -4,7 +4,6 @@
   Vue.use(VueResource)
 
   const accidentUrl = 'doctor/accidents'
-
   export default {
     components: {},
     data () {

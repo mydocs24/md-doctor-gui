@@ -13,13 +13,12 @@
                 </div>
                 <div class="row">
                     <div class="col-12">
-                        <b>Phone</b>
+                        <b>{{ $t('Phone') }}</b>
                         <br><span class="ml-1">{{ doctor.phones }}</span>
                     </div>
                 </div>
             </div>
         </div>
-        <feedback ref="feedback"></feedback>
     </div>
 </template>
 <style lang="scss">
@@ -33,11 +32,10 @@
 </style>
 <script>
   import DoctorProvider from '../../providers/doctor.vue'
-  import Feedback from '../../components/ui/dialog/feedback.vue'
+  import HttpErrorComponent from '../../components/ui/http/error.vue'
 
   export default {
     components: {
-      Feedback
     },
     created: function () {
       this.fetchData()
@@ -55,20 +53,7 @@
             this.doctor = response.body
           },
           (err) => {
-            let title
-            let text
-            if (err.status === 401) {
-              title = 'Authorization'
-              text = 'You can\'t load list while you are not authorized.'
-            } else if (err.status === 0) {
-              title = 'Request Error'
-              text = 'Not a CORS response'
-            } else {
-              title = 'Request Error'
-              text = '"' + err.status + '" ' + err.statusText
-            }
-
-            this.$refs.feedback.show(title, text)
+            HttpErrorComponent.error(err)
           }
         )
       }
