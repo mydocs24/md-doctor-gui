@@ -1,6 +1,6 @@
 <template>
-    <div v-if="doctorCase">
-        <div class="row">
+    <div>
+        <div class="row" v-if="doctorCase">
             <div class="col-sm-12 col-lg-9 mx-auto">
                 <top-progress ref="topProgress" color="orange"></top-progress>
                 <breadcrumbs :items="bcItems"></breadcrumbs>
@@ -35,14 +35,6 @@
             </div>
         </div>
 
-        <b-modal ref="errorModal" size="sm">
-            <h4 slot="modal-header">{{ errorModal.title }}</h4>
-            <div slot="modal-body">{{ errorModal.bodyText }}</div>
-            <span slot="modal-footer">
-                <button class="btn btn-danger" @click="onErrorModalClose()">Close</button>
-            </span>
-        </b-modal>
-
         <b-modal ref="rejectCaseModal">
             <h4 slot="modal-header">Reject case</h4>
             <div slot="modal-body">
@@ -55,6 +47,11 @@
                 <button class="btn btn-warning" @click="sendReject()">Reject</button>
             </span>
         </b-modal>
+
+        <div v-if="error.show">
+            <h3 class="error-code">{{error.code}}</h3>
+            <h4 class="error-text">{{error.text}} <small>{{error.description}}</small></h4>
+        </div>
     </div>
 </template>
 
@@ -69,8 +66,8 @@
   import PatientDocumentsLoader from '../components/patient/documentsLoader.vue'
   import AccidentRegularityStatus from '../components/accdident/regularityStatus.vue'
   import CaseEditForm from '../components/case/editForm.vue'
-
   import AccidentProvider from '../providers/accident.vue'
+  import HttpErrorComponent from '../components/ui/http/error.vue'
 
   export default {
     components: {
@@ -84,9 +81,11 @@
     data () {
       return {
         rejectCommentary: '',
-        errorModal: {
+        error: {
+          show: false,
+          code: 0,
           title: '',
-          bodyText: ''
+          description: ''
         },
         src: '',
         doctorCase: null,
@@ -115,24 +114,16 @@
             })
           },
           (err) => {
-            this.error = err.toString()
-            if (err.status === 401) {
-              this.errorModal.title = 'Authorization'
-              this.errorModal.bodyText = 'You can\'t load list while you are not authorized.'
-            } else if (err.status === 0) {
-              this.errorModal.title = 'Request Error'
-              this.errorModal.bodyText = 'Not a CORS response'
+            if (HttpErrorComponent && HttpErrorComponent.error) {
+              HttpErrorComponent.error(err)
             } else {
-              this.errorModal.title = 'Request Error'
-              this.errorModal.bodyText = '"' + err.status + '" ' + err.statusText
+              this.error.text = err.statusText
+              this.error.code = err.status
+              this.error.description = err.url
+              this.error.show = true
             }
-
-            this.$refs.errorModal.show()
           }
         )
-      },
-      onErrorModalClose () {
-        this.$refs.errorModal.hide()
       },
 
       // handle some error like ajax not working
