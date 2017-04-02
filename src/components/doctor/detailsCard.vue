@@ -35,8 +35,6 @@
   import HttpErrorComponent from '../../components/ui/http/error.vue'
 
   export default {
-    components: {
-    },
     created: function () {
       this.fetchData()
     },

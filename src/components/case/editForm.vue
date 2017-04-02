@@ -8,9 +8,9 @@
                             <div class="row">
                                 <div class="col-sm-7">
                                     <label class="label" for="service">{{ $t('Select services') }}</label>
-                                    <select name="services[]" id="service" class="form-control">
-                                        <option value="1">Service selection</option>
-                                    </select>
+
+                                    <service-selector></service-selector>
+
                                     <div class="text-right">
                                         <a>+ {{$t('Add new service')}}</a>
                                     </div>
@@ -94,8 +94,11 @@
     }
 </style>
 <script>
+  import ServiceSelector from '../../components/service/selector.vue'
   export default {
-    components: {},
+    components: {
+      ServiceSelector
+    },
     data () {
       return {}
     }

@@ -1,15 +1,14 @@
 <script>
   /**
-   * Information about current doctor
+   * Services
    */
   import Vue from 'vue'
   import VueResource from 'vue-resource'
   Vue.use(VueResource)
 
-  const doctorUrl = 'doctor/me'
+  const servicesUrl = 'doctor/services'
 
   export default {
-    components: {},
     data () {
       return {
         httpOptions: {
@@ -21,13 +20,13 @@
       }
     },
     getUrl () {
-      return doctorUrl
+      return servicesUrl
     },
     get () {
       return Vue.http.get(this.getUrl(), this.httpOptions)
     },
-    save (data) {
-      return Vue.http.put(this.getUrl(), data)
+    add (data) {
+      return Vue.http.post(this.getUrl(), data)
     }
   }
 </script>
