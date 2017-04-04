@@ -134,6 +134,41 @@
         city: 'Tenerife',
         phones: '+375255283638'
       }
+    },
+    {
+      method: 'GET',
+      url: 'doctor/services',
+      response: {
+        total: 5,
+        'per_page': 5,
+        'current_page': 1,
+        'last_page': 1,
+        'next_page_url': null,
+        'prev_page_url': null,
+        'from': 5,
+        'to': 5,
+        data: [{
+          id: 1,
+          title: 'Hint',
+          description: 'Description for this hint'
+        }, {
+          id: 2,
+          title: 'Extra service',
+          description: 'Patient wants something extra obligtions'
+        }, {
+          id: 3,
+          title: 'Pills',
+          description: 'Give patient very expensive pills or other drugs'
+        }, {
+          id: 4,
+          title: 'Medical appointment',
+          description: 'I had medical appointment, so it should be payed'
+        }, {
+          id: 5,
+          title: 'Pick up',
+          description: 'If patient was picked up to the hospital'
+        }]
+      }
     }
   ]
 

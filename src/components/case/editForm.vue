@@ -1,28 +1,20 @@
 <template>
     <div class="card">
         <div class="card-body">
+            <div class="row">
+                <div class="col-11 col-sm-10 mx-auto">
+                    <label class="label" for="case">{{ $t('Case type') }}</label>
+                    <select name="case" id="case" class="form-control">
+                        <option value="">Case 1</option>
+                        <option value="">Case 2</option>
+                    </select>
+                </div>
+            </div>
             <div class="row mt-4">
                 <div class="col-11 col-sm-10 mx-auto">
-                    <form class="form">
+                    <div class="form">
                         <div class="form-group">
-                            <div class="row">
-                                <div class="col-sm-7">
-                                    <label class="label" for="service">{{ $t('Select services') }}</label>
-
-                                    <service-selector></service-selector>
-
-                                    <div class="text-right">
-                                        <a>+ {{$t('Add new service')}}</a>
-                                    </div>
-                                </div>
-                                <div class="col-sm-4">
-                                    <label class="label" for="case">{{ $t('Case type') }}</label>
-                                    <select name="case" id="case" class="form-control">
-                                        <option value="">Case 1</option>
-                                        <option value="">Case 2</option>
-                                    </select>
-                                </div>
-                            </div>
+                            <services-block></services-block>
                         </div>
                         <div class="form-group">
                             <div class="row">
@@ -35,8 +27,8 @@
                                     </select>
                                 </div>
                                 <div class="col-sm-5">
-                                    <div class="mt-sm-5 text-right">
-                                        <a>+ {{ $t('Add survey') }}</a>
+                                    <div class="mt-sm-4 text-right">
+                                        <button class="btn btn-sm" @click.prevent>+ {{ $t('Add survey') }}</button>
                                     </div>
                                 </div>
                             </div>
@@ -66,7 +58,7 @@
                                 </div>
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -94,13 +86,15 @@
     }
 </style>
 <script>
-  import ServiceSelector from '../../components/service/selector.vue'
+  import ServicesBlock from '../../blocks/servicesBlock.vue'
+
   export default {
     components: {
-      ServiceSelector
+      ServicesBlock
     },
     data () {
-      return {}
+      return {
+      }
     }
   }
 </script>

@@ -16,14 +16,10 @@
         </b-collapse>
       </div>
     </b-navbar>
-    <top-progress ref="topProgress"></top-progress>
 
     <div class="container main">
       <router-view></router-view>
     </div>
-
-    <http-error-component></http-error-component>
-
   </div>
 </template>
 
@@ -57,16 +53,5 @@
 </style>
 
 <script>
-  import Vue from 'vue'
-  import topProgress from 'vue-top-progress'
-  import HttpErrorComponent from './components/ui/http/error.vue'
-
-  Vue.component('http-error-component')
-
-  export default {
-    components: {
-      topProgress,
-      HttpErrorComponent
-    }
-  }
+  export default { }
 </script>

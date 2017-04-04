@@ -27,6 +27,7 @@
         } else {
           title = 'Request Error'
           text = '"' + err.status + '" ' + err.statusText
+          text += '\n\t' + err.url
         }
 
         this.$refs.httpError.show(title, text)

@@ -4,31 +4,11 @@
                 :clearSearchOnSelect="true"
                 :value.sync="selected"
                 :options="options"
-                on-change="onChange"
+                :on-change="onChange"
                 label="title"
                 :placeholder="$t('Services')"
         ></v-select>
-        <table v-if="selected">
-            <thead>
-            <tr>
-                <th>
-                    {{ $t('Service') }}
-                </th>
-                <th>
-                    {{ $t('Description') }}
-                </th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr v-for="service in services">
-                <td>{{ service.title }}</td>
-                <td>{{ service.description }}</td>
-                <td>
-                    <button class="btn btn-danger" :title="$t('Delete')">&times;</button>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+        <http-error-component ref="serviceError"></http-error-component>
     </div>
 </template>
 <style lang="scss">
@@ -40,13 +20,13 @@
 
   export default {
     components: {
-      vSelect
+      vSelect,
+      HttpErrorComponent
     },
     data () {
       return {
         selected: null,
-        options: null,
-        services: []
+        options: []
       }
     },
     created: function () {
@@ -56,15 +36,15 @@
       fetchData () {
         ServiceProvider.get().then(
           (response) => {
-            this.options = response.body
+            this.options = response.body.data
           },
           (err) => {
-            HttpErrorComponent.error(err)
+            this.$refs.serviceError.error(err)
           }
         )
       },
       onChange (service) {
-        this.services.push(service)
+        this.$events.fire('selector:change', service, event)
       }
     }
   }

@@ -39,6 +39,8 @@ export default {
       countActive: 10,
       caseUrl: false
     }
+  },
+  methods: {
   }
 }
 
