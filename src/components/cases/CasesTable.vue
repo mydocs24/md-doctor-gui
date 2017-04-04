@@ -144,13 +144,11 @@ import CustomActions from './CustomActions'
 import MyDetailRow from './DetailRow'
 import FilterBar from './FilterBar'
 import Vue from 'vue'
-import VueEvents from 'vue-events'
 import topProgress from 'vue-top-progress'
 import AccidentProvider from '../../providers/accident.vue'
 import Feedback from '../../components/ui/dialog/feedback.vue'
 import DialogConfirm from '../../components/ui/dialog/confirm.vue'
 
-Vue.use(VueEvents)
 Vue.component('my-detail-row', MyDetailRow)
 
 export default {

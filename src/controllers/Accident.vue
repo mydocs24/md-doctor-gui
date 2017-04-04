@@ -29,7 +29,7 @@
                 ></case-edit-form>
                 <footer class="footer">
                     <p class="mb-3 mt-2 text-center">
-                        &copy; 2017 <a href="">MyDoctor24.com</a>
+                        &copy; 2017 <a href="">MyDoctors24.com</a>
                     </p>
                 </footer>
             </div>
@@ -52,6 +52,7 @@
             <h3 class="error-code">{{error.code}}</h3>
             <h4 class="error-text">{{error.text}} <small>{{error.description}}</small></h4>
         </div>
+        <http-error-component></http-error-component>
     </div>
 </template>
 
@@ -76,7 +77,8 @@
       PatientInfoCard,
       PatientDocumentsLoader,
       AccidentRegularityStatus,
-      CaseEditForm
+      CaseEditForm,
+      HttpErrorComponent
     },
     data () {
       return {

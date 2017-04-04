@@ -4,9 +4,11 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import VueI18n from 'vue-i18n'
 import BootstrapVue from 'bootstrap-vue'
+import VueEvents from 'vue-events'
 
 Vue.use(BootstrapVue)
 Vue.use(VueRouter)
+Vue.use(VueEvents)
 
 // components
 import App from './App'
@@ -101,7 +103,15 @@ var locales = {
     'Commentary': 'Commentary',
     'Confirmation': 'Confirmation',
     'You\'ll sign selected cases': 'You\'ll sign selected cases',
-    'You\'ll send selected cases': 'You\'ll send selected cases'
+    'You\'ll send selected cases': 'You\'ll send selected cases',
+    'Select services': 'Select services',
+    'Add new service': 'Add new service',
+    'Case type': 'Case type',
+    'Survey': 'Survey',
+    'Add survey': 'Add survey',
+    'Diagnostic': 'Diagnostic',
+    'Additional investigation': 'Additional investigation',
+    'Services': 'Services'
   }
 }
 
