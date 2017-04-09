@@ -111,7 +111,10 @@ var locales = {
     'Add survey': 'Add survey',
     'Diagnostic': 'Diagnostic',
     'Additional investigation': 'Additional investigation',
-    'Services': 'Services'
+    'Services': 'Services',
+    'Service': 'Service',
+    'Description': 'Description',
+    'Delete': 'Delete'
   }
 }
 

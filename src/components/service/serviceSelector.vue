@@ -2,6 +2,8 @@
     <div>
         <v-select
                 :clearSearchOnSelect="true"
+                :debounce="250"
+                :on-search="onSearch"
                 :value.sync="selected"
                 :options="options"
                 :on-change="onChange"
@@ -33,6 +35,19 @@
       this.fetchData()
     },
     methods: {
+      onSearch (search, loading) {
+        loading(true)
+        ServiceProvider.get().then(
+          (response) => {
+            this.options = response.body.data
+            loading(false)
+          },
+          (err) => {
+            this.$refs.serviceError.error(err)
+            loading(false)
+          }
+        )
+      },
       fetchData () {
         ServiceProvider.get().then(
           (response) => {
