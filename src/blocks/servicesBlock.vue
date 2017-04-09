@@ -5,7 +5,6 @@
                 <label class="label" for="service">{{ $t('Select services') }}</label>
                 <service-selector
                         name="service"
-                        @selector:change="onSelectService"
                 ></service-selector>
             </div>
             <div class="col-sm-5">
@@ -16,8 +15,6 @@
         </div>
         <div class="row" v-if="selectedServices">
             <div class="col-12">
-                table with selected services + oportunity to delete them
-
                 <table class="table">
                     <thead>
                     <tr>
@@ -30,7 +27,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr v-for="service in services">
+                    <tr v-for="service in selectedServices">
                         <td>{{ service.title }}</td>
                         <td>{{ service.description }}</td>
                         <td>
@@ -58,8 +55,18 @@
       }
     },
     methods: {
-      onSelectService (service) {
-        console.log('new service selected')
+      addService: function (service) {
+        if (!this.selectedServices) {
+          this.selectedServices = []
+        }
+
+        // to do check if not already there
+        this.selectedServices.push(service)
+      }
+    },
+    events: {
+      'selector:change' (service) {
+        this.addService(service)
       }
     }
   }
