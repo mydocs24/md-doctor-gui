@@ -5,6 +5,7 @@
                 <label class="label" for="service">{{ $t('Select services') }}</label>
                 <service-selector
                         name="service"
+                        excluded="selectedServices"
                 ></service-selector>
             </div>
             <div class="col-sm-5">
@@ -13,10 +14,10 @@
                 </div>
             </div>
         </div>
-        <div class="row" v-if="selectedServices">
+        <div class="row mt-4" v-if="selectedServices && selectedServices.length">
             <div class="col-12">
-                <table class="table">
-                    <thead>
+                <table class="table table-striped table-hover table-sm">
+                    <thead class="thead-inverse">
                     <tr>
                         <th>
                             {{ $t('Service') }}
@@ -24,6 +25,7 @@
                         <th>
                             {{ $t('Description') }}
                         </th>
+                        <th></th>
                     </tr>
                     </thead>
                     <tbody>
@@ -31,7 +33,7 @@
                         <td>{{ service.title }}</td>
                         <td>{{ service.description }}</td>
                         <td>
-                            <button class="btn btn-danger" :title="$t('Delete')">&times;</button>
+                            <button class="btn btn-danger btn-sm" :title="$t('Delete')" @click="onServiceDelete(service)">&times;</button>
                         </td>
                     </tr>
                     </tbody>
@@ -43,6 +45,7 @@
 <style lang="scss">
 </style>
 <script>
+  import Vue from 'vue'
   import ServiceSelector from '../components/service/serviceSelector.vue'
 
   export default {
@@ -60,13 +63,31 @@
           this.selectedServices = []
         }
 
-        // to do check if not already there
-        this.selectedServices.push(service)
+        if (this.getServiceKey(service) === false) {
+          this.selectedServices.push(service)
+        }
+      },
+      onServiceDelete (service) {
+        let key = this.getServiceKey(service)
+        if (key !== false) {
+          Vue.delete(this.selectedServices, key)
+        }
+      },
+      getServiceKey (service) {
+        let key = false
+        this.selectedServices.forEach(function (_service, index) {
+          if (service.id === _service.id) {
+            key = index
+          }
+        })
+        return key
       }
     },
     events: {
       'selector:change' (service) {
-        this.addService(service)
+        if (service) {
+          this.addService(service)
+        }
       }
     }
   }
