@@ -10,7 +10,7 @@
             </div>
             <div class="col-sm-5">
                 <div class="mt-sm-4 text-right">
-                    <button class="btn btn-sm btn-info" @click.prevent>+ {{ $t('Add new service') }}</button>
+                    <service-editor></service-editor>
                 </div>
             </div>
         </div>
@@ -47,10 +47,12 @@
 <script>
   import Vue from 'vue'
   import ServiceSelector from '../components/service/serviceSelector.vue'
+  import ServiceEditor from '../components/service/serviceEditor.vue'
 
   export default {
     components: {
-      ServiceSelector
+      ServiceSelector,
+      ServiceEditor
     },
     data () {
       return {
@@ -84,10 +86,13 @@
       }
     },
     events: {
-      'selector:change' (service) {
+      'service-selector:change' (service) {
         if (service) {
           this.addService(service)
         }
+      },
+      'service-editor:save' (service) {
+        console.log(service, 'added or updated service for updating i could delete and add it again')
       }
     }
   }

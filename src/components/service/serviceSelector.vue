@@ -66,7 +66,7 @@
         )
       },
       onChange (service) {
-        this.$events.fire('selector:change', service, event)
+        this.$events.fire('service-selector:change', service, event)
       }
     }
   }
