@@ -25,10 +25,17 @@
       vSelect,
       HttpErrorComponent
     },
+    property: {
+      excluded: {
+        type: Array,
+        default: []
+      }
+    },
     data () {
       return {
         selected: null,
-        options: []
+        options: [],
+        services: []
       }
     },
     created: function () {
@@ -39,7 +46,7 @@
         loading(true)
         ServiceProvider.get().then(
           (response) => {
-            this.options = response.body.data
+            this.services = response.body.data
             loading(false)
           },
           (err) => {
