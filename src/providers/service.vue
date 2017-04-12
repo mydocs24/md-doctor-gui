@@ -25,7 +25,7 @@
     get () {
       return Vue.http.get(this.getUrl(), this.httpOptions)
     },
-    add (data) {
+    post (data) {
       return Vue.http.post(this.getUrl(), data)
     }
   }

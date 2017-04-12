@@ -114,7 +114,14 @@ var locales = {
     'Services': 'Services',
     'Service': 'Service',
     'Description': 'Description',
-    'Delete': 'Delete'
+    'Delete': 'Delete',
+    'New service': 'New service',
+    'Title': 'Title',
+    'Service title': 'Service title',
+    'Service description': 'Service description',
+    'Price': 'Price',
+    'Save': 'Save',
+    'Cancel': 'Cancel'
   }
 }
 
