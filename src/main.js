@@ -121,7 +121,8 @@ var locales = {
     'Service description': 'Service description',
     'Price': 'Price',
     'Save': 'Save',
-    'Cancel': 'Cancel'
+    'Cancel': 'Cancel',
+    'All fields should be filled': 'All fields should be filled'
   }
 }
 

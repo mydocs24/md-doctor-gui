@@ -54,23 +54,14 @@
       ServiceSelector,
       ServiceEditor
     },
-    created: function () {
-      this.fetchData()
-    },
-    props: {
-      defaultServices: {
-        type: Array,
-        default: () => []
-      }
-    },
     data () {
       return {
         selectedServices: null
       }
     },
     methods: {
-      fetchData () {
-        this.selectedServices = this.defaultServices
+      setSelectedServices (services) {
+        this.selectedServices = services
       },
       addService: function (service) {
         if (!this.selectedServices) {
@@ -104,7 +95,7 @@
         }
       },
       'service-editor:save' (service) {
-        console.log(service, 'added or updated service for updating i could delete and add it again')
+        console.log(service, 'added or updated service for updating I could delete and add it again')
       }
     }
   }
