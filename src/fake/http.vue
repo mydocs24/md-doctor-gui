@@ -149,25 +149,55 @@
         'to': 5,
         data: [{
           id: 1,
+          type: 'accident',
           title: 'Hint',
+          price: 10.99,
           description: 'Description for this hint'
         }, {
           id: 2,
+          type: 'accident',
           title: 'Extra service',
+          price: 10.99,
           description: 'Patient wants something extra obligtions'
         }, {
           id: 3,
+          type: 'accident',
           title: 'Pills',
+          price: 10.99,
           description: 'Give patient very expensive pills or other drugs'
         }, {
           id: 4,
+          type: 'accident',
           title: 'Medical appointment',
+          price: 10.99,
           description: 'I had medical appointment, so it should be payed'
         }, {
           id: 5,
+          type: 'accident',
           title: 'Pick up',
+          price: 10.99,
           description: 'If patient was picked up to the hospital'
+        }, {
+          id: 1,
+          type: 'doctor',
+          title: 'Created by me',
+          price: 10.99,
+          description: 'Patient wants something extra obligations'
         }]
+      }
+    },
+    {
+      method: 'POST',
+      url: 'doctor/services',
+      response: {
+        status: 'success',
+        service: {
+          id: 2,
+          type: 'doctor',
+          title: 'Created just now',
+          price: 1000,
+          description: 'Patient wants something extra services'
+        }
       }
     }
   ]

@@ -16,6 +16,7 @@
 <style lang="scss">
 </style>
 <script>
+  import _ from 'lodash'
   import vSelect from 'vue-select'
   import HttpErrorComponent from '../../components/ui/http/error.vue'
   import ServiceProvider from '../../providers/service.vue'
@@ -66,6 +67,9 @@
         )
       },
       onChange (service) {
+        this.services = _.filter(this.services, (iService) => {
+          return iService.id === service.id
+        })
         this.$events.fire('service-selector:change', service, event)
       }
     }

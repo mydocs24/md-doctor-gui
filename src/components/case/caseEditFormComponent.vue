@@ -14,7 +14,9 @@
                 <div class="col-11 col-sm-10 mx-auto">
                     <div class="form">
                         <div class="form-group">
-                            <services-block></services-block>
+                            <services-block
+                                :default-services="caseServices"
+                            ></services-block>
                         </div>
                         <div class="form-group">
                             <div class="row">
@@ -72,6 +74,8 @@
                 </div>
             </div>
         </div>
+        <top-progress ref="topProgressCaseEditForm" color="orange"></top-progress>
+        <http-error-component ref="httpErrorCaseEditForm"></http-error-component>
     </div>
 </template>
 <style lang="scss">
@@ -86,14 +90,46 @@
     }
 </style>
 <script>
+  import topProgress from 'vue-top-progress'
+  import HttpErrorComponent from '../../components/ui/http/error.vue'
   import ServicesBlock from '../../blocks/servicesBlock.vue'
+  import AccidentProvider from '../../providers/accident.vue'
 
   export default {
     components: {
-      ServicesBlock
+      ServicesBlock,
+      topProgress,
+      HttpErrorComponent,
+      AccidentProvider
+    },
+    mounted: function () {
+      this.fetchData()
+    },
+    props: {
+      id: {
+        type: Number,
+        required: true
+      }
     },
     data () {
       return {
+        caseServices: null
+      }
+    },
+    methods: {
+      fetchData () {
+        this.$refs.topProgressCaseEditForm.start()
+        AccidentProvider.getServices(this.id).then(
+          response => {
+            this.caseServices = response.data.services
+            this.$refs.topProgressCaseEditForm.done()
+          }
+        ).catch(
+          err => {
+            this.$refs.httpErrorCaseEditForm.error(err)
+            this.$refs.topProgressCaseEditForm.done()
+          }
+        )
       }
     }
   }
