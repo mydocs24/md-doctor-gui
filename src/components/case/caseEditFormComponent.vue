@@ -14,9 +14,7 @@
                 <div class="col-11 col-sm-10 mx-auto">
                     <div class="form">
                         <div class="form-group">
-                            <services-block
-                                :default-services="caseServices"
-                            ></services-block>
+                            <services-block ref="servicesBlock"></services-block>
                         </div>
                         <div class="form-group">
                             <div class="row">
@@ -111,17 +109,12 @@
         required: true
       }
     },
-    data () {
-      return {
-        caseServices: null
-      }
-    },
     methods: {
       fetchData () {
         this.$refs.topProgressCaseEditForm.start()
         AccidentProvider.getServices(this.id).then(
           response => {
-            this.caseServices = response.data.services
+            this.$refs.servicesBlock.setSelectedServices(response.data.services)
             this.$refs.topProgressCaseEditForm.done()
           }
         ).catch(

@@ -199,6 +199,27 @@
           description: 'Patient wants something extra services'
         }
       }
+    },
+    {
+      method: 'GET',
+      url: 'doctor/accidents/17/services',
+      response: {
+        services: [
+          {
+            id: 5,
+            type: 'accident',
+            title: 'Pick up',
+            price: 10.99,
+            description: 'If patient was picked up to the hospital'
+          }, {
+            id: 1,
+            type: 'doctor',
+            title: 'Created by me',
+            price: 10.99,
+            description: 'Patient wants something extra obligations'
+          }
+        ]
+      }
     }
   ]
 
