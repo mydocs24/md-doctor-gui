@@ -134,7 +134,7 @@ Object.keys(locales).forEach(function (lang) {
 })
 
 /* eslint-disable no-new */
-new Vue({
+window.vm = new Vue({
   el: '#app',
   template: '<App/>',
   components: { App, FakeHttp },

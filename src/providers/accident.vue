@@ -24,6 +24,14 @@
     },
     getAccident (id) {
       return Vue.http.get(this.getUrl() + '/' + id, this.httpOptions)
+    },
+
+    /**
+     * Services from this case
+     * @param id
+     */
+    getServices (id) {
+      return Vue.http.get(this.getUrl() + '/' + id + '/services', this.httpOptions)
     }
   }
 </script>

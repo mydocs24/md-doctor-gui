@@ -29,7 +29,7 @@
                     </tr>
                     </thead>
                     <tbody>
-                    <tr v-for="service in selectedServices">
+                    <tr v-for="service in selectedServices" :class="service.type === 'doctor' ? 'table-danger' : ''">
                         <td>{{ service.title }}</td>
                         <td>{{ service.description }}</td>
                         <td>
@@ -54,12 +54,24 @@
       ServiceSelector,
       ServiceEditor
     },
+    created: function () {
+      this.fetchData()
+    },
+    props: {
+      defaultServices: {
+        type: Array,
+        default: () => []
+      }
+    },
     data () {
       return {
         selectedServices: null
       }
     },
     methods: {
+      fetchData () {
+        this.selectedServices = this.defaultServices
+      },
       addService: function (service) {
         if (!this.selectedServices) {
           this.selectedServices = []
@@ -78,7 +90,7 @@
       getServiceKey (service) {
         let key = false
         this.selectedServices.forEach(function (_service, index) {
-          if (service.id === _service.id) {
+          if (service.id === _service.id && _service.type === service.type) {
             key = index
           }
         })
