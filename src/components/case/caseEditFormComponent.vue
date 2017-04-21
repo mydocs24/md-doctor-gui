@@ -1,66 +1,69 @@
 <template>
     <div class="card">
         <div class="card-body">
-            <div class="row">
+            <div class="form">
+            <div class="row mt-4">
                 <div class="col-11 col-sm-10 mx-auto">
-                    <label class="label" for="case">{{ $t('Case type') }}</label>
-                    <select name="case" id="case" class="form-control">
-                        <option value="">Case 1</option>
-                        <option value="">Case 2</option>
-                    </select>
+                    <div class="row">
+                        <div class="col-3">
+                            <label class="label">{{ $t('Case type') }}</label>
+                        </div>
+                        <div class="col-7">
+                            <case-selector ref="caseType"></case-selector>
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="row mt-4">
                 <div class="col-11 col-sm-10 mx-auto">
-                    <div class="form">
-                        <div class="form-group">
-                            <services-block ref="servicesBlock"></services-block>
-                        </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-sm-7">
-                                    <label for="survey" class="label">{{ $t('Survey') }}</label>
-                                    <select name="survey" id="survey" class="form-control">
-                                        <option value="1">Survey 1</option>
-                                        <option value="1">Survey 2</option>
-                                        <option value="1">Survey 3</option>
-                                    </select>
-                                </div>
-                                <div class="col-sm-5">
-                                    <div class="mt-sm-4 text-right">
-                                        <button class="btn btn-sm" @click.prevent>+ {{ $t('Add survey') }}</button>
-                                    </div>
+                    <div class="form-group">
+                        <services-block ref="servicesBlock"></services-block>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-7">
+                                <label for="survey" class="label">{{ $t('Survey') }}</label>
+                                <select name="survey" id="survey" class="form-control">
+                                    <option value="1">Survey 1</option>
+                                    <option value="1">Survey 2</option>
+                                    <option value="1">Survey 3</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-5">
+                                <div class="mt-sm-4 text-right">
+                                    <button class="btn btn-sm" @click.prevent>+ {{ $t('Add survey') }}</button>
                                 </div>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <div class="row">
-                                <div class="col-sm-12 mx-auto">
-                                    <div class="row">
-                                        <div class="col-4">
-                                            <label for="diagnostic" class="label">{{ $t('Diagnostic') }}</label>
-                                        </div>
-                                        <div class="col-8 text-right">
-                                            <a>{{ $t('Additional investigation') }}</a>
-                                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-12 mx-auto">
+                                <div class="row">
+                                    <div class="col-4">
+                                        <label for="diagnostic" class="label">{{ $t('Diagnostic') }}</label>
                                     </div>
-                                    <textarea class="form-control" name="diagnostic" id="diagnostic"
-                                              rows="10"></textarea>
+                                    <div class="col-8 text-right">
+                                        <a>{{ $t('Additional investigation') }}</a>
+                                    </div>
                                 </div>
+                                <textarea class="form-control" name="diagnostic" id="diagnostic"
+                                          rows="10"></textarea>
                             </div>
                         </div>
-                        <div class="form-group">
-                            <div class="row mt-4">
-                                <div class="col-sm-8 mx-auto">
-                                    <div class="total">
-                                        {{ $t('Total') }}: 2000 &euro;
-                                    </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row mt-4">
+                            <div class="col-sm-8 text-right mx-auto">
+                                <div class="total h4">
+                                    {{ $t('Total') }}: 2000 &euro;
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
         </div>
         <div class="card-footer">
             <div class="row">
@@ -92,13 +95,15 @@
   import HttpErrorComponent from '../../components/ui/http/error.vue'
   import ServicesBlock from '../../blocks/servicesBlock.vue'
   import AccidentProvider from '../../providers/accident.vue'
+  import CaseSelector from '../case/caseTypeSelector.vue'
 
   export default {
     components: {
       ServicesBlock,
       topProgress,
       HttpErrorComponent,
-      AccidentProvider
+      AccidentProvider,
+      CaseSelector
     },
     mounted: function () {
       this.fetchData()
@@ -111,16 +116,39 @@
     },
     methods: {
       fetchData () {
+        let started = 0
         this.$refs.topProgressCaseEditForm.start()
+        started++
         AccidentProvider.getServices(this.id).then(
           response => {
             this.$refs.servicesBlock.setSelectedServices(response.data.services)
-            this.$refs.topProgressCaseEditForm.done()
+            if (--started <= 0) {
+              this.$refs.topProgressCaseEditForm.done()
+            }
           }
         ).catch(
           err => {
             this.$refs.httpErrorCaseEditForm.error(err)
-            this.$refs.topProgressCaseEditForm.done()
+            if (--started <= 0) {
+              this.$refs.topProgressCaseEditForm.done()
+            }
+          }
+        )
+
+        started++
+        AccidentProvider.getCaseType(this.id).then(
+          response => {
+            this.$refs.caseType.select(response.data)
+            if (--started <= 0) {
+              this.$refs.topProgressCaseEditForm.done()
+            }
+          }
+        ).catch(
+          err => {
+            this.$refs.httpErrorCaseEditForm.error(err)
+            if (--started <= 0) {
+              this.$refs.topProgressCaseEditForm.done()
+            }
           }
         )
       }

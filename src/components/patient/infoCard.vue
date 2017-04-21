@@ -1,10 +1,10 @@
 <template>
-    <div class="card">
+    <div v-if="patient" class="card">
         <div class="card-header">
             <div class="card-title">
                 <h6>
-                    {{ name }}
-                    <small> · <a>Edit</a></small>
+                    {{ patient.name }}
+                    <small> · <a @click="onEdit()">{{ $t('Edit') }}</a></small>
                 </h6>
             </div>
         </div>
@@ -12,49 +12,61 @@
             <address>
                 <div class="row">
                     <div class="col-sm-12">
-                        <a class="small" :href="'tel:'+phones">{{ phones }}</a>
+                        <a class="small" v-for="phone in patient.phones" :href="'tel:' + phone">{{ phone }}</a>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-sm-12 lead">
-                        {{ address }}
+                        {{ patient.address }}
                     </div>
                 </div>
             </address>
 
             <div class="row">
                 <div class="col-sm-12 card-text text-muted">
-                    {{ symptoms }}
+                    {{ patient.symptoms }}
                 </div>
             </div>
         </div>
+
+        <top-progress-v ref="pic" color="orange"></top-progress-v>
     </div>
 </template>
-<style lang="scss">
-</style>
 <script>
+  import AccidentProvider from '../../providers/accident.vue'
+  import HttpErrorComponent from '../../components/ui/http/error.vue'
+  import TopProgressV from 'vue-top-progress'
+
   export default {
-    props: {
-      name: {
-        type: String,
-        default: 'Patient Name'
-      },
-      phones: {
-        type: String,
-        default: '+_____________'
-      },
-      address: {
-        type: String,
-        default: 'Address'
-      },
-      symptoms: {
-        type: String,
-        default: 'Reason of the appointment'
+    components: {
+      TopProgressV
+    },
+    mounted: function () {
+      this.$refs.pic.start()
+      this.fetchData()
+    },
+    data () {
+      return {
+        patient: null
       }
     },
-    components: {},
-    data () {
-      return {}
+    methods: {
+      fetchData () {
+        this.$refs.topProgressInfoCard.start()
+        AccidentProvider.getPatient().then(
+          (response) => {
+            this.patient = response.body
+            this.$refs.topProgressInfoCard.done()
+          },
+          (err) => {
+            HttpErrorComponent.error(err)
+            this.$refs.topProgressInfoCard.fail()
+          }
+        )
+      },
+      onEdit () {
+        this.$emit('on-edit')
+      }
     }
   }
 </script>
