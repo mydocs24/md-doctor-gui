@@ -5,7 +5,6 @@
 
   const accidentUrl = 'doctor/accidents'
   export default {
-    components: {},
     data () {
       return {
         httpOptions: {
@@ -32,6 +31,12 @@
      */
     getServices (id) {
       return Vue.http.get(this.getUrl() + '/' + id + '/services', this.httpOptions)
+    },
+    getCaseType (id) {
+      return Vue.http.get(this.getUrl() + '/' + id + '/caseType', this.httpOptions)
+    },
+    getPatient (id) {
+      return Vue.http.get(this.getUrl() + '/' + id + '/patient', this.httpOptions)
     }
   }
 </script>

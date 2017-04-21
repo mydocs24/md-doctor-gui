@@ -2,7 +2,7 @@
     <div>
         <div class="row">
             <div class="col-sm-7">
-                <label class="label" for="service">{{ $t('Select services') }}</label>
+                <label class="label">{{ $t('Select services') }}</label>
                 <service-selector
                         name="service"
                         excluded="selectedServices"

@@ -220,6 +220,41 @@
           }
         ]
       }
+    },
+    {
+      method: 'GET',
+      url: 'doctor/caseTypes',
+      response: {
+        data: [
+          {
+            id: 1,
+            title: 'Insurance'
+          }, {
+            id: 2,
+            title: 'Non-Insurance'
+          }
+        ]
+      }
+    },
+    {
+      method: 'GET',
+      url: 'doctor/accidents/17/caseType',
+      response: {
+        id: 1,
+        title: 'Insurance'
+      }
+    },
+    {
+      method: 'GET',
+      url: 'doctor/accidents/17/patient',
+      response: {
+        id: 1,
+        name: 'Foster Abigail',
+        city: 'Barcelona',
+        phones: [{tel: '+375255283638'}],
+        address: 'Benidorm, Adolfa Uzuarez 162/4, 52',
+        reason: 'Reason of the call. Call from the Assistant company AXA. Patient with some ill want to get medical appointment'
+      }
     }
   ]
 

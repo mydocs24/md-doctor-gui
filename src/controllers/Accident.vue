@@ -2,15 +2,12 @@
     <div>
         <div class="row" v-if="doctorCase">
             <div class="col-sm-12 col-lg-9 mx-auto">
-                <top-progress ref="topProgress" color="orange"></top-progress>
                 <breadcrumbs :items="bcItems"></breadcrumbs>
                 <div class="row mb-4">
                     <div class="col-sm-8 col-md-7 col-lg-6">
                         <patient-info-card
-                            :name="doctorCase.userName"
-                            :phones="doctorCase.accident.phones"
-                            :address="doctorCase.address"
-                            :symptoms="doctorCase.accident.reason"
+                            :id="doctorCase.id"
+                            @on-edit="openPatientEditor"
                         ></patient-info-card>
                     </div>
                     <div class="col-sm-4 col-lg-5 col-lg-6">
@@ -53,6 +50,9 @@
             <h4 class="error-text">{{error.text}} <small>{{error.description}}</small></h4>
         </div>
         <http-error-component></http-error-component>
+        <patient-editor></patient-editor>
+
+        <top-progress ref="topProgressAccident" color="orange"></top-progress>
     </div>
 </template>
 
@@ -69,6 +69,7 @@
   import CaseEditForm from '../components/case/caseEditFormComponent.vue'
   import AccidentProvider from '../providers/accident.vue'
   import HttpErrorComponent from '../components/ui/http/error.vue'
+  import PatientEditor from '../components/patient/editor.vue'
 
   export default {
     components: {
@@ -78,7 +79,8 @@
       PatientDocumentsLoader,
       AccidentRegularityStatus,
       CaseEditForm,
-      HttpErrorComponent
+      HttpErrorComponent,
+      PatientEditor
     },
     data () {
       return {
@@ -97,7 +99,7 @@
         }]
       }
     },
-    created: function () {
+    mounted: function () {
       this.fetchData()
     },
     watch: {
@@ -105,6 +107,7 @@
     },
     methods: {
       fetchData () {
+        this.$refs.topProgressAccident.start()
         this.doctorCase = null
         AccidentProvider.getAccident(this.$route.params.id).then(
           (response) => {
@@ -114,27 +117,13 @@
               text: this.doctorCase.accident.refNum,
               active: true
             })
+            this.$refs.topProgressAccident.done()
           },
           (err) => {
-            if (HttpErrorComponent && HttpErrorComponent.error) {
-              HttpErrorComponent.error(err)
-            } else {
-              this.error.text = err.statusText
-              this.error.code = err.status
-              this.error.description = err.url
-              this.error.show = true
-            }
+            HttpErrorComponent.error(err)
+            this.$refs.topProgressAccident.fail()
           }
         )
-      },
-
-      // handle some error like ajax not working
-      errorhandle (err) {
-        console.error(err)
-      },
-
-      onLink (item) {
-        console.log(item)
       },
 
       doReject () {
@@ -144,6 +133,10 @@
 
       sendReject () {
         this.$refs.rejectCaseModal.hide()
+      },
+
+      openPatientEditor () {
+        this.$refs.patientEditor.open(this.doctorCase.id)
       }
     }
   }
