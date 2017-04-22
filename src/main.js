@@ -5,14 +5,16 @@ import VueRouter from 'vue-router'
 import VueI18n from 'vue-i18n'
 import BootstrapVue from 'bootstrap-vue'
 import VueEvents from 'vue-events'
+import App from './App'
+import Hello from './controllers/Hello'
+import NotFoundComponent from './controllers/system/404'
+import FakeHttp from './fake/http.vue'
 
 Vue.use(BootstrapVue)
 Vue.use(VueRouter)
 Vue.use(VueEvents)
 
 // components
-import App from './App'
-
 const Dashboard = resolve => {
   require.ensure(['./controllers/Dashboard.vue'], () => {
     resolve(require('./controllers/Dashboard.vue'))
@@ -30,12 +32,6 @@ const Profile = resolve => {
     resolve(require('./controllers/Profile.vue'))
   })
 }
-
-import Hello from './controllers/Hello'
-import NotFoundComponent from './controllers/system/404'
-
-// try faker
-import FakeHttp from './fake/http.vue'
 
 // routes
 const Foo = {template: '<div>foo</div>'}
@@ -60,8 +56,9 @@ const router = new VueRouter({
 // lang
 Vue.use(VueI18n)
 // ready translated locales
-var locales = {
+const messages = {
   en: {
+    'MeDoctor': 'MeDoctor',
     message: {
       hello: 'hello world',
       open: 'Open'
@@ -70,7 +67,7 @@ var locales = {
       status: {
         closed: 'Closed',
         'signed': 'Signed',
-        sended: 'Sended',
+        sent: 'Sent',
         'new': 'New',
         processing: 'In Progress'
       }
@@ -122,22 +119,33 @@ var locales = {
     'Price': 'Price',
     'Save': 'Save',
     'Cancel': 'Cancel',
-    'All fields should be filled': 'All fields should be filled'
+    'All fields should be filled': 'All fields should be filled',
+    'Request Error': 'Request Error',
+    'Reject Reason': 'Reject Reason',
+    'Reject Case': 'Reject Case',
+    'MyDoctors24.com': 'MyDoctors24.com',
+    'root_url': 'https://mydoctors24.com'
   }
 }
 
-// set lang
-Vue.config.lang = 'en'
+// Create VueI18n instance with options
+const i18n = new VueI18n({
+  locale: 'en', // set locale
+  messages // set locale messages
+})
 
 // set locales
+/*
 Object.keys(locales).forEach(function (lang) {
   Vue.locale(lang, locales[lang])
 })
+*/
 
 /* eslint-disable no-new */
 window.vm = new Vue({
   el: '#app',
   template: '<App/>',
   components: { App, FakeHttp },
-  router
+  router,
+  i18n
 })

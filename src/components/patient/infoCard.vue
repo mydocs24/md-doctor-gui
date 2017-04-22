@@ -12,7 +12,7 @@
             <address>
                 <div class="row">
                     <div class="col-sm-12">
-                        <a class="small" v-for="phone in patient.phones" :href="'tel:' + phone">{{ phone }}</a>
+                        <a class="small" v-for="phone in patient.phones" :href="'tel:' + phone.tel">{{ phone.tel }}</a>
                     </div>
                 </div>
                 <div class="row">
@@ -24,26 +24,25 @@
 
             <div class="row">
                 <div class="col-sm-12 card-text text-muted">
-                    {{ patient.symptoms }}
+                    {{ patient.reason }}
                 </div>
             </div>
         </div>
-
-        <top-progress-v ref="pic" color="orange"></top-progress-v>
     </div>
 </template>
 <script>
   import AccidentProvider from '../../providers/accident.vue'
-  import HttpErrorComponent from '../../components/ui/http/error.vue'
-  import TopProgressV from 'vue-top-progress'
 
   export default {
-    components: {
-      TopProgressV
-    },
-    mounted: function () {
-      this.$refs.pic.start()
+    inject: ['loadingBarWrapper', 'httpErrorWrapper'],
+    created: function () {
       this.fetchData()
+    },
+    props: {
+      doctorCaseId: {
+        type: Number,
+        required: true
+      }
     },
     data () {
       return {
@@ -52,15 +51,15 @@
     },
     methods: {
       fetchData () {
-        this.$refs.topProgressInfoCard.start()
-        AccidentProvider.getPatient().then(
+        this.loadingBarWrapper.ref.start()
+        AccidentProvider.getPatient(this.doctorCaseId).then(
           (response) => {
             this.patient = response.body
-            this.$refs.topProgressInfoCard.done()
+            this.loadingBarWrapper.ref.done()
           },
           (err) => {
-            HttpErrorComponent.error(err)
-            this.$refs.topProgressInfoCard.fail()
+            this.httpErrorWrapper.ref.error(err)
+            this.loadingBarWrapper.ref.fail()
           }
         )
       },

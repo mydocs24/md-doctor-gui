@@ -5,19 +5,38 @@
         <div v-if="status==='old'" class="text-warning">{{ $t('Reiterative Appointment') }}</div>
     </div>
 </template>
-<style lang="scss">
-</style>
 <script>
+  import AccidentProvider from '../../providers/accident.vue'
+
   export default {
-    params: {
+    inject: ['loadingBarWrapper', 'httpErrorWrapper'],
+    created: function () {
+      this.fetchData()
+    },
+    props: {
       id: {
         type: Number,
-        default: 0
+        required: true
       }
     },
     data () {
       return {
         status: false
+      }
+    },
+    methods: {
+      fetchData () {
+        this.loadingBarWrapper.ref.start()
+        AccidentProvider.getRegularityStatus(this.id).then(
+          (response) => {
+            this.status = response.body
+            this.loadingBarWrapper.ref.done()
+          },
+          (err) => {
+            this.httpErrorWrapper.ref.error(err)
+            this.loadingBarWrapper.ref.fail()
+          }
+        )
       }
     }
   }
