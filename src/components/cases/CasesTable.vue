@@ -310,7 +310,7 @@ export default {
           badge = '<span class="badge badge-success">' + this.$t('case.status.new') + '</span>'
           break
         case 'sended':
-          badge = '<span class="badge badge-warning">' + this.$t('case.status.sended') + '</span>'
+          badge = '<span class="badge badge-warning">' + this.$t('case.status.sent') + '</span>'
           break
         case 'processing':
           badge = '<span class="badge badge-info">' + this.$t('case.status.processing') + '</span>'

@@ -6,7 +6,7 @@
                 <div class="row mb-4">
                     <div class="col-sm-8 col-md-7 col-lg-6">
                         <patient-info-card
-                            :id="doctorCase.id"
+                            :doctor-case-id="doctorCase.id"
                             @on-edit="openPatientEditor"
                         ></patient-info-card>
                     </div>
@@ -26,16 +26,16 @@
                 ></case-edit-form>
                 <footer class="footer">
                     <p class="mb-3 mt-2 text-center">
-                        &copy; 2017 <a href="">MyDoctors24.com</a>
+                        &copy; 2017 <a :href="$t('root_url')">{{ $t('MyDoctors24.com') }}</a>
                     </p>
                 </footer>
             </div>
         </div>
 
         <b-modal ref="rejectCaseModal">
-            <h4 slot="modal-header">Reject case</h4>
+            <h4 slot="modal-header">{{ $t('Reject Case') }}</h4>
             <div slot="modal-body">
-                <textarea placeholder="Reject reason" class="form-control"
+                <textarea :placeholder="$t('Reject Reason')" class="form-control"
                           v-model="rejectCommentary"
                           @keyup.enter="doReject"
                 ></textarea>
@@ -49,10 +49,7 @@
             <h3 class="error-code">{{error.code}}</h3>
             <h4 class="error-text">{{error.text}} <small>{{error.description}}</small></h4>
         </div>
-        <http-error-component></http-error-component>
         <patient-editor></patient-editor>
-
-        <top-progress ref="topProgressAccident" color="orange"></top-progress>
     </div>
 </template>
 
@@ -61,25 +58,22 @@
 </style>
 
 <script>
-  import topProgress from 'vue-top-progress'
   import Breadcrumbs from '../components/layout/breadcrumbs.vue'
   import PatientInfoCard from '../components/patient/infoCard.vue'
   import PatientDocumentsLoader from '../components/patient/documentsLoader.vue'
   import AccidentRegularityStatus from '../components/accdident/regularityStatus.vue'
   import CaseEditForm from '../components/case/caseEditFormComponent.vue'
   import AccidentProvider from '../providers/accident.vue'
-  import HttpErrorComponent from '../components/ui/http/error.vue'
   import PatientEditor from '../components/patient/editor.vue'
 
   export default {
+    inject: ['loadingBarWrapper', 'httpErrorWrapper'],
     components: {
-      topProgress,
       Breadcrumbs,
       PatientInfoCard,
       PatientDocumentsLoader,
       AccidentRegularityStatus,
       CaseEditForm,
-      HttpErrorComponent,
       PatientEditor
     },
     data () {
@@ -99,7 +93,7 @@
         }]
       }
     },
-    mounted: function () {
+    created: function () {
       this.fetchData()
     },
     watch: {
@@ -107,7 +101,7 @@
     },
     methods: {
       fetchData () {
-        this.$refs.topProgressAccident.start()
+        this.loadingBarWrapper.ref.start()
         this.doctorCase = null
         AccidentProvider.getAccident(this.$route.params.id).then(
           (response) => {
@@ -117,11 +111,11 @@
               text: this.doctorCase.accident.refNum,
               active: true
             })
-            this.$refs.topProgressAccident.done()
+            this.loadingBarWrapper.ref.done()
           },
           (err) => {
-            HttpErrorComponent.error(err)
-            this.$refs.topProgressAccident.fail()
+            this.httpErrorWrapper.ref.error(err)
+            this.loadingBarWrapper.ref.fail()
           }
         )
       },

@@ -10,22 +10,19 @@
     components: {
       Feedback
     },
-    data () {
-      return {}
-    },
     methods: {
       error (err) {
         let title
         let text
 
         if (err.status === 401) {
-          title = 'Authorization'
-          text = 'You can\'t load list while you are not authorized.'
+          title = this.$t('Authorization')
+          text = this.$t('You can\'t load list while you are not authorized.')
         } else if (err.status === 0) {
-          title = 'Request Error'
-          text = 'Not a CORS response'
+          title = this.$t('Request Error')
+          text = this.$t('Not a CORS response')
         } else {
-          title = 'Request Error'
+          title = this.$t('Request Error')
           text = '"' + err.status + '" ' + err.statusText
           text += '\n\t' + err.url
         }

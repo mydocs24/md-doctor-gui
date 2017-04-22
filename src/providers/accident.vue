@@ -37,6 +37,9 @@
     },
     getPatient (id) {
       return Vue.http.get(this.getUrl() + '/' + id + '/patient', this.httpOptions)
+    },
+    getRegularityStatus (id) {
+      return Vue.http.get(this.getUrl() + '/' + id + '/status', this.httpOptions)
     }
   }
 </script>
