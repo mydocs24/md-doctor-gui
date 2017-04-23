@@ -20,21 +20,7 @@
                         <services-block ref="servicesBlock"></services-block>
                     </div>
                     <div class="form-group">
-                        <div class="row">
-                            <div class="col-sm-7">
-                                <label for="survey" class="label">{{ $t('Survey') }}</label>
-                                <select name="survey" id="survey" class="form-control">
-                                    <option value="1">Survey 1</option>
-                                    <option value="1">Survey 2</option>
-                                    <option value="1">Survey 3</option>
-                                </select>
-                            </div>
-                            <div class="col-sm-5">
-                                <div class="mt-sm-4 text-right">
-                                    <button class="btn btn-sm" @click.prevent>+ {{ $t('Add survey') }}</button>
-                                </div>
-                            </div>
-                        </div>
+                        <surveys-block ref="surveysBlock"></surveys-block>
                     </div>
                     <div class="form-group">
                         <div class="row">
@@ -75,8 +61,6 @@
                 </div>
             </div>
         </div>
-        <top-progress ref="topProgressCaseEditForm" color="orange"></top-progress>
-        <http-error-component ref="httpErrorCaseEditForm"></http-error-component>
     </div>
 </template>
 <style lang="scss">
@@ -91,17 +75,16 @@
     }
 </style>
 <script>
-  import topProgress from 'vue-top-progress'
-  import HttpErrorComponent from '../../components/ui/http/error.vue'
   import ServicesBlock from '../../blocks/servicesBlock.vue'
+  import SurveysBlock from '../../blocks/surveyBlock.vue'
   import AccidentProvider from '../../providers/accident.vue'
   import CaseSelector from '../case/caseTypeSelector.vue'
 
   export default {
+    inject: ['loadingBarWrapper', 'httpErrorWrapper'],
     components: {
       ServicesBlock,
-      topProgress,
-      HttpErrorComponent,
+      SurveysBlock,
       AccidentProvider,
       CaseSelector
     },
@@ -117,20 +100,20 @@
     methods: {
       fetchData () {
         let started = 0
-        this.$refs.topProgressCaseEditForm.start()
+        this.loadingBarWrapper.ref.start()
         started++
         AccidentProvider.getServices(this.id).then(
           response => {
             this.$refs.servicesBlock.setSelectedServices(response.data.services)
             if (--started <= 0) {
-              this.$refs.topProgressCaseEditForm.done()
+              this.loadingBarWrapper.ref.done()
             }
           }
         ).catch(
           err => {
-            this.$refs.httpErrorCaseEditForm.error(err)
+            this.httpErrorWrapper.ref.error(err)
             if (--started <= 0) {
-              this.$refs.topProgressCaseEditForm.done()
+              this.loadingBarWrapper.ref.done()
             }
           }
         )
@@ -140,14 +123,31 @@
           response => {
             this.$refs.caseType.select(response.data)
             if (--started <= 0) {
-              this.$refs.topProgressCaseEditForm.done()
+              this.loadingBarWrapper.ref.done()
             }
           }
         ).catch(
           err => {
-            this.$refs.httpErrorCaseEditForm.error(err)
+            this.httpErrorWrapper.ref.error(err)
             if (--started <= 0) {
-              this.$refs.topProgressCaseEditForm.done()
+              this.loadingBarWrapper.ref.done()
+            }
+          }
+        )
+
+        started++
+        AccidentProvider.getSurveys(this.id).then(
+          response => {
+            this.$refs.surveysBlock.setSelectedSurveys(response.data.surveys)
+            if (--started <= 0) {
+              this.loadingBarWrapper.ref.done()
+            }
+          }
+        ).catch(
+          err => {
+            this.httpErrorWrapper.ref.error(err)
+            if (--started <= 0) {
+              this.loadingBarWrapper.ref.done()
             }
           }
         )
