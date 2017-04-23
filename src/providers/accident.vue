@@ -40,6 +40,9 @@
     },
     getRegularityStatus (id) {
       return Vue.http.get(this.getUrl() + '/' + id + '/status', this.httpOptions)
+    },
+    getSurveys (id) {
+      return Vue.http.get(this.getUrl() + '/' + id + '/surveys', this.httpOptions)
     }
   }
 </script>

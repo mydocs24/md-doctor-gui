@@ -124,7 +124,13 @@ const messages = {
     'Reject Reason': 'Reject Reason',
     'Reject Case': 'Reject Case',
     'MyDoctors24.com': 'MyDoctors24.com',
-    'root_url': 'https://mydoctors24.com'
+    'root_url': 'https://mydoctors24.com',
+    'Surveys': 'Surveys',
+    'Select surveys': 'Select surveys',
+    'Add new survey': 'Add new survey',
+    'New Survey': 'New Survey',
+    'Survey title': 'Survey title',
+    'Survey description': 'Survey description'
   }
 }
 

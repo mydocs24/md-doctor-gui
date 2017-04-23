@@ -223,6 +223,63 @@
     },
     {
       method: 'GET',
+      url: 'doctor/surveys',
+      response: {
+        total: 5,
+        'per_page': 5,
+        'current_page': 1,
+        'last_page': 1,
+        'next_page_url': null,
+        'prev_page_url': null,
+        'from': 5,
+        'to': 5,
+        data: [{
+          id: 1,
+          type: 'accident',
+          title: 'Eye slashes',
+          description: 'Description for this survey with eye slashes'
+        }, {
+          id: 2,
+          type: 'accident',
+          title: 'Extra survey',
+          description: 'Another survey'
+        }, {
+          id: 1,
+          type: 'doctor',
+          title: 'Survey created by me',
+          description: 'Doctor creates new survey'
+        }]
+      }
+    },
+    {
+      method: 'POST',
+      url: 'doctor/surveys',
+      response: {
+        status: 'success',
+        survey: {
+          id: 2,
+          type: 'doctor',
+          title: 'Created just now',
+          description: 'Survey just created by that doctor'
+        }
+      }
+    },
+    {
+      method: 'GET',
+      url: 'doctor/accidents/17/surveys',
+      response: {
+        surveys: [
+          {
+            id: 1,
+            type: 'accident',
+            title: 'Eye slashes',
+            description: 'Description for this survey with eye slashes'
+          }
+        ]
+      }
+    },
+    {
+      method: 'GET',
       url: 'doctor/caseTypes',
       response: {
         data: [
@@ -255,6 +312,11 @@
         address: 'Benidorm, Adolfa Uzuarez 162/4, 52',
         reason: 'Reason of the call. Call from the Assistant company AXA. Patient with some ill want to get medical appointment'
       }
+    },
+    {
+      method: 'GET',
+      url: 'doctor/accidents/17/status',
+      response: {status: 'new'}
     }
   ]
 
