@@ -24,7 +24,7 @@
     components: {
       vSelect
     },
-    property: {
+    props: {
       excluded: {
         type: Array,
         default: []

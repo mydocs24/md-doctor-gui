@@ -50,22 +50,15 @@
                 <button class="btn btn-secondary" @click="onClose()">{{ $t('Cancel') }}</button>
             </span>
         </b-modal>
-        <top-progress ref="topProgress" color="orange"></top-progress>
-        <http-error-component></http-error-component>
     </div>
 </template>
 <style lang="scss">
 </style>
 <script>
-  import topProgress from 'vue-top-progress'
-  import HttpErrorComponent from '../../components/ui/http/error.vue'
   import ServiceProvider from '../../providers/service.vue'
 
   export default {
-    components: {
-      topProgress,
-      HttpErrorComponent
-    },
+    inject: ['loadingBarWrapper', 'httpErrorWrapper'],
     data () {
       return {
         title: '',
@@ -95,16 +88,16 @@
       },
       onSave () {
         if (this.isValid()) {
-          this.$refs.topProgress.start()
+          this.loadingBarWrapper.ref.start()
           ServiceProvider.post().then(
             response => {
               this.onClose()
               this.$events.fire('service-selector:change', response.data.service, event)
-              this.$refs.topProgress.done()
+              this.loadingBarWrapper.ref.done()
             },
             err => {
-              HttpErrorComponent.error(err)
-              this.$refs.topProgress.done()
+              this.httpErrorWrapper.ref.error(err)
+              this.loadingBarWrapper.ref.fail()
             }
           )
         }

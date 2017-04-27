@@ -5,7 +5,7 @@
                 <label class="label">{{ $t('Select services') }}</label>
                 <service-selector
                         name="service"
-                        excluded="selectedServices"
+                        :excluded="selectedServices"
                 ></service-selector>
             </div>
             <div class="col-sm-5">
@@ -42,8 +42,6 @@
         </div>
     </div>
 </template>
-<style lang="scss">
-</style>
 <script>
   import Vue from 'vue'
   import ServiceSelector from '../components/service/serviceSelector.vue'
