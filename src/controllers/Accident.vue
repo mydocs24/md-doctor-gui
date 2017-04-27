@@ -49,7 +49,7 @@
             <h3 class="error-code">{{error.code}}</h3>
             <h4 class="error-text">{{error.text}} <small>{{error.description}}</small></h4>
         </div>
-        <patient-editor></patient-editor>
+        <patient-editor ref="patientEditor"></patient-editor>
     </div>
 </template>
 

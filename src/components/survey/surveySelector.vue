@@ -42,14 +42,17 @@
     },
     methods: {
       onSearch (search, loading) {
+        this.loadingBarWrapper.ref.start()
         loading(true)
         SurveyProvider.get().then(
           (response) => {
             this.surveys = response.body.data
             loading(false)
+            this.loadingBarWrapper.ref.done()
           },
           (err) => {
             this.httpErrorWrapper.ref.error(err)
+            this.loadingBarWrapper.ref.fail()
             loading(false)
           }
         )

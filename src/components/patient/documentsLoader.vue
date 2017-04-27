@@ -40,7 +40,7 @@
     components: {
       VueCoreImageUpload
     },
-    params: {
+    props: {
       id: {
         type: Number,
         default: 0

@@ -32,9 +32,9 @@
 </style>
 <script>
   import DoctorProvider from '../../providers/doctor.vue'
-  import HttpErrorComponent from '../../components/ui/http/error.vue'
 
   export default {
+    inject: ['loadingBarWrapper', 'httpErrorWrapper'],
     created: function () {
       this.fetchData()
     },
@@ -45,13 +45,16 @@
     },
     methods: {
       fetchData () {
+        this.loadingBarWrapper.ref.start()
         this.doctor = null
         DoctorProvider.get().then(
           (response) => {
             this.doctor = response.body
+            this.loadingBarWrapper.ref.done()
           },
           (err) => {
-            HttpErrorComponent.error(err)
+            this.httpErrorWrapper.ref.error(err)
+            this.loadingBarWrapper.ref.fail()
           }
         )
       }
