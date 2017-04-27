@@ -10,7 +10,6 @@
                 label="title"
                 :placeholder="$t('Services')"
         ></v-select>
-        <http-error-component ref="serviceError"></http-error-component>
     </div>
 </template>
 <style lang="scss">
@@ -18,13 +17,12 @@
 <script>
   import _ from 'lodash'
   import vSelect from 'vue-select'
-  import HttpErrorComponent from '../../components/ui/http/error.vue'
   import ServiceProvider from '../../providers/service.vue'
 
   export default {
+    inject: ['loadingBarWrapper', 'httpErrorWrapper'],
     components: {
-      vSelect,
-      HttpErrorComponent
+      vSelect
     },
     property: {
       excluded: {
@@ -44,25 +42,31 @@
     },
     methods: {
       onSearch (search, loading) {
+        this.loadingBarWrapper.ref.start()
         loading(true)
         ServiceProvider.get().then(
           (response) => {
             this.services = response.body.data
             loading(false)
+            this.loadingBarWrapper.ref.done()
           },
           (err) => {
-            this.$refs.serviceError.error(err)
+            this.httpErrorWrapper.ref.error(err)
+            this.loadingBarWrapper.ref.fail()
             loading(false)
           }
         )
       },
       fetchData () {
+        this.loadingBarWrapper.ref.start()
         ServiceProvider.get().then(
           (response) => {
             this.options = response.body.data
+            this.loadingBarWrapper.ref.done()
           },
           (err) => {
-            this.$refs.serviceError.error(err)
+            this.httpErrorWrapper.ref.error(err)
+            this.loadingBarWrapper.ref.fail()
           }
         )
       },

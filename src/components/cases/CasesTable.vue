@@ -7,7 +7,6 @@
         </div>
         <div class="row">
             <div class="col-sm-12">
-                <top-progress ref="topProgress" color="orange"></top-progress>
                 <div class="card">
                     <div class="card-block">
                         <div class="card-title">
@@ -72,7 +71,6 @@
                 </div>
             </div>
         </div>
-        <feedback ref="feedback"></feedback>
         <dialog-confirm ref="dialogConfirm"></dialog-confirm>
     </div>
 </template>
@@ -146,12 +144,12 @@ import FilterBar from './FilterBar'
 import Vue from 'vue'
 import topProgress from 'vue-top-progress'
 import AccidentProvider from '../../providers/accident.vue'
-import Feedback from '../../components/ui/dialog/feedback.vue'
 import DialogConfirm from '../../components/ui/dialog/confirm.vue'
 
 Vue.component('my-detail-row', MyDetailRow)
 
 export default {
+  inject: ['loadingBarWrapper', 'httpErrorWrapper'],
   components: {
     Vuetable,
     VuetablePagination,
@@ -159,7 +157,6 @@ export default {
     FilterBar,
     CustomActions,
     topProgress,
-    Feedback,
     DialogConfirm
   },
   data () {
@@ -332,28 +329,14 @@ export default {
       this.$refs.vuetable.toggleDetailRow(data.id)
     },
     onLoaded () {
-      this.$refs.topProgress.done()
+      this.loadingBarWrapper.ref.done()
     },
     onLoadError (err) {
-      this.$refs.topProgress.error = 1
-      let title
-      let text
-      if (err.status === 401) {
-        title = 'Authorization'
-        text = 'You can\'t load list while you are not authorized.'
-      } else if (err.status === 0) {
-        title = 'Request Error'
-        text = 'Not a CORS response'
-      } else {
-        title = 'Request Error'
-        text = '"' + err.status + '" ' + err.statusText
-      }
-
-      this.$refs.feedback.show(title, text)
+      this.httpErrorWrapper.ref.error(err)
+      this.loadingBarWrapper.ref.fail()
     },
     onLoading () {
-      this.$refs.topProgress.error = false
-      this.$refs.topProgress.start()
+      this.loadingBarWrapper.ref.start()
     }
   },
   events: {
