@@ -21,10 +21,10 @@
       vSelect,
       HttpErrorComponent
     },
-    property: {
+    props: {
       excluded: {
         type: Array,
-        default: []
+        default: () => []
       }
     },
     data () {

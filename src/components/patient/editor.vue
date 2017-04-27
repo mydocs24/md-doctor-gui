@@ -1,5 +1,5 @@
 <template>
-    <b-modal ref="patientEditorModal" v-if="loaded">
+    <b-modal ref="patientEditorModal" v-if="patient">
         <h5 slot="modal-header">{{ $t('Edit patient data') }}</h5>
         <div slot="modal-body">
             <div class="form">
@@ -14,7 +14,7 @@
                                     @change="onChange"
                                     type="text"
                                     class="form-control"
-                                    v-model="name"
+                                    v-model="patient.name"
                                     :placeholder="$t('Patient Name')"
                                     required>
                         </div>
@@ -27,8 +27,21 @@
                             <input
                                     @change="onChange"
                                     class="form-control"
-                                    v-model="phone"
+                                    v-model="patient.phones"
                                     :placeholder="$t('Patient Phone')"
+                                    required>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-12">
+                            <label class="label">{{ $t('City') }}</label>
+                            <input
+                                    @change="onChange"
+                                    class="form-control"
+                                    v-model="patient.address"
+                                    :placeholder="$t('Patient City')"
                                     required>
                         </div>
                     </div>
@@ -40,7 +53,7 @@
                             <input
                                     @change="onChange"
                                     class="form-control"
-                                    v-model="address"
+                                    v-model="patient.address"
                                     :placeholder="$t('Patient Address')"
                                     required>
                         </div>
@@ -53,7 +66,7 @@
                             <textarea
                                     @change="onChange"
                                     class="form-control"
-                                    v-model="reason"
+                                    v-model="patient.reason"
                                     :placeholder="$t('Reason of treatment')"
                                     required></textarea>
                         </div>
@@ -68,24 +81,45 @@
     </b-modal>
 </template>
 <script>
+  import AccidentProvider from '../../providers/accident.vue'
+
   export default {
     inject: ['loadingBarWrapper', 'httpErrorWrapper'],
     components: {},
     props: {
-      id: {
+      doctorCaseId: {
         type: Number,
         required: true
       }
     },
+    created: function () {
+      this.fetchData()
+    },
     data () {
       return {
-        loaded: false
+        patient: false,
+        valid: true
       }
     },
     methods: {
       open (caseId) {
-        this.loadingBarWrapper.ref.start()
         console.log('opened')
+      },
+      fetchData () {
+        this.loadingBarWrapper.ref.start()
+        AccidentProvider.getPatient(this.doctorCaseId).then(
+          (response) => {
+            this.patient = response.body
+            this.loadingBarWrapper.ref.done()
+          },
+          (err) => {
+            this.httpErrorWrapper.ref.error(err)
+            this.loadingBarWrapper.ref.fail()
+          }
+        )
+      },
+      onChange () {
+        console.log('changed')
       }
     }
   }

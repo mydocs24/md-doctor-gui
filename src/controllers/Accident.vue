@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <div class="row" v-if="doctorCase">
+    <div v-if="doctorCase">
+        <div class="row">
             <div class="col-sm-12 col-lg-9 mx-auto">
                 <breadcrumbs :items="bcItems"></breadcrumbs>
                 <div class="row mb-4">
@@ -49,7 +49,7 @@
             <h3 class="error-code">{{error.code}}</h3>
             <h4 class="error-text">{{error.text}} <small>{{error.description}}</small></h4>
         </div>
-        <patient-editor ref="patientEditor"></patient-editor>
+        <patient-editor ref="patientEditor" :doctorCaseId="doctorCase.id"></patient-editor>
     </div>
 </template>
 

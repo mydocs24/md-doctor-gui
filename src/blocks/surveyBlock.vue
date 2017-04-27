@@ -5,7 +5,7 @@
                 <label class="label">{{ $t('Select surveys') }}</label>
                 <survey-selector
                         name="survey"
-                        excluded="selectedSurveys"
+                        :excluded="selectedSurveys"
                 ></survey-selector>
             </div>
             <div class="col-sm-5">
