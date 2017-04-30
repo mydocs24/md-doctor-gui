@@ -130,7 +130,16 @@ const messages = {
     'Add new survey': 'Add new survey',
     'New Survey': 'New Survey',
     'Survey title': 'Survey title',
-    'Survey description': 'Survey description'
+    'Survey description': 'Survey description',
+    'Patient City': 'Patient City',
+    'Reason of treatment': 'Reason of treatment',
+    'Patient Address': 'Patient Address',
+    'Patient Name': 'Patient Name',
+    'Name': 'Name',
+    'Edit patient data': 'Edit patient data',
+    'All fields are required': 'All fields are required',
+    'Main': 'Main',
+    'Reason should be provided': 'Reason should be provided'
   }
 }
 

@@ -24,17 +24,21 @@
                     </div>
                     <div class="form-group">
                         <div class="row">
-                            <div class="col-sm-12 mx-auto">
-                                <div class="row">
-                                    <div class="col-4">
-                                        <label for="diagnostic" class="label">{{ $t('Diagnostic') }}</label>
-                                    </div>
-                                    <div class="col-8 text-right">
-                                        <a>{{ $t('Additional investigation') }}</a>
-                                    </div>
-                                </div>
+                            <div class="col-4">
+                                <label for="diagnostic" class="label">{{ $t('Diagnostic') }}</label>
+                            </div>
+                            <div class="col-8 text-right">
+                                <a @click="withInvestigation = !withInvestigation">{{ $t('Additional investigation') }}</a>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div :class="withInvestigation ? 'col-sm-6': 'col-sm-12'">
                                 <textarea class="form-control" name="diagnostic" id="diagnostic"
-                                          rows="10"></textarea>
+                                          :placeholder="$t('Diagnostic')" rows="10"></textarea>
+                            </div>
+                            <div class="col-sm-6" v-if="withInvestigation">
+                                <textarea name="investigation" rows="10"
+                                          :placeholder="$t('Additional Investigation')" class="form-control"></textarea>
                             </div>
                         </div>
                     </div>
@@ -54,13 +58,31 @@
         <div class="card-footer">
             <div class="row">
                 <div class="col-6 text-center">
-                    <button class="btn btn-lg btn-warning" @click="doReject()">{{ $t('Reject') }}</button>
+                    <button class="btn btn-lg btn-warning" @click="doReject">{{ $t('Reject') }}</button>
                 </div>
                 <div class="col-6 text-center">
-                    <button class="btn btn-lg btn-success">{{ $t('Accept') }}</button>
+                    <button class="btn btn-lg btn-success" @click="doAccept">{{ $t('Accept') }}</button>
                 </div>
             </div>
         </div>
+
+        <b-modal ref="rejectCaseModal">
+            <h4 slot="modal-header">{{ $t('Reject Case') }}</h4>
+            <div slot="modal-body">
+                <b-alert :show="!rejectValid" state="danger" dismissible>
+                    {{ $t('Reason should be provided') }}
+                </b-alert>
+
+                <textarea :placeholder="$t('Reject Reason')" class="form-control"
+                          v-model="rejectCommentary"
+                          @keyup.enter="doReject"
+                ></textarea>
+            </div>
+            <span slot="modal-footer">
+                <button class="btn btn-warning" @click="sendReject">{{ $t('Reject') }}</button>
+            </span>
+        </b-modal>
+
     </div>
 </template>
 <style lang="scss">
@@ -90,6 +112,13 @@
     },
     mounted: function () {
       this.fetchData()
+    },
+    data () {
+      return {
+        rejectCommentary: '',
+        rejectValid: true,
+        withInvestigation: false
+      }
     },
     props: {
       id: {
@@ -149,6 +178,58 @@
             if (--started <= 0) {
               this.loadingBarWrapper.ref.done()
             }
+          }
+        )
+      },
+
+      doReject () {
+        this.rejectValid = true
+        this.$refs.rejectCaseModal.show()
+      },
+
+      isRejectValid () {
+        this.rejectValid = !!this.rejectCommentary.length
+        return this.rejectValid
+      },
+
+      sendReject () {
+        if (this.isRejectValid()) {
+          this.loadingBarWrapper.ref.start()
+          AccidentProvider.reject(this.id, this.rejectCommentary).then(
+            response => {
+              this.$refs.surveysBlock.setSelectedSurveys(response.data.surveys)
+              this.loadingBarWrapper.ref.done()
+              this.$root.$on('hidden::modal', () => {
+                this.$emit('rejected')
+              })
+              this.$refs.rejectCaseModal.hide()
+            }
+          ).catch(
+            err => {
+              this.httpErrorWrapper.ref.error(err)
+              this.loadingBarWrapper.ref.done()
+            }
+          )
+        }
+      },
+
+      doAccept () {
+        AccidentProvider.save(this.id, {
+          services: [],
+          surveys: []
+        }).then(
+          response => {
+            this.$refs.surveysBlock.setSelectedSurveys(response.data.surveys)
+            this.loadingBarWrapper.ref.done()
+            this.$root.$off('hidden::modal').$on('hidden::modal', () => {
+              this.$emit('accepted')
+            })
+            this.$refs.rejectCaseModal.hide()
+          }
+        ).catch(
+          err => {
+            this.httpErrorWrapper.ref.error(err)
+            this.loadingBarWrapper.ref.done()
           }
         )
       }

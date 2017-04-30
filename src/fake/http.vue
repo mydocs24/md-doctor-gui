@@ -314,6 +314,16 @@
       }
     },
     {
+      method: 'PATCH',
+      url: 'doctor/accidents/17/patient',
+      response: {success: true}
+    },
+    {
+      method: 'PATCH',
+      url: 'doctor/accidents/17/reject',
+      response: {success: true}
+    },
+    {
       method: 'GET',
       url: 'doctor/accidents/17/status',
       response: {status: 'new'}

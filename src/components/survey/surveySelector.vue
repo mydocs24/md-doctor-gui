@@ -12,8 +12,6 @@
         ></v-select>
     </div>
 </template>
-<style lang="scss">
-</style>
 <script>
   import _ from 'lodash'
   import vSelect from 'vue-select'
@@ -27,7 +25,7 @@
     props: {
       excluded: {
         type: Array,
-        default: []
+        default: () => []
       }
     },
     data () {
