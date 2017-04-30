@@ -63,6 +63,9 @@
           }
         )
       },
+      reload () {
+        this.fetchData()
+      },
       onEdit () {
         this.$emit('on-edit')
       }

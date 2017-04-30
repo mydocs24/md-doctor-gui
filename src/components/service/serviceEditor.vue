@@ -78,12 +78,7 @@
         this.valid = true
       },
       isValid () {
-        if (this.title.length && this.description.length && this.price.length) {
-          this.valid = true
-        } else {
-          this.valid = false
-        }
-
+        this.valid = this.title.length && this.description.length && this.price.length
         return this.valid
       },
       onSave () {

@@ -24,6 +24,9 @@
     getAccident (id) {
       return Vue.http.get(this.getUrl() + '/' + id, this.httpOptions)
     },
+    save (id, data) {
+      return Vue.http.patch(this.getUrl() + '/' + id, data, this.httpOptions)
+    },
 
     /**
      * Services from this case
@@ -43,6 +46,12 @@
     },
     getSurveys (id) {
       return Vue.http.get(this.getUrl() + '/' + id + '/surveys', this.httpOptions)
+    },
+    patchPatient (id, patientData) {
+      return Vue.http.patch(this.getUrl() + '/' + id + '/patient', patientData, this.httpOptions)
+    },
+    reject (id, commentary) {
+      return Vue.http.patch(this.getUrl() + '/' + id + '/reject', {comment: commentary})
     }
   }
 </script>

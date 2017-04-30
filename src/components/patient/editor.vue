@@ -23,24 +23,11 @@
                 <div class="form-group">
                     <div class="row">
                         <div class="col-12">
-                            <label class="label">{{ $t('Phone') }}</label>
-                            <input
-                                    @change="onChange"
-                                    class="form-control"
-                                    v-model="patient.phones"
-                                    :placeholder="$t('Patient Phone')"
-                                    required>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col-12">
                             <label class="label">{{ $t('City') }}</label>
                             <input
                                     @change="onChange"
                                     class="form-control"
-                                    v-model="patient.address"
+                                    v-model="patient.city"
                                     :placeholder="$t('Patient City')"
                                     required>
                         </div>
@@ -103,7 +90,34 @@
     },
     methods: {
       open (caseId) {
-        console.log('opened')
+        this.$refs.patientEditorModal.show()
+      },
+      onClose () {
+        this.$refs.patientEditorModal.hide()
+      },
+      onOpen () {
+        this.open()
+      },
+      isValid () {
+        this.valid = this.patient.name.length && this.patient.address.length &&
+          this.patient.city.length && this.patient.reason.length
+        return this.valid
+      },
+      onSave () {
+        if (this.isValid()) {
+          this.loadingBarWrapper.ref.start()
+          AccidentProvider.patchPatient(this.doctorCaseId, this.patient).then(
+            response => {
+              this.onClose()
+              this.$emit('updated')
+              this.loadingBarWrapper.ref.done()
+            },
+            err => {
+              this.httpErrorWrapper.ref.error(err)
+              this.loadingBarWrapper.ref.fail()
+            }
+          )
+        }
       },
       fetchData () {
         this.loadingBarWrapper.ref.start()

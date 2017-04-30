@@ -6,8 +6,9 @@
                 <div class="row mb-4">
                     <div class="col-sm-8 col-md-7 col-lg-6">
                         <patient-info-card
-                            :doctor-case-id="doctorCase.id"
-                            @on-edit="openPatientEditor"
+                                ref="patientInfoCard"
+                                :doctor-case-id="doctorCase.id"
+                                @on-edit="openPatientEditor"
                         ></patient-info-card>
                     </div>
                     <div class="col-sm-4 col-lg-5 col-lg-6">
@@ -23,6 +24,8 @@
                 </div>
                 <case-edit-form
                     :id="doctorCase.id"
+                    @accepted="onAccepted"
+                    @rejected="onRejected"
                 ></case-edit-form>
                 <footer class="footer">
                     <p class="mb-3 mt-2 text-center">
@@ -32,24 +35,11 @@
             </div>
         </div>
 
-        <b-modal ref="rejectCaseModal">
-            <h4 slot="modal-header">{{ $t('Reject Case') }}</h4>
-            <div slot="modal-body">
-                <textarea :placeholder="$t('Reject Reason')" class="form-control"
-                          v-model="rejectCommentary"
-                          @keyup.enter="doReject"
-                ></textarea>
-            </div>
-            <span slot="modal-footer">
-                <button class="btn btn-warning" @click="sendReject()">Reject</button>
-            </span>
-        </b-modal>
-
-        <div v-if="error.show">
-            <h3 class="error-code">{{error.code}}</h3>
-            <h4 class="error-text">{{error.text}} <small>{{error.description}}</small></h4>
-        </div>
-        <patient-editor ref="patientEditor" :doctorCaseId="doctorCase.id"></patient-editor>
+        <patient-editor
+                ref="patientEditor"
+                :doctorCaseId="doctorCase.id"
+                @updated="patientUpdated"
+        ></patient-editor>
     </div>
 </template>
 
@@ -78,17 +68,10 @@
     },
     data () {
       return {
-        rejectCommentary: '',
-        error: {
-          show: false,
-          code: 0,
-          title: '',
-          description: ''
-        },
         src: '',
         doctorCase: null,
         bcItems: [{
-          text: 'Main',
+          text: this.$t('Main'),
           link: '/doctor'
         }]
       }
@@ -120,17 +103,20 @@
         )
       },
 
-      doReject () {
-        console.log('will be done reject')
-        this.$refs.rejectCaseModal.show()
-      },
-
-      sendReject () {
-        this.$refs.rejectCaseModal.hide()
-      },
-
       openPatientEditor () {
         this.$refs.patientEditor.open(this.doctorCase.id)
+      },
+
+      patientUpdated () {
+        this.$refs.patientInfoCard.reload()
+      },
+
+      onAccepted () {
+        this.$router.push({ path: '/' })
+      },
+
+      onRejected () {
+        this.$router.push({ path: '/' })
       }
     }
   }
