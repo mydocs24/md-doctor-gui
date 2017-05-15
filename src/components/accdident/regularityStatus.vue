@@ -29,7 +29,7 @@
         this.loadingBarWrapper.ref.start()
         AccidentProvider.getRegularityStatus(this.id).then(
           (response) => {
-            this.status = response.body.status
+            this.status = response.status
             this.loadingBarWrapper.ref.done()
           },
           (err) => {

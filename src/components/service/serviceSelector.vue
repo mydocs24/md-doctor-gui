@@ -46,8 +46,8 @@
         loading(true)
         ServiceProvider.get().then(
           (response) => {
-            this.services = response.body.data
-            loading(false)
+            this.services = response.data
+            loading(true)
             this.loadingBarWrapper.ref.done()
           },
           (err) => {
@@ -61,7 +61,7 @@
         this.loadingBarWrapper.ref.start()
         ServiceProvider.get().then(
           (response) => {
-            this.options = response.body.data
+            this.options = response.data
             this.loadingBarWrapper.ref.done()
           },
           (err) => {

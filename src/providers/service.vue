@@ -2,9 +2,7 @@
   /**
    * Services
    */
-  import Vue from 'vue'
-  import VueResource from 'vue-resource'
-  Vue.use(VueResource)
+  import axios from 'axios'
 
   const servicesUrl = 'doctor/services'
 
@@ -23,10 +21,10 @@
       return servicesUrl
     },
     get () {
-      return Vue.http.get(this.getUrl(), this.httpOptions)
+      return axios.get(this.getUrl(), this.httpOptions)
     },
     post (data) {
-      return Vue.http.post(this.getUrl(), data)
+      return axios.post(this.getUrl(), data)
     }
   }
 </script>

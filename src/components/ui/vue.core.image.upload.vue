@@ -32,8 +32,6 @@
             </div>
         </div>
     </div>
-
-
 </template>
 
 <style>
@@ -260,9 +258,9 @@
         },
         text: {
           type: String,
-          default: 'Upload Image'
+          'default': 'Upload Image'
         },
-        class: {
+        classes: {
           type: Array,
           default: function () {
             return []
@@ -270,19 +268,19 @@
         },
         extensions: {
           type: String,
-          default: 'png.jpg,jpeg,gif,svg,webp'
+          'default': 'png.jpg,jpeg,gif,svg,webp'
         },
         inputOfFile: {
           type: String,
-          default: 'files'
+          'default': 'files'
         },
         crop: {
           type: Boolean,
-          default: false
+          'default': false
         },
         cropBtn: {
           type: Object,
-          default: function () {
+          'default': function () {
             return {
               ok: 'Ok',
               cancel: 'Cancel'
@@ -291,11 +289,11 @@
         },
         cropRatio: {
           type: String,
-          default: '1:1'
+          'default': '1:1'
         },
         maxFileSize: {
           type: Number,
-          default: 1024 * 1024 * 100
+          'default': 1024 * 1024 * 100
         },
         maxWidth: {
           type: Number
@@ -305,15 +303,15 @@
         },
         inputAccept: {
           type: String,
-          default: 'image/jpg,image/jpeg,image/png'
+          'default': 'image/jpg,image/jpeg,image/png'
         },
         isXhr: {
           type: Boolean,
-          default: true
+          'default': true
         },
         headers: {
           type: Object,
-          default: function () {
+          'default': function () {
             return {}
           }
         }

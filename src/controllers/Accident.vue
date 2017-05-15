@@ -88,7 +88,7 @@
         this.doctorCase = null
         AccidentProvider.getAccident(this.$route.params.id).then(
           (response) => {
-            this.doctorCase = response.body
+            this.doctorCase = response.data
             // put it into breadcrumbs
             this.bcItems.push({
               text: this.doctorCase.accident.refNum,
