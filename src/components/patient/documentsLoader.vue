@@ -17,7 +17,7 @@
         <div class="col-6 col-sm-12 col-lg-6">
             <figure class="figure w-100">
                 <vue-core-image-upload
-                        v-bind:class="['pure-button','pure-button-primary','js-btn-crop']"
+                        v-bind:classes="['pure-button','pure-button-primary','js-btn-crop']"
                         v-bind:crop="true"
                         cropRatio="2:1"
                         text="Take a photo"

@@ -2,9 +2,7 @@
   /**
    * Services
    */
-  import Vue from 'vue'
-  import VueResource from 'vue-resource'
-  Vue.use(VueResource)
+  import axios from 'axios'
 
   const caseTypesUrl = 'doctor/caseTypes'
 
@@ -23,7 +21,7 @@
       return caseTypesUrl
     },
     get () {
-      return Vue.http.get(this.getUrl(), this.httpOptions)
+      return axios.get(this.getUrl(), this.httpOptions)
     }
   }
 </script>

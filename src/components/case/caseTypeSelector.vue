@@ -8,18 +8,16 @@
                 label="title"
                 :placeholder="$t('Case type')"
         ></v-select>
-        <http-error-component ref="caseTypeError"></http-error-component>
     </div>
 </template>
 <script>
   import vSelect from 'vue-select'
-  import HttpErrorComponent from '../../components/ui/http/error.vue'
   import CaseTypeProvider from '../../providers/caseType.vue'
 
   export default {
+    inject: ['loadingBarWrapper', 'httpErrorWrapper'],
     components: {
-      vSelect,
-      HttpErrorComponent
+      vSelect
     },
     props: {
       excluded: {
@@ -39,12 +37,15 @@
     },
     methods: {
       fetchData () {
+        this.loadingBarWrapper.ref.start()
         CaseTypeProvider.get().then(
           (response) => {
-            this.options = response.body.data
+            this.options = response.data.toArray()
+            this.loadingBarWrapper.ref.done()
           },
           (err) => {
-            this.$refs.caseTypeError.error(err)
+            this.loadingBarWrapper.ref.done()
+            this.httpErrorWrapper.ref.error(err)
           }
         )
       },
