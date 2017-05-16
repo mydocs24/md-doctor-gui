@@ -61,7 +61,7 @@
         this.loadingBarWrapper.ref.start()
         ServiceProvider.get().then(
           (response) => {
-            this.options = response.data
+            this.options = response.data.data
             this.loadingBarWrapper.ref.done()
           },
           (err) => {

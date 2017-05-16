@@ -54,7 +54,7 @@
         this.loadingBarWrapper.ref.start()
         AccidentProvider.getPatient(this.doctorCaseId).then(
           (response) => {
-            this.patient = response.body
+            this.patient = response.data
             this.loadingBarWrapper.ref.done()
           },
           (err) => {

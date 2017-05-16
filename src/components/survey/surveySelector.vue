@@ -44,7 +44,7 @@
         loading(true)
         SurveyProvider.get().then(
           (response) => {
-            this.surveys = response.body.data
+            this.surveys = response.data.data
             loading(false)
             this.loadingBarWrapper.ref.done()
           },
@@ -59,7 +59,7 @@
         this.loadingBarWrapper.ref.start()
         SurveyProvider.get().then(
           (response) => {
-            this.options = response.body.data
+            this.options = response.data.data
             this.loadingBarWrapper.ref.done()
           },
           (err) => {
