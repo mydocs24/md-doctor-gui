@@ -40,7 +40,7 @@
         this.loadingBarWrapper.ref.start()
         CaseTypeProvider.get().then(
           (response) => {
-            this.options = response.data.toArray()
+            this.options = response.data.data
             this.loadingBarWrapper.ref.done()
           },
           (err) => {
