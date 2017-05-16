@@ -106,7 +106,7 @@ const messages = {
     'Case type': 'Case type',
     'Survey': 'Survey',
     'Add survey': 'Add survey',
-    'Diagnostic': 'Diagnostic',
+    'Diagnose': 'Diagnose',
     'Additional investigation': 'Additional investigation',
     'Services': 'Services',
     'Service': 'Service',
@@ -139,7 +139,8 @@ const messages = {
     'Edit patient data': 'Edit patient data',
     'All fields are required': 'All fields are required',
     'Main': 'Main',
-    'Reason should be provided': 'Reason should be provided'
+    'Reason should be provided': 'Reason should be provided',
+    'Additional Investigation': 'Additional Investigation'
   }
 }
 

@@ -25,7 +25,7 @@
                     <div class="form-group">
                         <div class="row">
                             <div class="col-4">
-                                <label for="diagnostic" class="label">{{ $t('Diagnostic') }}</label>
+                                <label class="label">{{ $t('Diagnose') }}</label>
                             </div>
                             <div class="col-8 text-right">
                                 <a @click="withInvestigation = !withInvestigation">{{ $t('Additional investigation') }}</a>
@@ -33,8 +33,8 @@
                         </div>
                         <div class="row">
                             <div :class="withInvestigation ? 'col-sm-6': 'col-sm-12'">
-                                <textarea class="form-control" name="diagnostic" id="diagnostic"
-                                          :placeholder="$t('Diagnostic')" rows="10"></textarea>
+                                <textarea class="form-control"
+                                          :placeholder="$t('Diagnose')" rows="10"></textarea>
                             </div>
                             <div class="col-sm-6" v-if="withInvestigation">
                                 <textarea name="investigation" rows="10"
