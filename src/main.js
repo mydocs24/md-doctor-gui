@@ -8,7 +8,9 @@ import VueEvents from 'vue-events'
 import App from './App'
 import Hello from './controllers/Hello'
 import NotFoundComponent from './controllers/system/404'
-import AuthHttp from './http/httpAxios.laravel.vue'
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+import VueAuth from '@websanova/vue-auth'
 
 Vue.use(BootstrapVue)
 Vue.use(VueRouter)
@@ -54,7 +56,7 @@ const routes = [
   { path: '*', component: NotFoundComponent }
 ]
 
-const router = new VueRouter({
+Vue.router = new VueRouter({
   mode: 'history',
   routes: routes,
   base: __dirname,
@@ -152,6 +154,14 @@ const messages = {
   }
 }
 
+Vue.use(VueAxios, axios)
+Vue.use(VueAuth, {
+  auth: require('@websanova/vue-auth/drivers/auth/bearer.js'),
+  http: require('@websanova/vue-auth/drivers/http/axios.1.x.js'),
+  router: require('@websanova/vue-auth/drivers/router/vue-router.2.x.js'),
+  rolesVar: 'doctor'
+})
+
 // Create VueI18n instance with options
 const i18n = new VueI18n({
   locale: 'en', // set locale
@@ -162,7 +172,7 @@ const i18n = new VueI18n({
 window.vm = new Vue({
   el: '#app',
   template: '<App/>',
-  components: { App, AuthHttp },
-  router,
+  components: { App },
+  router: Vue.router,
   i18n
 })
