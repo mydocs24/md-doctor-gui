@@ -7,16 +7,6 @@
   const surveysUrl = 'doctor/surveys'
 
   export default {
-    data () {
-      return {
-        httpOptions: {
-          type: Object,
-          'default': function () {
-            return {}
-          }
-        }
-      }
-    },
     getUrl () {
       return surveysUrl
     },

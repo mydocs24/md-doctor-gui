@@ -8,7 +8,8 @@ import VueEvents from 'vue-events'
 import App from './App'
 import Hello from './controllers/Hello'
 import NotFoundComponent from './controllers/system/404'
-import FakeHttp from './fake/httpAxios.vue'
+// import FakeHttp from './fake/httpAxios.vue'
+import FakeHttp from './fake/httpAxios.laravel.vue'
 
 Vue.use(BootstrapVue)
 Vue.use(VueRouter)
