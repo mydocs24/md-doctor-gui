@@ -142,7 +142,6 @@ import CustomActions from './CustomActions'
 import MyDetailRow from './DetailRow'
 import FilterBar from './FilterBar'
 import Vue from 'vue'
-import topProgress from 'vue-top-progress'
 import AccidentProvider from '../../providers/accident.vue'
 import DialogConfirm from '../../components/ui/dialog/confirm.vue'
 
@@ -156,7 +155,6 @@ export default {
     VuetablePaginationInfo,
     FilterBar,
     CustomActions,
-    topProgress,
     DialogConfirm
   },
   data () {

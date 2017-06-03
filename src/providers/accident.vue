@@ -3,27 +3,17 @@
 
   const accidentUrl = 'doctor/accidents'
   export default {
-    data () {
-      return {
-        httpOptions: {
-          type: Object,
-          'default': function () {
-            return {}
-          }
-        }
-      }
-    },
     getUrl () {
       return accidentUrl
     },
     get () {
-      return axios.get(this.getUrl(), this.httpOptions)
+      return axios.get(this.getUrl())
     },
     getAccident (id) {
-      return axios.get(this.getUrl() + '/' + id, this.httpOptions)
+      return axios.get(this.getUrl() + '/' + id)
     },
     save (id, data) {
-      return axios.patch(this.getUrl() + '/' + id, data, this.httpOptions)
+      return axios.patch(this.getUrl() + '/' + id, data)
     },
 
     /**
@@ -31,22 +21,22 @@
      * @param id
      */
     getServices (id) {
-      return axios.get(this.getUrl() + '/' + id + '/services', this.httpOptions)
+      return axios.get(this.getUrl() + '/' + id + '/services')
     },
     getCaseType (id) {
-      return axios.get(this.getUrl() + '/' + id + '/caseType', this.httpOptions)
+      return axios.get(this.getUrl() + '/' + id + '/caseType')
     },
     getPatient (id) {
-      return axios.get(this.getUrl() + '/' + id + '/patient', this.httpOptions)
+      return axios.get(this.getUrl() + '/' + id + '/patient')
     },
     getRegularityStatus (id) {
-      return axios.get(this.getUrl() + '/' + id + '/status', this.httpOptions)
+      return axios.get(this.getUrl() + '/' + id + '/status')
     },
     getSurveys (id) {
-      return axios.get(this.getUrl() + '/' + id + '/surveys', this.httpOptions)
+      return axios.get(this.getUrl() + '/' + id + '/surveys')
     },
     patchPatient (id, patientData) {
-      return axios.patch(this.getUrl() + '/' + id + '/patient', patientData, this.httpOptions)
+      return axios.patch(this.getUrl() + '/' + id + '/patient', patientData)
     },
     reject (id, commentary) {
       return axios.patch(this.getUrl() + '/' + id + '/reject', {comment: commentary})

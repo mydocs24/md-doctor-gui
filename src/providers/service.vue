@@ -7,21 +7,11 @@
   const servicesUrl = 'doctor/services'
 
   export default {
-    data () {
-      return {
-        httpOptions: {
-          type: Object,
-          'default': function () {
-            return {}
-          }
-        }
-      }
-    },
     getUrl () {
       return servicesUrl
     },
     get () {
-      return axios.get(this.getUrl(), this.httpOptions)
+      return axios.get(this.getUrl())
     },
     post (data) {
       return axios.post(this.getUrl(), data)
