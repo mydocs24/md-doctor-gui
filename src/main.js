@@ -8,8 +8,7 @@ import VueEvents from 'vue-events'
 import App from './App'
 import Hello from './controllers/Hello'
 import NotFoundComponent from './controllers/system/404'
-// import FakeHttp from './fake/httpAxios.vue'
-import FakeHttp from './fake/httpAxios.laravel.vue'
+import AuthHttp from './http/httpAxios.laravel.vue'
 
 Vue.use(BootstrapVue)
 Vue.use(VueRouter)
@@ -41,6 +40,12 @@ const Bar = {template: '<div>bar</div>'}
 const routes = [
   // default component when page not found
   { path: '/', component: Dashboard },
+  {
+    path: '/login',
+    name: 'login',
+    component: require('./controllers/Login.vue'),
+    meta: {auth: false}
+  },
   { path: '/doctor/accidents/:id', component: Accident },
   { path: '/doctor/profile', component: Profile },
   { path: '/component1', component: Foo },
@@ -51,7 +56,9 @@ const routes = [
 
 const router = new VueRouter({
   mode: 'history',
-  routes: routes
+  routes: routes,
+  base: __dirname,
+  hashbang: false
 })
 
 // lang
@@ -151,18 +158,11 @@ const i18n = new VueI18n({
   messages // set locale messages
 })
 
-// set locales
-/*
-Object.keys(locales).forEach(function (lang) {
-  Vue.locale(lang, locales[lang])
-})
-*/
-
 /* eslint-disable no-new */
 window.vm = new Vue({
   el: '#app',
   template: '<App/>',
-  components: { App, FakeHttp },
+  components: { App, AuthHttp },
   router,
   i18n
 })

@@ -1,0 +1,166 @@
+<template>
+    <div class="login-container">
+        <div class="login-content">
+            <form v-on:submit.prevent="login()" class="login-form">
+                <a href="#main" class="login-brand">{{ $t('MyDoctors24.com') }}</a>
+
+                <div class="login-email">
+                    <input type="text" class="form-control" placeholder="E-Mail" v-model="data.body.username">
+                </div>
+
+                <div class="login-email">
+                    <input type="password" class="form-control" placeholder="Password" v-model="data.body.password">
+                </div>
+
+                <div class="login-buttons">
+                    <button type="submit" class="enter-btn">Log In</button>
+                </div>
+
+                <footer class="login-footer">
+                    <a href="#forgot">Forgot Password</a>
+                </footer>
+
+                <div v-show="error" style="color:red;word-wrap:break-word">{{ error | json }}</div>
+            </form>
+        </div>
+    </div>
+</template>
+<style type="scss">
+    .login-footer > a {
+        color: #636c72 !important;
+        &:hover {
+            color: #4b5257 !important;
+        }
+    }
+
+    .login-container {
+        font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+        font-size: 14px;
+        line-height: 1.6;
+        display: table;
+        width: 100%;
+        height: 100vh;
+        position: relative;
+        margin-left: auto;
+        margin-right: auto;
+        padding-right: 15px;
+        padding-left: 15px;
+    }
+
+    @media (min-width: 576px) {
+        .login-container {
+            padding-right: 15px;
+            padding-left: 15px;
+        }
+    }
+
+    @media (min-width: 768px) {
+        .login-container {
+            padding-right: 15px;
+            padding-left: 15px;
+        }
+    }
+
+    @media (min-width: 992px) {
+        .login-container {
+            padding-right: 15px;
+            padding-left: 15px;
+        }
+    }
+
+    @media (min-width: 1200px) {
+        .login-container {
+            padding-right: 15px;
+            padding-left: 15px;
+        }
+    }
+
+    .login-content {
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+    .login-form {
+        max-width: 280px;
+        margin-top: -60px;
+        text-align: center !important;
+        margin-right: auto !important;
+        margin-left: auto !important;
+    }
+
+    .login-brand {
+        width: 40%;
+        display: inline-block;
+        margin-bottom: 3rem !important;
+    }
+
+    .login-email {
+        margin-bottom: 1rem;
+    }
+
+    .login-buttons {
+        margin-bottom: 3rem;
+    }
+
+    .enter-btn {
+        color: #fff;
+        background-color: #3097D1;
+        border-color: #3097D1;
+        display: inline-block;
+        font-weight: normal;
+        line-height: 1.25;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        border: 1px solid transparent;
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+        border-radius: 0.25rem;
+        -webkit-transition: all 0.2s ease-in-out;
+        transition: all 0.2s ease-in-out;
+    }
+</style>
+<script>
+  export default {
+    data () {
+      return {
+        context: 'login context',
+        data: {
+          body: {
+            username: 'admin',
+            password: 'secret'
+          },
+          rememberMe: false,
+          fetchUser: true
+        },
+        error: null
+      }
+    },
+    mounted () {
+      console.log(this.$auth.redirect())
+      // Can set query parameter here for auth redirect or just do it silently in login redirect.
+    },
+    methods: {
+      login () {
+        let redirect = this.$auth.redirect()
+        this.$auth.login({
+          body: this.data.body,
+          rememberMe: this.data.rememberMe,
+          redirect: {name: redirect ? redirect.from.name : 'account'},
+          fetchUser: this.data.fetchUser,
+          success () {
+            console.log('success ' + this.context)
+          },
+          error (res) {
+            console.log('error ' + this.context)
+            this.error = res.data
+          }
+        })
+      }
+    }
+  }
+</script>

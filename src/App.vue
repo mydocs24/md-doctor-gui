@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <b-navbar toggleable type="inverse" variant="mydoc" class="sticky-top">
+    <b-navbar v-if="$auth.ready() && loaded" toggleable type="inverse" variant="mydoc" class="sticky-top">
 
       <b-nav-toggle target="nav_collapse"/>
 
