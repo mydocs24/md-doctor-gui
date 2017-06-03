@@ -1,25 +1,34 @@
 <template>
   <div id="app">
-    <b-navbar v-if="$auth.ready() && loaded" toggleable type="inverse" variant="mydoc" class="sticky-top">
+    <div v-if="$auth.ready() && loaded">
+      <b-navbar toggleable type="inverse" variant="mydoc" class="sticky-top">
 
-      <b-nav-toggle target="nav_collapse"/>
+        <b-nav-toggle target="nav_collapse"/>
 
-      <div class="container">
-        <router-link to="/" class="navbar-brand">{{ $t("MeDoctor") }}</router-link>
+        <div class="container">
+          <router-link to="/" class="navbar-brand">{{ $t("MeDoctor") }}</router-link>
 
-        <b-collapse isNav id="nav_collapse">
-          <b-nav isNavBar>
-            <router-link to="/component1" class="nav-link">Component 1</router-link>
-            <router-link to="/component2" class="nav-link">Component 2</router-link>
-            <router-link to="/hello" class="nav-link">Hello</router-link>
-          </b-nav>
-        </b-collapse>
+          <b-collapse isNav id="nav_collapse">
+            <b-nav isNavBar>
+              <router-link to="/component1" class="nav-link">Component 1</router-link>
+              <router-link to="/component2" class="nav-link">Component 2</router-link>
+              <router-link to="/hello" class="nav-link">Hello</router-link>
+            </b-nav>
+          </b-collapse>
+        </div>
+      </b-navbar>
+
+      <div class="container main">
+        <router-view></router-view>
       </div>
-    </b-navbar>
-
-    <div class="container main">
-      <router-view></router-view>
     </div>
+
+    <div v-if="!$auth.ready() || !loaded">
+      <div style="text-align:center; padding-top:50px;">
+        Loading site...
+      </div>
+    </div>
+
     <loading-bar ref="loadingBar"></loading-bar>
     <http-error-component ref="httpErrorModal"></http-error-component>
   </div>
@@ -72,6 +81,11 @@
   }
 
   export default {
+    data () {
+      return {
+        loaded: false
+      }
+    },
     // Allows descendants to inject everything in the Providers object.
     provide: Providers,
     components: {
@@ -79,10 +93,15 @@
       HttpErrorComponent
     },
     mounted () {
+      let _this = this
       Providers.loadingBarWrapper.ref = this.$refs.loadingBar
       Providers.httpErrorWrapper.ref = this.$refs.httpErrorModal
       // Emit the app-ready event via the Event Bus
       Providers.EventBus.$emit('app-ready')
+      // Set up $auth.ready with other arbitrary loaders (ex: language file).
+      setTimeout(function () {
+        _this.loaded = true
+      }, 500)
     }
   }
 </script>
