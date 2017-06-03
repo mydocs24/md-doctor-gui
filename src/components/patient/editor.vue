@@ -3,7 +3,7 @@
         <h5 slot="modal-header">{{ $t('Edit patient data') }}</h5>
         <div slot="modal-body">
             <div class="form">
-                <b-alert :show="!valid" state="warning" dismissible>
+                <b-alert :show="!valid" variant="warning" dismissible>
                     {{ $t('All fields are required') }}
                 </b-alert>
                 <div class="form-group">

@@ -1,5 +1,5 @@
 <template>
-    <b-modal ref="feedbackModal" size="sm">
+    <b-modal ref="feedbackModal" size="sm" @visible="true">
         <h4 slot="modal-header">{{ title }}</h4>
         <div slot="modal-body">{{ text }}</div>
         <span slot="modal-footer">

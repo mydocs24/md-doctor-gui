@@ -1,5 +1,5 @@
 <template>
-    <b-alert :show="true" state="warning" dismissible>
+    <b-alert :show="true" variant="warning" dismissible>
           This is an alert
     </b-alert>
 </template>

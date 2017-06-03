@@ -69,7 +69,7 @@
         <b-modal ref="rejectCaseModal">
             <h4 slot="modal-header">{{ $t('Reject Case') }}</h4>
             <div slot="modal-body">
-                <b-alert :show="!rejectValid" state="danger" dismissible>
+                <b-alert :show="!rejectValid" variant="danger" dismissible>
                     {{ $t('Reason should be provided') }}
                 </b-alert>
 

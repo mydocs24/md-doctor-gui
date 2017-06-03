@@ -5,9 +5,9 @@ import VueRouter from 'vue-router'
 import VueI18n from 'vue-i18n'
 import BootstrapVue from 'bootstrap-vue'
 import VueEvents from 'vue-events'
-import App from './App'
-import Hello from './controllers/Hello'
-import NotFoundComponent from './controllers/system/404'
+import App from './App.vue'
+import Hello from './controllers/Hello.vue'
+import NotFoundComponent from './controllers/system/404.vue'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VueAuth from '@websanova/vue-auth'
@@ -41,18 +41,18 @@ const Bar = {template: '<div>bar</div>'}
 
 const routes = [
   // default component when page not found
-  { path: '/', component: Dashboard },
+  { path: '/', component: Dashboard, meta: {auth: true} },
   {
     path: '/login',
     name: 'login',
     component: require('./controllers/Login.vue'),
     meta: {auth: false}
   },
-  { path: '/doctor/accidents/:id', component: Accident },
-  { path: '/doctor/profile', component: Profile },
-  { path: '/component1', component: Foo },
-  { path: '/component2', component: Bar },
-  { path: '/hello', component: Hello },
+  { path: '/doctor/accidents/:id', component: Accident, meta: {auth: true} },
+  { path: '/doctor/profile', component: Profile, meta: {auth: true} },
+  { path: '/component1', component: Foo, meta: {auth: true} },
+  { path: '/component2', component: Bar, meta: {auth: true} },
+  { path: '/hello', component: Hello, meta: {auth: true} },
   { path: '*', component: NotFoundComponent }
 ]
 
@@ -153,6 +153,8 @@ const messages = {
     'Additional Investigation': 'Additional Investigation'
   }
 }
+
+axios.defaults.baseURL = 'http://127.0.0.1:8000'
 
 Vue.use(VueAxios, axios)
 Vue.use(VueAuth, {
