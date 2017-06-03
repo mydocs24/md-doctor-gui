@@ -1,7 +1,10 @@
 <template>
   <div id="app">
+    <loading-bar ref="loadingBar"></loading-bar>
+    <http-error-component ref="httpErrorModal"></http-error-component>
+
     <div v-if="$auth.ready() && loaded">
-      <b-navbar toggleable type="inverse" variant="mydoc" class="sticky-top">
+      <b-navbar  v-if="$auth.check()" toggleable type="inverse" variant="mydoc" class="sticky-top">
 
         <b-nav-toggle target="nav_collapse"/>
 
@@ -9,11 +12,24 @@
           <router-link to="/" class="navbar-brand">{{ $t("MeDoctor") }}</router-link>
 
           <b-collapse isNav id="nav_collapse">
+
             <b-nav isNavBar>
               <router-link to="/component1" class="nav-link">Component 1</router-link>
               <router-link to="/component2" class="nav-link">Component 2</router-link>
               <router-link to="/hello" class="nav-link">Hello</router-link>
             </b-nav>
+
+            <b-nav isNavBar>
+
+              <!-- Navbar dropdowns -->
+              <b-nav-item-dropdown text="Lang" right>
+                <b-dropdown-item to="#">EN</b-dropdown-item>
+                <b-dropdown-item to="#">ES</b-dropdown-item>
+                <b-dropdown-item to="#">RU</b-dropdown-item>
+                <b-dropdown-item to="#">FA</b-dropdown-item>
+              </b-nav-item-dropdown>
+            </b-nav>
+
           </b-collapse>
         </div>
       </b-navbar>
@@ -26,11 +42,9 @@
     <div v-if="!$auth.ready() || !loaded">
       <div style="text-align:center; padding-top:50px;">
         Loading site...
+        will show loading picture here
       </div>
     </div>
-
-    <loading-bar ref="loadingBar"></loading-bar>
-    <http-error-component ref="httpErrorModal"></http-error-component>
   </div>
 </template>
 
@@ -94,6 +108,11 @@
     },
     mounted () {
       let _this = this
+
+      if (!this.$auth.check()) {
+        console.log('not authorized')
+      }
+
       Providers.loadingBarWrapper.ref = this.$refs.loadingBar
       Providers.httpErrorWrapper.ref = this.$refs.httpErrorModal
       // Emit the app-ready event via the Event Bus
@@ -102,6 +121,29 @@
       setTimeout(function () {
         _this.loaded = true
       }, 500)
+    },
+    methods: {
+      logout () {
+        this.$auth.logout({
+          makeRequest: true,
+          success () {
+            console.log('success ' + this.context)
+          },
+          error () {
+            console.log('error ' + this.context)
+          }
+        })
+      },
+      logoutOther () {
+        this.$auth.logoutOther({
+          success () {
+            console.log('success ' + this.context)
+          },
+          error () {
+            console.log('error ' + this.context)
+          }
+        })
+      }
     }
   }
 </script>
