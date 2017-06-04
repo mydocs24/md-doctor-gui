@@ -69,6 +69,8 @@ Vue.use(VueI18n)
 const messages = {
   en: {
     'MeDoctor': 'MeDoctor',
+    'Log In': 'Log In',
+    'Forgot Password': 'Forgot Password',
     message: {
       hello: 'hello world',
       open: 'Open'
@@ -154,14 +156,20 @@ const messages = {
   }
 }
 
-axios.defaults.baseURL = 'http://127.0.0.1:8000'
+axios.defaults.baseURL = 'http://127.0.0.1:8000/api'
 
 Vue.use(VueAxios, axios)
 Vue.use(VueAuth, {
-  auth: require('@websanova/vue-auth/drivers/auth/bearer.js'),
+  token: [{name: 'token', authType: 'bearer', foundIn: 'response'}],
+  // auth: require('@websanova/vue-auth/drivers/auth/bearer.js'),
+  auth: require('./http/auth/bearer'),
   http: require('@websanova/vue-auth/drivers/http/axios.1.x.js'),
   router: require('@websanova/vue-auth/drivers/router/vue-router.2.x.js'),
-  rolesVar: 'doctor'
+  rolesVar: 'doctor',
+  loginData: {url: 'authenticate', redirect: '/'},
+  logoutData: {url: 'logout', redirect: '/login'},
+  fetchData: {url: 'user', method: 'GET', enabled: true},
+  refreshData: {url: 'token', method: 'GET', enabled: true, interval: 30}
 })
 
 // Create VueI18n instance with options

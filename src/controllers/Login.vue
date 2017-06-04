@@ -5,7 +5,7 @@
                 <a href="#main" class="login-brand">{{ $t('MyDoctors24.com') }}</a>
 
                 <div class="login-email">
-                    <input type="text" class="form-control" placeholder="E-Mail" v-model="data.body.username">
+                    <input type="text" class="form-control" placeholder="E-Mail" v-model="data.body.email">
                 </div>
 
                 <div class="login-email">
@@ -13,14 +13,14 @@
                 </div>
 
                 <div class="login-buttons">
-                    <button type="submit" class="enter-btn">Log In</button>
+                    <button type="submit" class="enter-btn">{{ $t('Log In') }}</button>
                 </div>
 
                 <footer class="login-footer">
-                    <a href="#forgot">Forgot Password</a>
+                    <a href="#forgot">{{ $t('Forgot Password') }}</a>
                 </footer>
 
-                <div v-show="error" style="color:red;word-wrap:break-word">{{ error | json }}</div>
+                <div v-show="error" style="color:red;word-wrap:break-word">{{ error }}</div>
             </form>
         </div>
     </div>
@@ -131,11 +131,11 @@
         context: 'login context',
         data: {
           body: {
-            username: 'admin',
-            password: 'secret'
+            email: '',
+            password: ''
           },
           rememberMe: false,
-          fetchUser: true
+          fetchUser: false
         },
         error: null
       }
@@ -146,14 +146,15 @@
     },
     methods: {
       login () {
-        let redirect = this.$auth.redirect()
+        // let redirect = this.$auth.redirect()
         this.$auth.login({
-          body: this.data.body,
+          data: this.data.body,
           rememberMe: this.data.rememberMe,
-          redirect: {name: redirect ? redirect.from.name : 'account'},
+          // redirect: {name: redirect ? redirect.from.name : 'account'},
           fetchUser: this.data.fetchUser,
-          success () {
-            console.log('success ' + this.context)
+          success (res) {
+            console.log(res)
+            console.log('success 2 ' + this.context)
           },
           error (res) {
             console.log('error ' + this.context)

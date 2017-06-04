@@ -109,14 +109,11 @@
     mounted () {
       let _this = this
 
-      if (!this.$auth.check()) {
-        console.log('not authorized')
-      }
-
       Providers.loadingBarWrapper.ref = this.$refs.loadingBar
       Providers.httpErrorWrapper.ref = this.$refs.httpErrorModal
       // Emit the app-ready event via the Event Bus
       Providers.EventBus.$emit('app-ready')
+
       // Set up $auth.ready with other arbitrary loaders (ex: language file).
       setTimeout(function () {
         _this.loaded = true
