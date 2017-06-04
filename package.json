@@ -15,9 +15,11 @@
   "dependencies": {
     "@websanova/vue-auth": "^2.11.1-beta",
     "axios": "^0.16.2",
+    "mini-toastr": "^0.6.5",
     "vue": "^2.2.0",
     "vue-axios": "^2.0.2",
     "vue-core-image-upload": "^2.0.10",
+    "vue-notifications": "^0.8.0",
     "vue-select": "github:sagalbot/vue-select",
     "vuetable-2": "^1.6.0"
   },

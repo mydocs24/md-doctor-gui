@@ -1,7 +1,6 @@
 <template>
   <div id="app">
     <loading-bar ref="loadingBar"></loading-bar>
-    <http-error-component ref="httpErrorModal"></http-error-component>
 
     <div v-if="$auth.ready() && loaded">
       <b-navbar  v-if="$auth.check()" toggleable type="inverse" variant="mydoc" class="sticky-top">
@@ -80,14 +79,10 @@
 <script>
   import Vue from 'vue'
   import LoadingBar from './components/ui/loadingBar.vue'
-  import HttpErrorComponent from './components/ui/http/error.vue'
 
   const Providers = {
     // These need to be contained in an object because providers are not reactive.
     loadingBarWrapper: {
-      ref: null
-    },
-    httpErrorWrapper: {
       ref: null
     },
     // Expose the event bus to all descendants so they can listen for the app-ready event.
@@ -103,14 +98,12 @@
     // Allows descendants to inject everything in the Providers object.
     provide: Providers,
     components: {
-      LoadingBar,
-      HttpErrorComponent
+      LoadingBar
     },
     mounted () {
       let _this = this
 
       Providers.loadingBarWrapper.ref = this.$refs.loadingBar
-      Providers.httpErrorWrapper.ref = this.$refs.httpErrorModal
       // Emit the app-ready event via the Event Bus
       Providers.EventBus.$emit('app-ready')
 
