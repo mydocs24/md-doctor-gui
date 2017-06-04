@@ -13,14 +13,16 @@
                 </div>
 
                 <div class="login-buttons">
-                    <button type="submit" class="enter-btn">{{ $t('Log In') }}</button>
+                    <button
+                            type="submit"
+                            class="enter-btn"
+                            :disabled="!valid()"
+                    >{{ $t('Log In') }}</button>
                 </div>
 
                 <footer class="login-footer">
                     <a href="#forgot">{{ $t('Forgot Password') }}</a>
                 </footer>
-
-                <div v-show="error" style="color:red;word-wrap:break-word">{{ error }}</div>
             </form>
         </div>
     </div>
@@ -137,14 +139,28 @@
           rememberMe: false,
           fetchUser: false
         },
-        error: null
+        error: {
+          title: ''
+        }
       }
     },
     mounted () {
       console.log(this.$auth.redirect())
       // Can set query parameter here for auth redirect or just do it silently in login redirect.
+      this.error.title = 'titi'
+    },
+    notifications: {
+      showLoginError: {
+        title: '',
+        message: '',
+        type: 'error', // Default: 'info', also you can use VueNotifications.type.error instead of 'error'
+        consoleMessage: 'let it be in console'
+      }
     },
     methods: {
+      valid () {
+        return this.data.body.password.length > 4 && this.data.body.email.length > 5
+      },
       login () {
         // let redirect = this.$auth.redirect()
         this.$auth.login({
@@ -153,11 +169,14 @@
           // redirect: {name: redirect ? redirect.from.name : 'account'},
           fetchUser: this.data.fetchUser,
           success (res) {
-            console.log(res)
             console.log('success 2 ' + this.context)
           },
           error (res) {
-            console.log('error ' + this.context)
+            this.showLoginError({
+              title: this.$t('Login Failed'),
+              message: this.$t('Failed to authenticate'),
+              consoleMessage: 'Failed authentication ' + res
+            })
             this.error = res.data
           }
         })

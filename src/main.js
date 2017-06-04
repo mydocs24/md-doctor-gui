@@ -12,6 +12,8 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 import VueAuth from '@websanova/vue-auth'
 
+require('./config/growlNotificator')
+
 Vue.use(BootstrapVue)
 Vue.use(VueRouter)
 Vue.use(VueEvents)
@@ -71,6 +73,8 @@ const messages = {
     'MeDoctor': 'MeDoctor',
     'Log In': 'Log In',
     'Forgot Password': 'Forgot Password',
+    'Login Failed': 'Login Failed',
+    'Failed to authenticate': 'Failed to authenticate',
     message: {
       hello: 'hello world',
       open: 'Open'
@@ -161,7 +165,6 @@ axios.defaults.baseURL = 'http://127.0.0.1:8000/api'
 Vue.use(VueAxios, axios)
 Vue.use(VueAuth, {
   token: [{name: 'token', authType: 'bearer', foundIn: 'response'}],
-  // auth: require('@websanova/vue-auth/drivers/auth/bearer.js'),
   auth: require('./http/auth/bearer'),
   http: require('@websanova/vue-auth/drivers/http/axios.1.x.js'),
   router: require('@websanova/vue-auth/drivers/router/vue-router.2.x.js'),
