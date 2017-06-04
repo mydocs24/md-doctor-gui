@@ -27,9 +27,12 @@
                                    v-if="showSend">{{ $t('Send') }}</a>
                             </div>
                         </div>
+
                         <vuetable
                           ref="vuetable"
                           :api-url="caseUrl"
+                          :api-mode="true"
+                          :http-options="httpOptions"
                           :class="css.tableClass"
                           :fields="fields"
                           pagination-path=""
@@ -162,7 +165,10 @@ export default {
       showCopy: false,
       showSign: false,
       showSend: false,
-      caseUrl: AccidentProvider.getUrl(),
+      caseUrl: Vue.axios.defaults.baseURL + '/' + AccidentProvider.getUrl(),
+      httpOptions: {
+        headers: {Authorization: 'Bearer ' + this.$auth.token()}
+      },
       showFilters: false,
       fields: [
         {
@@ -219,11 +225,9 @@ export default {
   methods: {
     getSelected () {
       let $vuetable = this.$refs.vuetable
-      let selected = $vuetable.tableData.filter(function (item) {
+      return $vuetable.tableData.filter(function (item) {
         return $vuetable.selectedTo.indexOf(item[$vuetable.trackBy]) >= 0
       })
-
-      return selected
     },
     showConfirmation (selected, msg) {
       if (!selected) {

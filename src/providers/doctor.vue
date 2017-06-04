@@ -2,7 +2,7 @@
   /**
    * Information about current doctor
    */
-  import axios from 'axios'
+  import Vue from 'vue'
 
   const doctorUrl = 'doctor/me'
 
@@ -11,10 +11,10 @@
       return doctorUrl
     },
     get () {
-      return axios.get(this.getUrl())
+      return Vue.axios.get(this.getUrl())
     },
     save (data) {
-      return axios.put(this.getUrl(), data)
+      return Vue.axios.put(this.getUrl(), data)
     }
   }
 </script>

@@ -2,7 +2,7 @@
   /**
    * Services
    */
-  import axios from 'axios'
+  import Vue from 'vue'
 
   const servicesUrl = 'doctor/services'
 
@@ -11,10 +11,10 @@
       return servicesUrl
     },
     get () {
-      return axios.get(this.getUrl())
+      return Vue.axios.get(this.getUrl())
     },
     post (data) {
-      return axios.post(this.getUrl(), data)
+      return Vue.axios.post(this.getUrl(), data)
     }
   }
 </script>
