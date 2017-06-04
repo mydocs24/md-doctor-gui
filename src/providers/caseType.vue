@@ -2,7 +2,7 @@
   /**
    * Services
    */
-  import axios from 'axios'
+  import Vue from 'vue'
 
   const caseTypesUrl = 'doctor/caseTypes'
 
@@ -11,7 +11,7 @@
       return caseTypesUrl
     },
     get () {
-      return axios.get(this.getUrl())
+      return Vue.axios.get(this.getUrl())
     }
   }
 </script>

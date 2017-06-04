@@ -2,7 +2,7 @@
   /**
    * Services
    */
-  import axios from 'axios'
+  import Vue from 'vue'
 
   const surveysUrl = 'doctor/surveys'
 
@@ -11,10 +11,10 @@
       return surveysUrl
     },
     get () {
-      return axios.get(this.getUrl(), this.httpOptions)
+      return Vue.axios.get(this.getUrl(), this.httpOptions)
     },
     post (data) {
-      return axios.post(this.getUrl(), data)
+      return Vue.axios.post(this.getUrl(), data)
     }
   }
 </script>
