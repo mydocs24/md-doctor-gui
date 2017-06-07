@@ -111,6 +111,10 @@
       setTimeout(function () {
         _this.loaded = true
       }, 500)
+
+      if (!this.$auth.check()) {
+        this.$auth.logout()
+      }
     },
     methods: {
       logout () {

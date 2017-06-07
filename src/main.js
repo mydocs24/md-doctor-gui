@@ -172,6 +172,7 @@ Vue.use(VueAuth, {
   loginData: {url: 'authenticate', redirect: '/'},
   logoutData: {url: 'logout', redirect: '/login'},
   fetchData: {url: 'user', method: 'GET', enabled: true},
+  authRedirect: {path: '/login'},
   refreshData: {url: 'token', method: 'GET', enabled: true, interval: 30}
 })
 
