@@ -24,6 +24,11 @@
         doctor: null
       }
     },
+    notifications: {
+      showGowl: {
+        type: 'error'
+      }
+    },
     methods: {
       fetchData () {
         this.loadingBarWrapper.ref.start()
@@ -34,7 +39,7 @@
             this.loadingBarWrapper.ref.done()
           },
           (err) => {
-            this.error({
+            this.showGowl({
               title: this.$t('Loading Error'),
               message: this.$t('Something wrong happened on the server side'),
               consoleMessage: err
