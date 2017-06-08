@@ -17,6 +17,12 @@
                         <br><span class="ml-1">{{ doctor.phones }}</span>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-12">
+                        <b :title="$t('Medical Board Number')">{{ $t('MBN') }}</b>
+                        <br><span class="ml-1">{{ doctor.mbn }}</span>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -49,7 +55,7 @@
         this.doctor = null
         DoctorProvider.get().then(
           (response) => {
-            this.doctor = response.data
+            this.doctor = response.data.data
             this.loadingBarWrapper.ref.done()
           },
           (err) => {

@@ -35,7 +35,7 @@
         this.doctor = null
         DoctorProvider.get().then(
           (response) => {
-            this.doctor = response.data
+            this.doctor = response.data.data
             this.loadingBarWrapper.ref.done()
           },
           (err) => {
