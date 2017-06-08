@@ -3,7 +3,7 @@
     <loading-bar ref="loadingBar"></loading-bar>
 
     <div v-if="$auth.ready() && loaded">
-      <b-navbar  v-if="$auth.check()" toggleable type="inverse" variant="mydoc" class="sticky-top">
+      <b-navbar  v-if="$auth.check()" toggleable type="inverse" variant="mydoc" :class="'sticky-top'">
 
         <b-nav-toggle target="nav_collapse"/>
 
@@ -11,14 +11,12 @@
           <router-link to="/" class="navbar-brand">{{ $t("MeDoctor") }}</router-link>
 
           <b-collapse isNav id="nav_collapse">
-
             <b-nav isNavBar>
               <router-link to="/component1" class="nav-link">Component 1</router-link>
               <router-link to="/component2" class="nav-link">Component 2</router-link>
               <router-link to="/hello" class="nav-link">Hello</router-link>
             </b-nav>
-
-            <b-nav isNavBar>
+            <b-nav is-nav-bar class="ml-auto">
 
               <!-- Navbar dropdowns -->
               <b-nav-item-dropdown text="Lang" right>
@@ -26,9 +24,20 @@
                 <b-dropdown-item to="#">ES</b-dropdown-item>
                 <b-dropdown-item to="#">RU</b-dropdown-item>
                 <b-dropdown-item to="#">FA</b-dropdown-item>
-              </b-nav-item-dropdown>
-            </b-nav>
 
+              </b-nav-item-dropdown>
+
+              <b-nav-item-dropdown right>
+                <!-- Using text slot -->
+                <template slot="text">
+                  <span style="font-weight: bold;">User</span>
+                </template>
+
+                <b-dropdown-item to="#">Profile</b-dropdown-item>
+                <b-dropdown-item to="#">Signout</b-dropdown-item>
+              </b-nav-item-dropdown>
+
+            </b-nav>
           </b-collapse>
         </div>
       </b-navbar>
@@ -110,11 +119,12 @@
       // Set up $auth.ready with other arbitrary loaders (ex: language file).
       setTimeout(function () {
         _this.loaded = true
+        /*
+        if (!_this.$auth.check()) {
+          _this.$auth.logout()
+        }
+        */
       }, 500)
-
-      if (!this.$auth.check()) {
-        this.$auth.logout()
-      }
     },
     methods: {
       logout () {

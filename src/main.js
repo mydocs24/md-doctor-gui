@@ -55,7 +55,20 @@ const routes = [
   { path: '/component1', component: Foo, meta: {auth: true} },
   { path: '/component2', component: Bar, meta: {auth: true} },
   { path: '/hello', component: Hello, meta: {auth: true} },
-  { path: '*', component: NotFoundComponent }
+  {
+    path: '/404',
+    name: 'error-404',
+    component: NotFoundComponent
+  }, {
+    path: '/403',
+    name: 'error-403',
+    component: require('./controllers/system/403.vue')
+  }, {
+    path: '/502',
+    name: 'error-502',
+    component: require('./controllers/system/502.vue')
+  },
+  { path: '*', name: 'no-route-404', component: NotFoundComponent }
 ]
 
 Vue.router = new VueRouter({

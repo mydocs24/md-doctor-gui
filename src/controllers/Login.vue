@@ -15,7 +15,7 @@
                 <div class="login-buttons">
                     <button
                             type="submit"
-                            class="enter-btn"
+                            class="btn btn-info"
                             :disabled="!valid()"
                     >{{ $t('Log In') }}</button>
                 </div>
@@ -145,9 +145,9 @@
       }
     },
     mounted () {
-      console.log(this.$auth.redirect())
+      /* console.log(this.$auth.redirect()) */
       // Can set query parameter here for auth redirect or just do it silently in login redirect.
-      this.error.title = 'titi'
+      // this.error.title = 'titi'
     },
     notifications: {
       showLoginError: {
