@@ -16,7 +16,7 @@
         </div>
         <div class="row mt-4" v-if="selectedSurveys && selectedSurveys.length">
             <div class="col-12">
-                <table class="table table-striped table-hover table-sm">
+                <table class="table table-striped table-hover table-sm table-bordered">
                     <thead class="thead-inverse">
                     <tr>
                         <th>

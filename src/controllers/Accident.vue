@@ -16,7 +16,6 @@
                             class="text-right mb-1"
                             :id="doctorCase.id"
                         ></accident-regularity-status>
-
                         <patient-documents-loader
                             :id="doctorCase.id"
                         ></patient-documents-loader>
@@ -82,22 +81,29 @@
     watch: {
       '$route': 'fetchData'
     },
+    notifications: {
+      showHttpError: {type: 'error'}
+    },
     methods: {
       fetchData () {
         this.loadingBarWrapper.ref.start()
         this.doctorCase = null
         AccidentProvider.getAccident(this.$route.params.id).then(
           (response) => {
-            this.doctorCase = response.data
+            this.doctorCase = response.data.data
             // put it into breadcrumbs
             this.bcItems.push({
-              text: this.doctorCase.accident.refNum,
+              text: this.doctorCase.ref_num,
               active: true
             })
             this.loadingBarWrapper.ref.done()
           },
           (err) => {
-            this.httpErrorWrapper.ref.error(err)
+            this.showHttpError({
+              title: this.$t('API Error'),
+              message: this.$t('Can\'t get Accident'),
+              consoleMessage: err.message
+            })
             this.loadingBarWrapper.ref.fail()
           }
         )

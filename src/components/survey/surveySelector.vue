@@ -18,7 +18,7 @@
   import SurveyProvider from '../../providers/survey.vue'
 
   export default {
-    inject: ['loadingBarWrapper', 'httpErrorWrapper'],
+    inject: ['loadingBarWrapper'],
     components: {
       vSelect
     },
@@ -38,8 +38,12 @@
     created: function () {
       this.fetchData()
     },
+    notifications: {
+      showHttpError: {type: 'error'}
+    },
     methods: {
       onSearch (search, loading) {
+        console.log('surveySelector should be improved to except code duplicate')
         this.loadingBarWrapper.ref.start()
         loading(true)
         SurveyProvider.get().then(
@@ -49,7 +53,11 @@
             this.loadingBarWrapper.ref.done()
           },
           (err) => {
-            this.httpErrorWrapper.ref.error(err)
+            this.showHttpError({
+              title: this.$t('API Error'),
+              message: this.$t('Can\'t get Surveys'),
+              consoleMessage: err.message
+            })
             this.loadingBarWrapper.ref.fail()
             loading(false)
           }
@@ -63,7 +71,11 @@
             this.loadingBarWrapper.ref.done()
           },
           (err) => {
-            this.httpErrorWrapper.ref.error(err)
+            this.showHttpError({
+              title: this.$t('API Error'),
+              message: this.$t('Can\'t get Surveys'),
+              consoleMessage: err.message
+            })
             this.loadingBarWrapper.ref.fail()
           }
         )

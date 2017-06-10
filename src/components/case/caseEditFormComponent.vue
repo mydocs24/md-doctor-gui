@@ -17,10 +17,14 @@
             <div class="row mt-4">
                 <div class="col-11 col-sm-10 mx-auto">
                     <div class="form-group">
-                        <services-block ref="servicesBlock"></services-block>
+                        <services-block
+                                :case-id="id"
+                                ref="servicesBlock"></services-block>
                     </div>
                     <div class="form-group">
-                        <surveys-block ref="surveysBlock"></surveys-block>
+                        <surveys-block
+                                :case-id="id"
+                                ref="surveysBlock"></surveys-block>
                     </div>
                     <div class="form-group">
                         <div class="row">
@@ -103,7 +107,7 @@
   import CaseSelector from '../case/caseTypeSelector.vue'
 
   export default {
-    inject: ['loadingBarWrapper', 'httpErrorWrapper'],
+    inject: ['loadingBarWrapper'],
     components: {
       ServicesBlock,
       SurveysBlock,
@@ -126,6 +130,9 @@
         required: true
       }
     },
+    notifications: {
+      showHttpError: {type: 'error'}
+    },
     methods: {
       fetchData () {
         let started = 0
@@ -140,7 +147,11 @@
           }
         ).catch(
           err => {
-            this.httpErrorWrapper.ref.error(err)
+            this.showHttpError({
+              title: this.$t('API Error'),
+              message: this.$t('Can\'t get accident services'),
+              consoleMessage: err.message
+            })
             if (--started <= 0) {
               this.loadingBarWrapper.ref.done()
             }
@@ -157,7 +168,11 @@
           }
         ).catch(
           err => {
-            this.httpErrorWrapper.ref.error(err)
+            this.showHttpError({
+              title: this.$t('API Error'),
+              message: this.$t('Can\'t get case type'),
+              consoleMessage: err.message
+            })
             if (--started <= 0) {
               this.loadingBarWrapper.ref.done()
             }
@@ -174,7 +189,11 @@
           }
         ).catch(
           err => {
-            this.httpErrorWrapper.ref.error(err)
+            this.showHttpError({
+              title: this.$t('API Error'),
+              message: this.$t('Can\'t get accident surveys'),
+              consoleMessage: err.message
+            })
             if (--started <= 0) {
               this.loadingBarWrapper.ref.done()
             }
@@ -206,7 +225,11 @@
             }
           ).catch(
             err => {
-              this.httpErrorWrapper.ref.error(err)
+              this.showHttpError({
+                title: this.$t('API Error'),
+                message: this.$t('Reject of the accident is failed'),
+                consoleMessage: err.message
+              })
               this.loadingBarWrapper.ref.done()
             }
           )
@@ -228,7 +251,11 @@
           }
         ).catch(
           err => {
-            this.httpErrorWrapper.ref.error(err)
+            this.showHttpError({
+              title: this.$t('API Error'),
+              message: this.$t('Can\'t save accident'),
+              consoleMessage: err.message
+            })
             this.loadingBarWrapper.ref.done()
           }
         )

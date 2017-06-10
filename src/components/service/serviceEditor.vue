@@ -2,46 +2,44 @@
     <div>
         <button class="btn btn-sm btn-info" @click.prevent="onOpen">+ {{ $t('Add new service') }}</button>
 
-        <b-modal ref="serviceEditorModal">
+        <b-modal ref="serviceEditorModal" id="serviceEditorModal">
             <h5 slot="modal-header">{{ $t('New service') }}</h5>
-            <div slot="modal-body">
-                <div class="form">
-                    <b-alert :show="!valid" variant="warning" dismissible>
-                        {{ $t('All fields should be filled') }}
-                    </b-alert>
-                    <div class="form-group">
-                        <div class="col-12">
-                            <label class="label">{{ $t('Title') }}</label>
-                            <input
-                                    @change="onChange"
-                                    type="text"
-                                    class="form-control"
-                                    v-model="title"
-                                    :placeholder="$t('Service title')"
-                                    required>
-                        </div>
+            <div class="form">
+                <b-alert :show="!valid" variant="warning" dismissible>
+                    {{ $t('All fields should be filled') }}
+                </b-alert>
+                <div class="form-group">
+                    <div class="col-12">
+                        <label class="label">{{ $t('Title') }}</label>
+                        <input
+                                @change="onChange"
+                                type="text"
+                                class="form-control"
+                                v-model="title"
+                                :placeholder="$t('Service title')"
+                                required>
                     </div>
-                    <div class="form-group">
-                        <div class="col-12">
-                            <label class="label">{{ $t('Description') }}</label>
-                            <input
-                                    @change="onChange"
-                                    class="form-control"
-                                    v-model="description"
-                                    :placeholder="$t('Service description')"
-                                    required>
-                        </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-12">
+                        <label class="label">{{ $t('Description') }}</label>
+                        <input
+                                @change="onChange"
+                                class="form-control"
+                                v-model="description"
+                                :placeholder="$t('Service description')"
+                                required>
                     </div>
-                    <div class="form-group">
-                        <div class="col-12">
-                            <label class="label">{{ $t('Price') }}</label>
-                            <input
-                                    @change="onChange"
-                                    class="form-control"
-                                    :placeholder="$t('Price')"
-                                    v-model="price"
-                                    required>
-                        </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-12">
+                        <label class="label">{{ $t('Price') }}</label>
+                        <input
+                                @change="onChange"
+                                class="form-control"
+                                :placeholder="$t('Price')"
+                                v-model="price"
+                                required>
                     </div>
                 </div>
             </div>
@@ -55,10 +53,11 @@
 <style lang="scss">
 </style>
 <script>
+  import $ from 'jquery'
   import ServiceProvider from '../../providers/service.vue'
 
   export default {
-    inject: ['loadingBarWrapper', 'httpErrorWrapper'],
+    inject: ['loadingBarWrapper'],
     data () {
       return {
         title: '',
@@ -67,12 +66,16 @@
         valid: true
       }
     },
+    notifications: {
+      showHttpError: {type: 'error'}
+    },
     methods: {
       onClose () {
         this.$refs.serviceEditorModal.hide()
       },
       onOpen () {
         this.$refs.serviceEditorModal.show()
+        $('#serviceEditorModal').css({display: 'block'})
       },
       onChange () {
         this.valid = true
@@ -91,7 +94,11 @@
               this.loadingBarWrapper.ref.done()
             },
             err => {
-              this.httpErrorWrapper.ref.error(err)
+              this.showHttpError({
+                title: this.$t('API Error'),
+                message: this.$t('Can\'t save service'),
+                consoleMessage: err.message
+              })
               this.loadingBarWrapper.ref.fail()
             }
           )

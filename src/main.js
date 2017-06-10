@@ -83,6 +83,8 @@ Vue.use(VueI18n)
 // ready translated locales
 const messages = {
   en: {
+    'Medical Board Number': 'Medical Board Number',
+    'MBN': 'MBN',
     'MeDoctor': 'MeDoctor',
     'Log In': 'Log In',
     'Forgot Password': 'Forgot Password',

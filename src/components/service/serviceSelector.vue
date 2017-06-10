@@ -20,7 +20,7 @@
   import ServiceProvider from '../../providers/service.vue'
 
   export default {
-    inject: ['loadingBarWrapper', 'httpErrorWrapper'],
+    inject: ['loadingBarWrapper'],
     components: {
       vSelect
     },
@@ -40,8 +40,12 @@
     created: function () {
       this.fetchData()
     },
+    notifications: {
+      showHttpError: {type: 'error'}
+    },
     methods: {
       onSearch (search, loading) {
+        console.log(search, 'todo need to be merged with fetch data')
         this.loadingBarWrapper.ref.start()
         loading(true)
         ServiceProvider.get().then(
@@ -51,7 +55,11 @@
             this.loadingBarWrapper.ref.done()
           },
           (err) => {
-            this.httpErrorWrapper.ref.error(err)
+            this.showHttpError({
+              title: this.$t('API Error'),
+              message: this.$t('Can\'t get Services'),
+              consoleMessage: err.message
+            })
             this.loadingBarWrapper.ref.fail()
             loading(false)
           }
@@ -65,7 +73,11 @@
             this.loadingBarWrapper.ref.done()
           },
           (err) => {
-            this.httpErrorWrapper.ref.error(err)
+            this.showHttpError({
+              title: this.$t('API Error'),
+              message: this.$t('Can\'t get Patient'),
+              consoleMessage: err.message
+            })
             this.loadingBarWrapper.ref.fail()
           }
         )

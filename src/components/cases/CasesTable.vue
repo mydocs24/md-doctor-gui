@@ -172,17 +172,17 @@ export default {
       showFilters: false,
       fields: [
         {
-          name: 'date',
+          name: 'created_at',
           title: this.$t('Date'),
-          sortField: 'date',
+          sortField: 'created_at',
           callback: 'formatDate|DD.MM.YYYY',
           titleClass: 'hidden-sm-down',
           dataClass: 'hidden-sm-down'
         },
         {
-          name: 'refNum',
+          name: 'ref_num',
           title: this.$t('Referral Num'),
-          sortField: 'refNum'
+          sortField: 'ref_num'
         },
         {
           name: 'city',
@@ -205,8 +205,8 @@ export default {
       ],
       sortOrder: [
         {
-          field: 'date',
-          sortField: 'date',
+          field: 'created_at',
+          sortField: 'created_at',
           direction: 'asc'
         }
       ],

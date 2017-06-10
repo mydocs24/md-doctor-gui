@@ -11,7 +11,7 @@
         <div class="row">
             <div class="col-sm-6">
                 <label>{{ $t('Referral Number') }}</label>
-                <h5 class="case-item">{{rowData.refNum}}</h5>
+                <h5 class="case-item">{{rowData.ref_num}}</h5>
             </div>
             <div class="col-sm-6">
                 <label>{{$t('City')}}</label>
@@ -19,18 +19,18 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-6">
+            <div class="col-sm-6" v-if="rowData.phone">
                 <label>{{$t('Phone')}}</label>
                 <p class="case-item">{{rowData.phone}}</p>
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-6" v-if="rowData.address">
                 <label>{{$t('Address')}}</label>
                 <p class="case-item">{{rowData.address}}</p>
             </div>
         </div>
-        <div class="row">
+        <div class="row" v-if="rowData.symptoms">
             <div class="col-sm-12">
-                <label>{{$t('Commentary')}}</label>
+                <label>{{$t('Symptoms')}}</label>
                 <p class="case-item">{{rowData.symptoms}}</p>
             </div>
         </div>
