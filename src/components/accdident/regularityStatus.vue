@@ -9,7 +9,7 @@
   import AccidentProvider from '../../providers/accident.vue'
 
   export default {
-    inject: ['loadingBarWrapper', 'httpErrorWrapper'],
+    inject: ['loadingBarWrapper'],
     created: function () {
       this.fetchData()
     },
@@ -24,16 +24,23 @@
         status: false
       }
     },
+    notifications: {
+      showHttpError: {type: 'error'}
+    },
     methods: {
       fetchData () {
         this.loadingBarWrapper.ref.start()
         AccidentProvider.getRegularityStatus(this.id).then(
           (response) => {
-            this.status = response.status
+            this.status = response.data.data.status
             this.loadingBarWrapper.ref.done()
           },
           (err) => {
-            this.httpErrorWrapper.ref.error(err)
+            this.showHttpError({
+              title: this.$t('API Error'),
+              message: this.$t('Can\'t get accident status'),
+              consoleMessage: err.message
+            })
             this.loadingBarWrapper.ref.fail()
           }
         )

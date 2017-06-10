@@ -12,7 +12,7 @@
             <address>
                 <div class="row">
                     <div class="col-sm-12">
-                        <a class="small" v-for="phone in patient.phones" :href="'tel:' + phone.tel">{{ phone.tel }}</a>
+                        <a class="small" :href="'tel:' + patient.phones">{{ patient.phones }}</a>
                     </div>
                 </div>
                 <div class="row">
@@ -24,7 +24,7 @@
 
             <div class="row">
                 <div class="col-sm-12 card-text text-muted">
-                    {{ patient.reason }}
+                    {{ patient.comment }}
                 </div>
             </div>
         </div>
@@ -34,7 +34,7 @@
   import AccidentProvider from '../../providers/accident.vue'
 
   export default {
-    inject: ['loadingBarWrapper', 'httpErrorWrapper'],
+    inject: ['loadingBarWrapper'],
     created: function () {
       this.fetchData()
     },
@@ -49,16 +49,23 @@
         patient: null
       }
     },
+    notifications: {
+      showHttpError: {type: 'error'}
+    },
     methods: {
       fetchData () {
         this.loadingBarWrapper.ref.start()
         AccidentProvider.getPatient(this.doctorCaseId).then(
           (response) => {
-            this.patient = response.data
+            this.patient = response.data.data
             this.loadingBarWrapper.ref.done()
           },
           (err) => {
-            this.httpErrorWrapper.ref.error(err)
+            this.showHttpError({
+              title: this.$t('API Error'),
+              message: this.$t('Can\'t get Patient'),
+              consoleMessage: err.message
+            })
             this.loadingBarWrapper.ref.fail()
           }
         )
