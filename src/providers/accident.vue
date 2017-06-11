@@ -44,6 +44,12 @@
     createDiagnostic (id, data) {
       return Vue.axios.post(this.getUrl() + '/' + id + '/diagnostics', data)
     },
+    createSurvey (id, data) {
+      return Vue.axios.post(this.getUrl() + '/' + id + '/surveys', data)
+    },
+    createService (id, data) {
+      return Vue.axios.post(this.getUrl() + '/' + id + '/services', data)
+    },
     reject (id, commentary) {
       return Vue.axios.patch(this.getUrl() + '/' + id + '/reject', {comment: commentary})
     }

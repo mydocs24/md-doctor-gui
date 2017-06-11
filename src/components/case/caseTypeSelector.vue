@@ -15,15 +15,9 @@
   import CaseTypeProvider from '../../providers/caseType.vue'
 
   export default {
-    inject: ['loadingBarWrapper', 'httpErrorWrapper'],
+    inject: ['loadingBarWrapper'],
     components: {
       vSelect
-    },
-    props: {
-      excluded: {
-        type: Array,
-        default: () => []
-      }
     },
     data () {
       return {
@@ -31,6 +25,9 @@
         options: [],
         caseTypes: []
       }
+    },
+    notifications: {
+      showHttpError: {type: 'error'}
     },
     created: function () {
       this.fetchData()
@@ -45,12 +42,16 @@
           },
           (err) => {
             this.loadingBarWrapper.ref.done()
-            this.httpErrorWrapper.ref.error(err)
+            this.showHttpError({
+              title: this.$t('API Error'),
+              message: this.$t('Can\'t get accident types'),
+              consoleMessage: err.message
+            })
           }
         )
       },
       onChange (caseType) {
-        this.$events.fire('case-type-selector:change', caseType, event)
+        this.$emit('change', caseType)
       },
       select (caseType) {
         this.selected = caseType
