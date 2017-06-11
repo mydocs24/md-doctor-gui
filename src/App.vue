@@ -3,7 +3,7 @@
     <loading-bar ref="loadingBar"></loading-bar>
 
     <div v-if="$auth.ready() && loaded">
-      <b-navbar  v-if="$auth.check()" toggleable type="inverse" variant="mydoc" :class="'sticky-top'">
+      <b-navbar v-if="$auth.check()" toggleable type="inverse" variant="mydoc" :class="'sticky-top'">
 
         <b-nav-toggle target="nav_collapse"/>
 
@@ -23,18 +23,16 @@
                 <b-dropdown-item to="#">EN</b-dropdown-item>
                 <b-dropdown-item to="#">ES</b-dropdown-item>
                 <b-dropdown-item to="#">RU</b-dropdown-item>
-                <b-dropdown-item to="#">FA</b-dropdown-item>
-
               </b-nav-item-dropdown>
 
               <b-nav-item-dropdown right>
                 <!-- Using text slot -->
                 <template slot="text">
-                  <span style="font-weight: bold;">User</span>
+                  <span style="font-weight: bold;">{{ $auth.user().email }}</span>
                 </template>
 
                 <b-dropdown-item to="#">Profile</b-dropdown-item>
-                <b-dropdown-item to="#">Signout</b-dropdown-item>
+                <b-dropdown-item v-if="$auth.check()" v-on:click="$auth.logout()">{{ $t('Logout') }}</b-dropdown-item>
               </b-nav-item-dropdown>
 
             </b-nav>
@@ -101,7 +99,8 @@
   export default {
     data () {
       return {
-        loaded: false
+        loaded: false,
+        user: null
       }
     },
     // Allows descendants to inject everything in the Providers object.
@@ -119,11 +118,6 @@
       // Set up $auth.ready with other arbitrary loaders (ex: language file).
       setTimeout(function () {
         _this.loaded = true
-        /*
-        if (!_this.$auth.check()) {
-          _this.$auth.logout()
-        }
-        */
       }, 500)
     },
     methods: {
