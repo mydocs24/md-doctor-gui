@@ -9,7 +9,9 @@
                             <label class="label">{{ $t('Case type') }}</label>
                         </div>
                         <div class="col-7">
-                            <case-selector ref="caseType"></case-selector>
+                            <case-selector
+                                    @change="onCaseTypeChanged($event)"
+                                    ref="caseType"></case-selector>
                         </div>
                     </div>
                 </div>
@@ -17,14 +19,22 @@
             <div class="row mt-4">
                 <div class="col-11 col-sm-10 mx-auto">
                     <div class="form-group">
-                        <services-block
-                                :case-id="id"
-                                ref="servicesBlock"></services-block>
+                        <select-component
+                                :label="$t('Select Services')"
+                                :title="$t('Service')"
+                                :items="services"
+                                :selectedItems="selectedServices"
+                                @save-item="onServiceSave($event)"
+                        ></select-component>
                     </div>
                     <div class="form-group">
-                        <surveys-block
-                                :case-id="id"
-                                ref="surveysBlock"></surveys-block>
+                        <select-component
+                                :label="$t('Select Surveys')"
+                                :title="$t('Survey')"
+                                :items="surveys"
+                                :selectedItems="selectedSurveys"
+                                @save-item="onSurveySave($event)"
+                        ></select-component>
                     </div>
                     <div class="form-group">
                         <select-component
@@ -99,21 +109,17 @@
     </div>
 </template>
 <script>
-  import ServicesBlock from '../../blocks/servicesBlock.vue'
-  import SurveysBlock from '../../blocks/surveyBlock.vue'
   import AccidentProvider from '../../providers/accident.vue'
   import CaseSelector from '../case/caseTypeSelector.vue'
   import SelectComponent from '../ui/selector/selector.vue'
   import DiagnosticProvider from '../../providers/diagnostic.vue'
+  import SurveyProvider from '../../providers/survey.vue'
+  import ServiceProvider from '../../providers/service.vue'
 
   export default {
     inject: ['loadingBarWrapper'],
     components: {
-      // blocks should be replaced by Selector component
-      ServicesBlock,
-      SurveysBlock,
       AccidentProvider,
-      // should be replaced by the default select
       CaseSelector,
       SelectComponent
     },
@@ -127,7 +133,13 @@
         withInvestigation: false,
         // Diagnostics
         diagnostics: [],
-        selectedDiagnostics: []
+        selectedDiagnostics: [],
+        // Surveys
+        surveys: [],
+        selectedSurveys: [],
+        // Services
+        services: [],
+        selectedServices: []
       }
     },
     props: {
@@ -146,7 +158,7 @@
         started++
         AccidentProvider.getServices(this.id).then(
           response => {
-            this.$refs.servicesBlock.setSelectedServices(response.data.services)
+            this.selectedServices = response.data.data
             if (--started <= 0) {
               this.loadingBarWrapper.ref.done()
             }
@@ -167,7 +179,7 @@
         started++
         AccidentProvider.getCaseType(this.id).then(
           response => {
-            this.$refs.caseType.select(response.data)
+            this.$refs.caseType.select(response.data.data)
             if (--started <= 0) {
               this.loadingBarWrapper.ref.done()
             }
@@ -188,7 +200,7 @@
         started++
         AccidentProvider.getSurveys(this.id).then(
           response => {
-            this.$refs.surveysBlock.setSelectedSurveys(response.data.surveys)
+            this.selectedSurveys = response.data.data
             if (--started <= 0) {
               this.loadingBarWrapper.ref.done()
             }
@@ -197,7 +209,7 @@
           err => {
             this.showHttpError({
               title: this.$t('API Error'),
-              message: this.$t('Can\'t get accident surveys'),
+              message: this.$t('Can\'t get surveys'),
               consoleMessage: err.message
             })
             if (--started <= 0) {
@@ -240,6 +252,48 @@
             this.showHttpError({
               title: this.$t('API Error'),
               message: this.$t('Can\'t get accident diagnostics'),
+              consoleMessage: err.message
+            })
+            if (--started <= 0) {
+              this.loadingBarWrapper.ref.done()
+            }
+          }
+        )
+
+        started++
+        SurveyProvider.get().then(
+          response => {
+            this.surveys = response.data.data
+            if (--started <= 0) {
+              this.loadingBarWrapper.ref.done()
+            }
+          }
+        ).catch(
+          err => {
+            this.showHttpError({
+              title: this.$t('API Error'),
+              message: this.$t('Can\'t get surveys'),
+              consoleMessage: err.message
+            })
+            if (--started <= 0) {
+              this.loadingBarWrapper.ref.done()
+            }
+          }
+        )
+
+        started++
+        ServiceProvider.get().then(
+          response => {
+            this.services = response.data.data
+            if (--started <= 0) {
+              this.loadingBarWrapper.ref.done()
+            }
+          }
+        ).catch(
+          err => {
+            this.showHttpError({
+              title: this.$t('API Error'),
+              message: this.$t('Can\'t get services'),
               consoleMessage: err.message
             })
             if (--started <= 0) {
@@ -317,13 +371,11 @@
           description: data.description
         }).then(
           response => {
-            this.diagnostics.push(response.data)
             this.selectedDiagnostics.push(response.data)
             this.loadingBarWrapper.ref.done()
             data.editorEl.onClose()
           }
         ).catch(err => {
-          console.log(err)
           this.showHttpError({
             title: this.$t('API Error'),
             message: this.$t('Can\'t create diagnostic'),
@@ -331,6 +383,52 @@
           })
           this.loadingBarWrapper.ref.done()
         })
+      },
+
+      onSurveySave (data) {
+        this.loadingBarWrapper.ref.start()
+        AccidentProvider.createSurvey(this.id, {
+          id: data.id,
+          title: data.title,
+          description: data.description
+        }).then(
+          response => {
+            this.selectedSurveys.push(response.data)
+            this.loadingBarWrapper.ref.done()
+            data.editorEl.onClose()
+          }
+        ).catch(err => {
+          this.showHttpError({
+            title: this.$t('API Error'),
+            message: this.$t('Can\'t create survey'),
+            consoleMessage: err.message
+          })
+          this.loadingBarWrapper.ref.done()
+        })
+      },
+
+      onServiceSave (data) {
+        this.loadingBarWrapper.ref.start()
+        AccidentProvider.createService(this.id, {
+          id: data.id,
+          title: data.title,
+          description: data.description
+        }).then(response => {
+          this.selectedServices.push(response.data)
+          this.loadingBarWrapper.ref.done()
+          data.editorEl.onClose()
+        }).catch(err => {
+          this.showHttpError({
+            title: this.$t('API Error'),
+            message: this.$t('Can\'t create service'),
+            consoleMessage: err.message
+          })
+          this.loadingBarWrapper.ref.done()
+        })
+      },
+
+      onCaseTypeChanged (data) {
+        console.log(data)
       }
     }
   }
