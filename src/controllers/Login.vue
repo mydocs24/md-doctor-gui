@@ -133,11 +133,11 @@
         context: 'login context',
         data: {
           body: {
-            email: '',
-            password: ''
+            email: 'doctor@mail.com',
+            password: 'secret'
           },
           rememberMe: false,
-          fetchUser: false
+          fetchUser: true
         },
         error: {
           title: ''
@@ -169,7 +169,7 @@
           // redirect: {name: redirect ? redirect.from.name : 'account'},
           fetchUser: this.data.fetchUser,
           success (res) {
-            console.log('success 2 ' + this.context)
+            // console.log('success 2 ' + this.context)
           },
           error (res) {
             this.showLoginError({

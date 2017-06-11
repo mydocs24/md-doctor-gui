@@ -83,6 +83,8 @@ Vue.use(VueI18n)
 // ready translated locales
 const messages = {
   en: {
+    'Symptoms': 'Symptoms',
+    'Logout': 'Logout',
     'Medical Board Number': 'Medical Board Number',
     'MBN': 'MBN',
     'MeDoctor': 'MeDoctor',
@@ -188,7 +190,19 @@ Vue.use(VueAuth, {
   logoutData: {url: 'logout', redirect: '/login'},
   fetchData: {url: 'user', method: 'GET', enabled: true},
   authRedirect: {path: '/login'},
-  refreshData: {url: 'token', method: 'GET', enabled: true, interval: 30}
+  tokenExpired: () => false,
+  refreshData: {
+    url: 'token',
+    method: 'GET',
+    enabled: true,
+    interval: 30,
+    error: function (err) {
+      if (err.response.status === 401) {
+        // drop token if expired for fresh
+        // Vue.router.push({path: '/login'})
+        console.log('Token could not be updated because current token is failed')
+      }
+    }}
 })
 
 // Create VueI18n instance with options
