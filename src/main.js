@@ -83,6 +83,15 @@ Vue.use(VueI18n)
 // ready translated locales
 const messages = {
   en: {
+    'Can\'t create diagnostic': 'Can\'t create diagnostic',
+    'Can\'t save accident': 'Can\'t save accident',
+    'API Error': 'API Error',
+    'Select Diagnostics': 'Select Diagnostics',
+    'Diagnostics': 'Diagnostics',
+    'Diagnostic': 'Diagnostic',
+    'Add': 'Add',
+    'New': 'New',
+    'Choose': 'Choose',
     'Symptoms': 'Symptoms',
     'Logout': 'Logout',
     'Medical Board Number': 'Medical Board Number',

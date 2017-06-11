@@ -27,6 +27,15 @@
                                 ref="surveysBlock"></surveys-block>
                     </div>
                     <div class="form-group">
+                        <select-component
+                            :label="$t('Select Diagnostics')"
+                            :title="$t('Diagnostic')"
+                            :items="diagnostics"
+                            :selectedItems="selectedDiagnostics"
+                            @save-item="onDiagnosticSave($event)"
+                        ></select-component>
+                    </div>
+                    <div class="form-group">
                         <div class="row">
                             <div class="col-4">
                                 <label class="label">{{ $t('Diagnose') }}</label>
@@ -89,30 +98,24 @@
 
     </div>
 </template>
-<style lang="scss">
-    @import "../../sass/variables";
-
-    .form {
-        .label {
-            font-weight: $font-weight-bold;
-            color: $gray-light;
-            margin-bottom: 0;
-        }
-    }
-</style>
 <script>
   import ServicesBlock from '../../blocks/servicesBlock.vue'
   import SurveysBlock from '../../blocks/surveyBlock.vue'
   import AccidentProvider from '../../providers/accident.vue'
   import CaseSelector from '../case/caseTypeSelector.vue'
+  import SelectComponent from '../ui/selector/selector.vue'
+  import DiagnosticProvider from '../../providers/diagnostic.vue'
 
   export default {
     inject: ['loadingBarWrapper'],
     components: {
+      // blocks should be replaced by Selector component
       ServicesBlock,
       SurveysBlock,
       AccidentProvider,
-      CaseSelector
+      // should be replaced by the default select
+      CaseSelector,
+      SelectComponent
     },
     mounted: function () {
       this.fetchData()
@@ -121,7 +124,10 @@
       return {
         rejectCommentary: '',
         rejectValid: true,
-        withInvestigation: false
+        withInvestigation: false,
+        // Diagnostics
+        diagnostics: [],
+        selectedDiagnostics: []
       }
     },
     props: {
@@ -199,6 +205,48 @@
             }
           }
         )
+
+        started++
+        AccidentProvider.getDiagnostics(this.id).then(
+          response => {
+            this.selectedDiagnostics = response.data.data
+            if (--started <= 0) {
+              this.loadingBarWrapper.ref.done()
+            }
+          }
+        ).catch(
+          err => {
+            this.showHttpError({
+              title: this.$t('API Error'),
+              message: this.$t('Can\'t get accident diagnostics'),
+              consoleMessage: err.message
+            })
+            if (--started <= 0) {
+              this.loadingBarWrapper.ref.done()
+            }
+          }
+        )
+
+        started++
+        DiagnosticProvider.get().then(
+          response => {
+            this.diagnostics = response.data.data
+            if (--started <= 0) {
+              this.loadingBarWrapper.ref.done()
+            }
+          }
+        ).catch(
+          err => {
+            this.showHttpError({
+              title: this.$t('API Error'),
+              message: this.$t('Can\'t get accident diagnostics'),
+              consoleMessage: err.message
+            })
+            if (--started <= 0) {
+              this.loadingBarWrapper.ref.done()
+            }
+          }
+        )
       },
 
       doReject () {
@@ -259,6 +307,30 @@
             this.loadingBarWrapper.ref.done()
           }
         )
+      },
+
+      onDiagnosticSave (data) {
+        this.loadingBarWrapper.ref.start()
+        AccidentProvider.createDiagnostic(this.id, {
+          id: data.id,
+          title: data.title,
+          description: data.description
+        }).then(
+          response => {
+            this.diagnostics.push(response.data)
+            this.selectedDiagnostics.push(response.data)
+            this.loadingBarWrapper.ref.done()
+            data.editorEl.onClose()
+          }
+        ).catch(err => {
+          console.log(err)
+          this.showHttpError({
+            title: this.$t('API Error'),
+            message: this.$t('Can\'t create diagnostic'),
+            consoleMessage: err.message
+          })
+          this.loadingBarWrapper.ref.done()
+        })
       }
     }
   }

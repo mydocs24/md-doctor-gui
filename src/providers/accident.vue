@@ -38,6 +38,12 @@
     patchPatient (id, patientData) {
       return Vue.axios.patch(this.getUrl() + '/' + id + '/patient', patientData)
     },
+    getDiagnostics (id) {
+      return Vue.axios.get(this.getUrl() + '/' + id + '/diagnostics')
+    },
+    createDiagnostic (id, data) {
+      return Vue.axios.post(this.getUrl() + '/' + id + '/diagnostics', data)
+    },
     reject (id, commentary) {
       return Vue.axios.patch(this.getUrl() + '/' + id + '/reject', {comment: commentary})
     }
