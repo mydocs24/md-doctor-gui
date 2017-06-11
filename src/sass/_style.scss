@@ -53,3 +53,15 @@ body {
     color: $gray-text;
   }
 }
+
+.form {
+  .label {
+    font-weight: $font-weight-bold;
+    color: $gray-light;
+    margin-bottom: 0;
+  }
+}
+
+.modal {
+  display: block;
+}
