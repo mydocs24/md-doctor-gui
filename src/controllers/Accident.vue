@@ -18,6 +18,7 @@
                         ></accident-regularity-status>
                         <patient-documents-loader
                             :id="doctorCase.id"
+                            :uploadUrl="uploadUrl"
                         ></patient-documents-loader>
                     </div>
                 </div>
@@ -72,7 +73,8 @@
         bcItems: [{
           text: this.$t('Main'),
           link: '/doctor'
-        }]
+        }],
+        uploadUrl: ''
       }
     },
     created: function () {
@@ -96,6 +98,7 @@
               text: this.doctorCase.ref_num,
               active: true
             })
+            this.uploadUrl = AccidentProvider.getUploadUrl(this.doctorCase.id)
             this.loadingBarWrapper.ref.done()
           },
           (err) => {
