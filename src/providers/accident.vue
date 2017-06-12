@@ -6,6 +6,9 @@
     getUrl () {
       return accidentUrl
     },
+    getUploadUrl (id) {
+      return '/' + accidentUrl + '/' + id + '/upload'
+    },
     get () {
       return Vue.axios.get(this.getUrl())
     },
