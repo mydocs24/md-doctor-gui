@@ -55,9 +55,10 @@
   import CaseEditForm from '../components/case/caseEditFormComponent.vue'
   import AccidentProvider from '../providers/accident.vue'
   import PatientEditor from '../components/patient/editor.vue'
+  import axios from 'axios'
 
   export default {
-    inject: ['loadingBarWrapper', 'httpErrorWrapper'],
+    inject: ['loadingBarWrapper'],
     components: {
       Breadcrumbs,
       PatientInfoCard,
@@ -98,7 +99,7 @@
               text: this.doctorCase.ref_num,
               active: true
             })
-            this.uploadUrl = AccidentProvider.getUploadUrl(this.doctorCase.id)
+            this.uploadUrl = axios.defaults.baseURL + AccidentProvider.getDocumentsUrl(this.doctorCase.id)
             this.loadingBarWrapper.ref.done()
           },
           (err) => {
