@@ -184,7 +184,12 @@ const messages = {
     'All fields are required': 'All fields are required',
     'Main': 'Main',
     'Reason should be provided': 'Reason should be provided',
-    'Additional Investigation': 'Additional Investigation'
+    'Additional Investigation': 'Additional Investigation',
+    'Passport': 'Passport',
+    'Insurance': 'Insurance',
+    'Take a photo': 'Take a photo',
+    'Take a new photo': 'Take a new photo',
+    'Documents': 'Documents'
   }
 }
 
