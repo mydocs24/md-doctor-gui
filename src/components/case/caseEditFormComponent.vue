@@ -57,20 +57,17 @@
                         <div class="row">
                             <div :class="withInvestigation ? 'col-sm-6': 'col-sm-12'">
                                 <textarea class="form-control"
-                                          :placeholder="$t('Diagnose')" rows="10"></textarea>
+                                          :placeholder="$t('Diagnose')"
+                                          rows="10"
+                                          v-model="diagnose"
+                                ></textarea>
                             </div>
                             <div class="col-sm-6" v-if="withInvestigation">
                                 <textarea name="investigation" rows="10"
-                                          :placeholder="$t('Additional Investigation')" class="form-control"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="row mt-4">
-                            <div class="col-sm-8 text-right mx-auto">
-                                <div class="total h4">
-                                    {{ $t('Total') }}: 2000 &euro;
-                                </div>
+                                          :placeholder="$t('Additional Investigation')"
+                                          class="form-control"
+                                          v-model="investigation"
+                                ></textarea>
                             </div>
                         </div>
                     </div>
@@ -139,7 +136,12 @@
         selectedSurveys: [],
         // Services
         services: [],
-        selectedServices: []
+        selectedServices: [],
+        // case type
+        selectedCaseType: null,
+        // texts
+        diagnose: '',
+        investigation: ''
       }
     },
     props: {
@@ -339,17 +341,25 @@
       },
 
       doAccept () {
+        let services = []
+        this.selectedServices.map(service => services.push(service.id))
+
+        let surveys = []
+        this.selectedSurveys.map(survey => surveys.push(survey.id))
+
+        let diagnostics = []
+        this.selectedDiagnostics.map(diagnostic => diagnostics.push(diagnostic.id))
+
         AccidentProvider.save(this.id, {
-          services: [],
-          surveys: []
+          services: services,
+          surveys: surveys,
+          diagnostics: diagnostics,
+          caseType: this.selectedCaseType,
+          diagnose: this.diagnose,
+          investigation: this.investigation
         }).then(
           response => {
-            this.$refs.surveysBlock.setSelectedSurveys(response.data.surveys)
-            this.loadingBarWrapper.ref.done()
-            this.$root.$off('hidden::modal').$on('hidden::modal', () => {
-              this.$emit('accepted')
-            })
-            this.$refs.rejectCaseModal.hide()
+            console.log(response)
           }
         ).catch(
           err => {
@@ -428,7 +438,7 @@
       },
 
       onCaseTypeChanged (data) {
-        console.log(data)
+        this.selectedCaseType = data.id
       }
     }
   }
