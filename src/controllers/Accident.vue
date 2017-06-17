@@ -22,11 +22,13 @@
                         ></patient-documents-loader>
                     </div>
                 </div>
+
                 <case-edit-form
-                    :id="doctorCase.id"
+                    :doctorCase="doctorCase"
                     @accepted="onAccepted"
                     @rejected="onRejected"
                 ></case-edit-form>
+
                 <footer class="footer">
                     <p class="mb-3 mt-2 text-center">
                         &copy; 2017 <a :href="$t('root_url')">{{ $t('MyDoctors24.com') }}</a>

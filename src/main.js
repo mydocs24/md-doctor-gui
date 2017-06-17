@@ -83,6 +83,8 @@ Vue.use(VueI18n)
 // ready translated locales
 const messages = {
   en: {
+    'Accident saved': 'Accident saved',
+    'Success': 'Success',
     'Select Services': 'Select Services',
     'Select Surveys': 'Select Surveys',
     'Can\'t create diagnostic': 'Can\'t create diagnostic',
