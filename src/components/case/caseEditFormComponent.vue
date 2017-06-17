@@ -25,6 +25,7 @@
                                 :items="services"
                                 :selectedItems="selectedServices"
                                 @save-item="onServiceSave($event)"
+                                :checkHighlighting="checkHighlighting"
                         ></select-component>
                     </div>
                     <div class="form-group">
@@ -34,6 +35,7 @@
                                 :items="surveys"
                                 :selectedItems="selectedSurveys"
                                 @save-item="onSurveySave($event)"
+                                :checkHighlighting="checkHighlighting"
                         ></select-component>
                     </div>
                     <div class="form-group">
@@ -43,6 +45,7 @@
                             :items="diagnostics"
                             :selectedItems="selectedDiagnostics"
                             @save-item="onDiagnosticSave($event)"
+                            :checkHighlighting="checkHighlighting"
                         ></select-component>
                     </div>
                     <div class="form-group">
@@ -55,14 +58,14 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div :class="withInvestigation ? 'col-sm-6': 'col-sm-12'">
+                            <div :class="withInvestigation || investigation.length ? 'col-sm-6': 'col-sm-12'">
                                 <textarea class="form-control"
                                           :placeholder="$t('Diagnose')"
                                           rows="10"
                                           v-model="diagnose"
                                 ></textarea>
                             </div>
-                            <div class="col-sm-6" v-if="withInvestigation">
+                            <div class="col-sm-6" v-if="withInvestigation || investigation.length">
                                 <textarea name="investigation" rows="10"
                                           :placeholder="$t('Additional Investigation')"
                                           class="form-control"
@@ -123,8 +126,15 @@
     mounted: function () {
       this.fetchData()
     },
+    props: {
+      doctorCase: {
+        type: Object,
+        required: true
+      }
+    },
     data () {
       return {
+        id: 0,
         rejectCommentary: '',
         rejectValid: true,
         withInvestigation: false,
@@ -139,23 +149,26 @@
         selectedServices: [],
         // case type
         selectedCaseType: null,
-        // texts
+        // text
         diagnose: '',
-        investigation: ''
-      }
-    },
-    props: {
-      id: {
-        type: Number,
-        required: true
+        investigation: '',
+        // selectorHighlighter
+        checkHighlighting: function (item) {
+          return item && item.type === 'doctor'
+        }
       }
     },
     notifications: {
-      showHttpError: {type: 'error'}
+      showGrowl: {type: 'info'}
     },
     methods: {
       fetchData () {
         let started = 0
+
+        this.id = +this.doctorCase.id
+        this.diagnose = this.doctorCase.diagnose
+        this.investigation = this.doctorCase.investigation
+
         this.loadingBarWrapper.ref.start()
         started++
         AccidentProvider.getServices(this.id).then(
@@ -188,10 +201,11 @@
           }
         ).catch(
           err => {
-            this.showHttpError({
+            this.showGrowl({
               title: this.$t('API Error'),
               message: this.$t('Can\'t get case type'),
-              consoleMessage: err.message
+              consoleMessage: err.message,
+              type: 'error'
             })
             if (--started <= 0) {
               this.loadingBarWrapper.ref.done()
@@ -209,10 +223,11 @@
           }
         ).catch(
           err => {
-            this.showHttpError({
+            this.showGrowl({
               title: this.$t('API Error'),
               message: this.$t('Can\'t get surveys'),
-              consoleMessage: err.message
+              consoleMessage: err.message,
+              type: 'error'
             })
             if (--started <= 0) {
               this.loadingBarWrapper.ref.done()
@@ -230,10 +245,11 @@
           }
         ).catch(
           err => {
-            this.showHttpError({
+            this.showGrowl({
               title: this.$t('API Error'),
               message: this.$t('Can\'t get accident diagnostics'),
-              consoleMessage: err.message
+              consoleMessage: err.message,
+              type: 'error'
             })
             if (--started <= 0) {
               this.loadingBarWrapper.ref.done()
@@ -251,10 +267,11 @@
           }
         ).catch(
           err => {
-            this.showHttpError({
+            this.showGrowl({
               title: this.$t('API Error'),
               message: this.$t('Can\'t get accident diagnostics'),
-              consoleMessage: err.message
+              consoleMessage: err.message,
+              type: 'error'
             })
             if (--started <= 0) {
               this.loadingBarWrapper.ref.done()
@@ -272,10 +289,11 @@
           }
         ).catch(
           err => {
-            this.showHttpError({
+            this.showGrowl({
               title: this.$t('API Error'),
               message: this.$t('Can\'t get surveys'),
-              consoleMessage: err.message
+              consoleMessage: err.message,
+              type: 'error'
             })
             if (--started <= 0) {
               this.loadingBarWrapper.ref.done()
@@ -293,10 +311,11 @@
           }
         ).catch(
           err => {
-            this.showHttpError({
+            this.showGrowl({
               title: this.$t('API Error'),
               message: this.$t('Can\'t get services'),
-              consoleMessage: err.message
+              consoleMessage: err.message,
+              type: 'error'
             })
             if (--started <= 0) {
               this.loadingBarWrapper.ref.done()
@@ -329,10 +348,11 @@
             }
           ).catch(
             err => {
-              this.showHttpError({
+              this.showGrowl({
                 title: this.$t('API Error'),
                 message: this.$t('Reject of the accident is failed'),
-                consoleMessage: err.message
+                consoleMessage: err.message,
+                type: 'error'
               })
               this.loadingBarWrapper.ref.done()
             }
@@ -358,15 +378,20 @@
           diagnose: this.diagnose,
           investigation: this.investigation
         }).then(
-          response => {
-            console.log(response)
+          () => {
+            this.showGrowl({
+              title: this.$t('Success'),
+              message: this.$t('Accident saved'),
+              type: 'success'
+            })
           }
         ).catch(
           err => {
-            this.showHttpError({
+            this.showGrowl({
               title: this.$t('API Error'),
               message: this.$t('Can\'t save accident'),
-              consoleMessage: err.message
+              consoleMessage: err.message,
+              type: 'error'
             })
             this.loadingBarWrapper.ref.done()
           }
@@ -386,10 +411,11 @@
             data.editorEl.onClose()
           }
         ).catch(err => {
-          this.showHttpError({
+          this.showGrowl({
             title: this.$t('API Error'),
             message: this.$t('Can\'t create diagnostic'),
-            consoleMessage: err.message
+            consoleMessage: err.message,
+            type: 'error'
           })
           this.loadingBarWrapper.ref.done()
         })
@@ -408,10 +434,11 @@
             data.editorEl.onClose()
           }
         ).catch(err => {
-          this.showHttpError({
+          this.showGrowl({
             title: this.$t('API Error'),
             message: this.$t('Can\'t create survey'),
-            consoleMessage: err.message
+            consoleMessage: err.message,
+            type: 'error'
           })
           this.loadingBarWrapper.ref.done()
         })
@@ -428,10 +455,11 @@
           this.loadingBarWrapper.ref.done()
           data.editorEl.onClose()
         }).catch(err => {
-          this.showHttpError({
+          this.showGrowl({
             title: this.$t('API Error'),
             message: this.$t('Can\'t create service'),
-            consoleMessage: err.message
+            consoleMessage: err.message,
+            type: 'error'
           })
           this.loadingBarWrapper.ref.done()
         })
