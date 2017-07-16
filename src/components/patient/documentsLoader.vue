@@ -39,8 +39,6 @@
         </b-modal>
     </div>
 </template>
-<style lang="scss">
-</style>
 <script>
   import VueCoreImageUpload from '../../components/ui/vue.core.image.upload.vue'
   import AccidentProvider from '../../providers/accident.vue'
