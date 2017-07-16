@@ -8,19 +8,19 @@
                 <div class="row">
                     <div class="col-12">
                         <b>{{ $t('City') }}</b>
-                        <br><span class="ml-1">{{ doctor.city }}</span>
+                        <br><span class="ml-1">{{ doctor.city ? doctor.city : $t('Not set') }}</span>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-12">
                         <b>{{ $t('Phone') }}</b>
-                        <br><span class="ml-1">{{ doctor.phones }}</span>
+                        <br><span class="ml-1">{{ doctor.phones ? doctor.phones : $t('Not set') }}</span>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-12">
                         <b :title="$t('Medical Board Number')">{{ $t('MBN') }}</b>
-                        <br><span class="ml-1">{{ doctor.mbn }}</span>
+                        <br><span class="ml-1">{{ doctor.mbn ? doctor.mbn : $t('Not set') }}</span>
                     </div>
                 </div>
             </div>

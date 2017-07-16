@@ -66,14 +66,14 @@
                 </div>
             </div>
         </div>
-        <div class="row">
+        <!-- div class="row">
             <div class="col-sm-11 mx-auto">
                 <hr>
                 <div class="total">
                     {{ $t('Total') }}: 2000 &euro;
                 </div>
             </div>
-        </div>
+        </div -->
         <dialog-confirm ref="dialogConfirm"></dialog-confirm>
     </div>
 </template>
