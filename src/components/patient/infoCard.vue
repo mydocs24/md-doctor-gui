@@ -2,9 +2,13 @@
     <div v-if="patient" class="card">
         <div class="card-header">
             <div class="card-title">
-                <h6>
+                <h6 class="text-danger" v-if="!patient.name">
+                    {{ $t('Patient name does not provided') }}
+                    <small> · <a href="#" @click.prevent="onEdit()">{{ $t('Fill') }}</a></small>
+                </h6>
+                <h6 v-if="patient.name">
                     {{ patient.name }}
-                    <small> · <a @click="onEdit()">{{ $t('Edit') }}</a></small>
+                    <small> · <a href="#" @click.prevent="onEdit()">{{ $t('Edit') }}</a></small>
                 </h6>
             </div>
         </div>

@@ -83,6 +83,15 @@ Vue.use(VueI18n)
 // ready translated locales
 const messages = {
   en: {
+    'Patient name does not provided': 'Patient name does not provided',
+    'Fill': 'Fill',
+    'To': 'To',
+    'From': 'From',
+    'Find': 'Find',
+    'Reset': 'Reset',
+    'Name, Phone, or Email': 'Name, Phone, or Email',
+    'Search for': 'Search for',
+    'Filters': 'Filters',
     'Not set': 'Not set',
     'Accident saved': 'Accident saved',
     'Success': 'Success',

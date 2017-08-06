@@ -1,6 +1,6 @@
 <template>
     <div class="g-core-image-upload-btn">
-        <img :src="'./static/camera.svg'" class="upload-btn w-100 figure-img rounded-circle img-fluid"
+        <img :src="'../../static/camera.svg'" class="upload-btn w-100 figure-img rounded-circle img-fluid"
              :alt="text">
 
         <form class="g-core-image-upload-form" v-show="!hasImage" method="post" enctype="multipart/form-data"

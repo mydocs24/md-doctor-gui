@@ -2,34 +2,34 @@
     <div class="filter-component">
         <div class="card filters">
             <div class="card-block">
-                <h6 class="card-title">Filters</h6>
+                <h6 class="card-title">{{ $t('Filters') }}</h6>
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="form">
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-sm-12">
-                                        <label class="label" for="filter-text">Search for</label>
+                                        <label class="label" for="filter-text">{{ $t('Search for') }}</label>
                                         <input type="text" v-model="filterText" id="filter-text"
                                                class="form-control input-sm"
-                                               @keyup.enter="doFilter" placeholder="name, nickname, or email">
+                                               @keyup.enter="doFilter" :placeholder="$t('Name, Phone, or Email')">
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="row">
                                     <div class="col-sm-6">
-                                        <label for="start-picker" class="col-sm-3 control-label">From</label>
+                                        <label for="start-picker" class="col-sm-3 control-label">{{ $t('From') }}</label>
                                         <date-picker :date="startTime" :option="option" id="start-picker"></date-picker>
                                     </div>
                                     <div class="col-sm-6">
-                                        <label class="col-sm-3 control-label" for="end-picker">To</label>
+                                        <label class="col-sm-3 control-label" for="end-picker">{{ $t('To') }}</label>
                                         <date-picker :date="endTime" :option="option" id="end-picker"></date-picker>
                                     </div>
                                 </div>
                             </div>
-                            <button class="btn btn-info btn-sm" @click="doFilter">Go</button>
-                            <button class="btn btn-sm" @click="resetFilter">Reset</button>
+                            <button class="btn btn-info btn-sm" @click="doFilter">{{ $t('Find') }}</button>
+                            <button class="btn btn-sm" @click="resetFilter">{{ $t('Reset') }}</button>
                         </div>
                     </div>
                 </div>
