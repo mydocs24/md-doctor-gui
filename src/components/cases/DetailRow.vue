@@ -13,7 +13,7 @@
                 <label>{{ $t('Referral Number') }}</label>
                 <h5 class="case-item">{{rowData.ref_num}}</h5>
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-6" v-if="rowData.city">
                 <label>{{$t('City')}}</label>
                 <p class="case-item">{{rowData.city}}</p>
             </div>
