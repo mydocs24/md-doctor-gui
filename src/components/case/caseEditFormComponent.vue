@@ -91,17 +91,17 @@
 
         <b-modal ref="rejectCaseModal">
             <h4 slot="modal-header">{{ $t('Reject Case') }}</h4>
-            <div slot="modal-body">
-                <b-alert :show="!rejectValid" variant="danger" dismissible>
-                    {{ $t('Reason should be provided') }}
-                </b-alert>
+            <b-alert :show="!rejectValid" variant="danger" dismissible>
+                {{ $t('Reason should be provided') }}
+            </b-alert>
 
-                <textarea :placeholder="$t('Reject Reason')" class="form-control"
-                          v-model="rejectCommentary"
-                          @keyup.enter="doReject"
-                ></textarea>
-            </div>
+            <textarea :placeholder="$t('Reject Reason')" class="form-control"
+                      :title="$t('Reject Reason')"
+                      v-model="rejectCommentary"
+                      @keyup.enter="doReject"
+            ></textarea>
             <span slot="modal-footer">
+                <button class="btn btn-info" @click="hideRejectModal">{{ $t('Cancel') }}</button>
                 <button class="btn btn-warning" @click="sendReject">{{ $t('Reject') }}</button>
             </span>
         </b-modal>
@@ -334,17 +334,20 @@
         return this.rejectValid
       },
 
+      hideRejectModal () {
+        this.$refs.rejectCaseModal.hide()
+      },
+
       sendReject () {
         if (this.isRejectValid()) {
           this.loadingBarWrapper.ref.start()
           AccidentProvider.reject(this.id, this.rejectCommentary).then(
             response => {
-              this.$refs.surveysBlock.setSelectedSurveys(response.data.surveys)
               this.loadingBarWrapper.ref.done()
               this.$root.$on('hidden::modal', () => {
                 this.$emit('rejected')
               })
-              this.$refs.rejectCaseModal.hide()
+              this.hideRejectModal()
             }
           ).catch(
             err => {

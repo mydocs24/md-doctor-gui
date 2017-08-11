@@ -83,6 +83,9 @@ Vue.use(VueI18n)
 // ready translated locales
 const messages = {
   en: {
+    'Information about patient': 'Information about patient',
+    'About patient': 'About patient',
+    'Server error': 'Server error',
     'Patient name does not provided': 'Patient name does not provided',
     'Fill': 'Fill',
     'To': 'To',
