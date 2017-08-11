@@ -1,62 +1,47 @@
 <template>
     <b-modal ref="patientEditorModal" v-if="patient">
         <h5 slot="modal-header">{{ $t('Edit patient data') }}</h5>
-        <div slot="modal-body">
-            <div class="form">
-                <b-alert :show="!valid" variant="warning" dismissible>
-                    {{ $t('All fields are required') }}
-                </b-alert>
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col-12">
-                            <label class="label">{{ $t('Name') }}</label>
-                            <input
-                                    @change="onChange"
-                                    type="text"
-                                    class="form-control"
-                                    v-model="patient.name"
-                                    :placeholder="$t('Patient Name')"
-                                    required>
-                        </div>
+        <div class="form">
+            <b-alert :show="!valid" variant="warning" dismissible>
+                {{ $t('All fields are required') }}
+            </b-alert>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-12">
+                        <label class="label">{{ $t('Name') }}</label>
+                        <input
+                                @change="onChange"
+                                type="text"
+                                class="form-control"
+                                v-model="patient.name"
+                                :placeholder="$t('Patient Name')"
+                                required>
                     </div>
                 </div>
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col-12">
-                            <label class="label">{{ $t('City') }}</label>
-                            <input
-                                    @change="onChange"
-                                    class="form-control"
-                                    v-model="patient.city"
-                                    :placeholder="$t('Patient City')"
-                                    required>
-                        </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-12">
+                        <label class="label">{{ $t('Address') }}</label>
+                        <input
+                                @change="onChange"
+                                class="form-control"
+                                v-model="patient.address"
+                                :placeholder="$t('Patient Address')"
+                                required>
                     </div>
                 </div>
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col-12">
-                            <label class="label">{{ $t('Address') }}</label>
-                            <input
-                                    @change="onChange"
-                                    class="form-control"
-                                    v-model="patient.address"
-                                    :placeholder="$t('Patient Address')"
-                                    required>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col-12">
-                            <label class="label">{{ $t('Reason of treatment') }}</label>
-                            <textarea
-                                    @change="onChange"
-                                    class="form-control"
-                                    v-model="patient.reason"
-                                    :placeholder="$t('Reason of treatment')"
-                                    required></textarea>
-                        </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-12">
+                        <label class="label">{{ $t('About patient') }}</label>
+                        <textarea
+                                @change="onChange"
+                                class="form-control"
+                                v-model="patient.comment"
+                                :placeholder="$t('Information about patient')"
+                                required></textarea>
                     </div>
                 </div>
             </div>
@@ -71,13 +56,16 @@
   import AccidentProvider from '../../providers/accident.vue'
 
   export default {
-    inject: ['loadingBarWrapper', 'httpErrorWrapper'],
+    inject: ['loadingBarWrapper'],
     components: {},
     props: {
       doctorCaseId: {
         type: Number,
         required: true
       }
+    },
+    notifications: {
+      showHttpError: {type: 'error'}
     },
     created: function () {
       this.fetchData()
@@ -89,7 +77,7 @@
       }
     },
     methods: {
-      open (caseId) {
+      open () {
         this.$refs.patientEditorModal.show()
       },
       onClose () {
@@ -99,8 +87,7 @@
         this.open()
       },
       isValid () {
-        this.valid = this.patient.name.length && this.patient.address.length &&
-          this.patient.city.length && this.patient.reason.length
+        this.valid = this.patient.name.length && this.patient.address.length && this.patient.comment.length
         return this.valid
       },
       onSave () {
@@ -108,12 +95,16 @@
           this.loadingBarWrapper.ref.start()
           AccidentProvider.patchPatient(this.doctorCaseId, this.patient).then(
             response => {
-              this.onClose()
-              this.$emit('updated')
+              this.$emit('updated', this.patient)
               this.loadingBarWrapper.ref.done()
+              this.onClose()
             },
             err => {
-              this.httpErrorWrapper.ref.error(err)
+              this.showHttpError({
+                title: this.$t('API Error'),
+                message: this.$t('Server error'),
+                consoleMessage: err.message
+              })
               this.loadingBarWrapper.ref.fail()
             }
           )
@@ -123,17 +114,21 @@
         this.loadingBarWrapper.ref.start()
         AccidentProvider.getPatient(this.doctorCaseId).then(
           (response) => {
-            this.patient = response.data
+            this.patient = response.data.data
             this.loadingBarWrapper.ref.done()
           },
           (err) => {
-            this.httpErrorWrapper.ref.error(err)
+            this.showHttpError({
+              title: this.$t('API Error'),
+              message: this.$t('Server error'),
+              consoleMessage: err.message
+            })
             this.loadingBarWrapper.ref.fail()
           }
         )
       },
       onChange () {
-        console.log('changed')
+        // console.log('changed')
       }
     }
   }
