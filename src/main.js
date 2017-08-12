@@ -83,6 +83,12 @@ Vue.use(VueI18n)
 // ready translated locales
 const messages = {
   en: {
+    'Can not get documents': 'Can not get documents',
+    'View': 'View',
+    'Document': 'Document',
+    'Type': 'Type',
+    'This patient has no documents. You need to load them firstly.': 'This patient has no documents. You need to load them firstly.',
+    'Error on image uploading': 'Error on image uploading',
     'Information about patient': 'Information about patient',
     'About patient': 'About patient',
     'Server error': 'Server error',

@@ -4,11 +4,11 @@
             <div class="col-6 col-sm-12 col-lg-6 flex-lg-last">
                 <table class="table">
                     <thead>
-                    <tr v-on:click="showDocuments()">
+                    <tr v-on:click="showDocuments('passport')">
                         <th>{{$t('Passport')}}</th>
                         <th><span class="badge badge-default">{{ passports.length }}</span></th>
                     </tr>
-                    <tr v-on:click="showDocuments()">
+                    <tr v-on:click="showDocuments('insurance')">
                         <th>{{$t('Insurance')}}</th>
                         <th><span class="badge badge-success">{{ insurances.length }}</span></th>
                     </tr>
@@ -23,7 +23,9 @@
                         :text="$t('Take a photo')"
                         :url="uploadUrl"
                         extensions="png,gif,jpeg,jpg"
-                        v-on:imageuploaded="imageUploaded"
+                        @imageuploaded="imageUploaded"
+                        @imageuploading="imageUploading"
+                        @errorhandle="uploadError"
                         :headers="{ Authorization: 'Bearer ' + $auth.token() }"
                     ></vue-core-image-upload>
                     <figcaption class="figure-caption text-right text-muted">
@@ -34,8 +36,22 @@
         </div>
 
         <!-- Modal Component -->
-        <b-modal id="documents" :title="$t('Documents')" @shown="onModalShown">
-            body
+        <b-modal id="documents" :title="$t('Documents')" @shown="onModalShown" size="lg">
+            <div v-if="!passports.length && !insurances.length">{{ $t('This patient has no documents. You need to load them firstly.') }}</div>
+
+            <div v-if="passports.length" class="row">
+                <div class="col-sm-6 mb-3" v-for="passport in passports">
+                    <div class="card">
+                        <img class="card-img-top" :src="passport.url" :alt="passport.title">
+                        <div class="card-block">
+                            <h5 class="card-title">{{ $t('Passport') }}</h5>
+                            <p class="card-text">{{ passport.title }}</p>
+                            <a href="#" class="btn btn-info" @click="onView(passport)">{{ $t('View') }}</a>
+                            <a href="#" class="btn btn-danger" @click="onDelete(passport)">{{ $t('Delete') }}</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </b-modal>
     </div>
 </template>
@@ -51,11 +67,11 @@
     props: {
       id: {
         type: Number,
-        default: 0
+        'default': 0
       },
       uploadUrl: {
         type: String,
-        default: 'upload'
+        'default': 'upload'
       }
     },
     data () {
@@ -76,16 +92,17 @@
         AccidentProvider.getDocuments(this.id).then(
           response => {
             this.passports = response.data.data
+            console.log(this.passports)
             this.loadingBarWrapper.ref.done()
           }
         ).catch(
           err => {
             this.showHttpError({
               title: this.$t('API Error'),
-              message: this.$t('Can\'t get documents'),
+              message: this.$t('Can not get documents'),
               consoleMessage: err.message
             })
-            this.loadingBarWrapper.ref.done()
+            this.loadingBarWrapper.ref.fail()
           }
         )
       },
@@ -94,8 +111,8 @@
         console.log('modal opened')
       },
 
-      showDocuments () {
-        console.log('show docs')
+      showDocuments (mode) {
+        this.documentsMode = mode
         this.$root.$emit('show::modal', 'documents')
       },
 
@@ -104,16 +121,22 @@
         if (res.errcode === 0) {
           this.src = ''
         }
-      },
 
-      // return file object
-      imagechanged (res) {
-        console.log('changed', res.name)
+        this.loadingBarWrapper.ref.done()
       },
 
       // uploading image
-      imageuploading (res) {
-        console.info('uploading')
+      imageUploading (res) {
+        this.loadingBarWrapper.ref.start()
+      },
+
+      uploadError (error) {
+        this.showHttpError({
+          title: this.$t('API Error'),
+          message: this.$t('Error on image uploading'),
+          consoleMessage: error
+        })
+        this.loadingBarWrapper.ref.fail()
       }
     }
   }
