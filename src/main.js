@@ -83,6 +83,13 @@ Vue.use(VueI18n)
 // ready translated locales
 const messages = {
   en: {
+    'Are you sure?': 'Are you sure?',
+    'Yes': 'Yes',
+    'No': 'No',
+    'Mark as passport': 'Mark as passport',
+    'Download': 'Download',
+    'Mark as insurance': 'Mark as insurance',
+    'Document has not been moved': 'Document has not been moved',
     'Can not get documents': 'Can not get documents',
     'View': 'View',
     'Document': 'Document',

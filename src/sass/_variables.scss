@@ -4,6 +4,7 @@
  * @author Alexander Zagovorichev <zagovorichev@gmail.com>
  */
 
+@import "../../node_modules/bootstrap/scss/functions";
 @import "../../node_modules/bootstrap/scss/variables";
 
 $body-bg: #f5f8fa;
@@ -12,3 +13,5 @@ $offset-bottom: 1.5rem;
 $offset-doctor-info: 3.5rem;
 
 $gray-text: #dadada;
+$gray-lighter: $gray-500;
+$gray-light: $gray-700;

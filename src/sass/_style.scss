@@ -54,6 +54,14 @@ body {
   }
 }
 
+.card-blue {
+  border: 1px solid $blue;
+}
+
+.card-orange {
+  border: 1px solid $orange;
+}
+
 .form {
   .label {
     font-weight: $font-weight-bold;
