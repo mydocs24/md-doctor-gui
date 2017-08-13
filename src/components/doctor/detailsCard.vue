@@ -40,7 +40,12 @@
   import DoctorProvider from '../../providers/doctor.vue'
 
   export default {
-    inject: ['loadingBarWrapper', 'httpErrorWrapper'],
+    inject: ['loadingBarWrapper'],
+    notifications: {
+      showGowl: {
+        type: 'error'
+      }
+    },
     created: function () {
       this.fetchData()
     },
@@ -59,7 +64,11 @@
             this.loadingBarWrapper.ref.done()
           },
           (err) => {
-            this.httpErrorWrapper.ref.error(err)
+            this.showGowl({
+              title: this.$t('Loading Error'),
+              message: this.$t('Something wrong happened on the server side'),
+              consoleMessage: err
+            })
             this.loadingBarWrapper.ref.fail()
           }
         )
