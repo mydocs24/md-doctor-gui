@@ -83,6 +83,7 @@ Vue.use(VueI18n)
 // ready translated locales
 const messages = {
   en: {
+    'Cases have not been loaded': 'Cases have not been loaded',
     'Are you sure?': 'Are you sure?',
     'Yes': 'Yes',
     'No': 'No',
