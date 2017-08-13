@@ -151,7 +151,7 @@ import DialogConfirm from '../../components/ui/dialog/confirm.vue'
 Vue.component('my-detail-row', MyDetailRow)
 
 export default {
-  inject: ['loadingBarWrapper', 'httpErrorWrapper'],
+  inject: ['loadingBarWrapper'],
   components: {
     Vuetable,
     VuetablePagination,
@@ -159,6 +159,9 @@ export default {
     FilterBar,
     CustomActions,
     DialogConfirm
+  },
+  notifications: {
+    showHttpError: {type: 'error'}
   },
   data () {
     return {
@@ -334,7 +337,11 @@ export default {
       this.loadingBarWrapper.ref.done()
     },
     onLoadError (err) {
-      this.httpErrorWrapper.ref.error(err)
+      this.showHttpError({
+        title: this.$t('API Error'),
+        message: this.$t('Cases have not been loaded'),
+        consoleMessage: err.message
+      })
       this.loadingBarWrapper.ref.fail()
     },
     onLoading () {

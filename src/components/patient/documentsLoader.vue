@@ -235,21 +235,16 @@
 
       shouldShowDeleteConfirm (document, status) {
         const buff = this.shouldShowDeleteConfirmation.find(val => val.id === document.id)
-        console.log('start', document.id, status)
-
         if (status === true && !buff) {
           this.shouldShowDeleteConfirmation.push(document)
-          console.log('in true set')
         }
 
         if (status === false && buff) {
           this.shouldShowDeleteConfirmation = this.shouldShowDeleteConfirmation.filter(val => val.id !== document.id)
-          console.log('in false set')
         }
 
         if (status !== false && status !== true) {
           status = !!buff
-          console.log('in check', status)
         }
 
         return status
