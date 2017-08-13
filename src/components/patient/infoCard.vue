@@ -12,7 +12,7 @@
                 </h6>
             </div>
         </div>
-        <div class="card-block">
+        <div class="card-block p-2">
             <address>
                 <div class="row">
                     <div class="col-sm-12">
