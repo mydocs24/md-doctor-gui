@@ -3,35 +3,34 @@
         <div class="row">
             <div class="col-sm-12 text-right control-links">
                 <a @click="onClose" class="close-link">&times; {{ $t('Close') }}</a>
-                <a @click="onSign" class="sign-link" v-if="rowData.status === 'processing'">{{ $t('Sign') }}</a>
-                <a @click="onSend" class="send-link" v-if="rowData.status === 'signed'">{{ $t('Send') }}</a>
-                <router-link :to="'doctor/accidents/'+rowData.id" class="proceed-link">{{$t('Open')}} &rarr;</router-link>
+                <a @click="onSend" class="send-link" v-if="rowData.status === 'in_progress'">{{ $t('Send') }}</a>
+                <router-link :to="'doctor/accidents/'+rowData.id" class="proceed-link">{{ $t('Open') }} &rarr;</router-link>
             </div>
         </div>
         <div class="row">
             <div class="col-sm-6">
                 <label>{{ $t('Referral Number') }}</label>
-                <h5 class="case-item">{{rowData.ref_num}}</h5>
+                <h5 class="case-item">{{ rowData.ref_num }}</h5>
             </div>
             <div class="col-sm-6" v-if="rowData.city">
-                <label>{{$t('City')}}</label>
-                <p class="case-item">{{rowData.city}}</p>
+                <label>{{ $t('City') }}</label>
+                <p class="case-item">{{ rowData.city }}</p>
             </div>
         </div>
         <div class="row">
             <div class="col-sm-6" v-if="rowData.phone">
-                <label>{{$t('Phone')}}</label>
-                <p class="case-item">{{rowData.phone}}</p>
+                <label>{{ $t('Phone') }}</label>
+                <p class="case-item">{{ rowData.phone }}</p>
             </div>
             <div class="col-sm-6" v-if="rowData.address">
-                <label>{{$t('Address')}}</label>
-                <p class="case-item">{{rowData.address}}</p>
+                <label>{{ $t('Address') }}</label>
+                <p class="case-item">{{ rowData.address }}</p>
             </div>
         </div>
         <div class="row" v-if="rowData.symptoms">
             <div class="col-sm-12">
                 <label>{{$t('Symptoms')}}</label>
-                <p class="case-item">{{rowData.symptoms}}</p>
+                <p class="case-item">{{ rowData.symptoms }}</p>
             </div>
         </div>
     </div>
@@ -66,11 +65,8 @@ export default {
     onClose (event) {
       this.$events.fire('vuerow:close', {id: this.rowData.id}, event)
     },
-    onSign (event) {
-      this.$events.fire('vuerow:sign', this.rowData, event)
-    },
     onSend (event) {
-      this.$events.fire('vuerow:send', this.rowData, event)
+      this.$events.fire('vuerow:send', [this.rowData], event)
     }
   }
 }

@@ -8,7 +8,7 @@
         <div class="row">
             <div class="col-sm-12">
                 <div class="card">
-                    <div class="card-block">
+                    <div class="card-block m-2">
                         <div class="card-title">
                             <h5>
                                 {{ $t('My Cases') }}
@@ -18,12 +18,8 @@
                         </div>
                         <div class="row case-control">
                             <div class="col-sm-12 small">
-                                <a class="item link" title="could be only on selected with status new"
-                                   v-if="showSign"
-                                   @click="onSign"
-                                >{{ $t('Sign') }}</a>
-                                <a class="item link" title="could be only on selected with status signed"
-                                   @click="onSend"
+                                <a class="item link" :title="$t('Send selected items to the director')"
+                                   @click="onSend(null)"
                                    v-if="showSend">{{ $t('Send') }}</a>
                             </div>
                         </div>
@@ -161,7 +157,10 @@ export default {
     DialogConfirm
   },
   notifications: {
-    showHttpError: {type: 'error'}
+    showHttpError: {type: 'error'},
+    showGowl: {
+      type: 'error'
+    }
   },
   data () {
     return {
@@ -190,7 +189,7 @@ export default {
         {
           name: 'city',
           title: this.$t('City'),
-          sortField: 'status'
+          sortField: 'city'
         },
         {
           name: 'status',
@@ -237,17 +236,31 @@ export default {
         selected = this.getSelected()
       }
 
-      let titles = []
-      for (let i in selected) {
-        titles.push(selected[i].refNum)
-      }
+      const titles = []
+      selected.map(row => titles.push(row.ref_num))
 
-      this.$refs.dialogConfirm.show(this.$t('Confirmation'), msg, function () {
-        console.log(selected)
-      }, titles)
+      this.$refs.dialogConfirm.show(this.$t('Confirmation'), msg, titles, () => {
+        this.send(selected)
+      })
     },
-    onSign (selected) {
-      this.showConfirmation(selected, this.$t('You\'ll sign selected cases'))
+    send (selected) {
+      this.loadingBarWrapper.ref.start()
+      const identifiers = []
+      selected.map(row => identifiers.push(row.id))
+      AccidentProvider.sendCases(identifiers)
+        .then(() => {
+          this.$refs.dialogConfirm.onClose()
+          this.$refs.vuetable.refresh()
+          this.loadingBarWrapper.ref.done()
+        })
+        .catch(error => {
+          this.showGowl({
+            title: this.$t('Send Error'),
+            message: this.$t('Server error'),
+            consoleMessage: error
+          })
+          this.loadingBarWrapper.ref.fail()
+        })
     },
     onSend (selected) {
       this.showConfirmation(selected, this.$t('You\'ll send selected cases'))
@@ -269,26 +282,18 @@ export default {
       })
 
       if (selected.length) {
-        let onlySigned = selected.filter(function (item) {
-          return item.status === 'signed'
-        })
-
         let onlyProcessing = selected.filter(function (item) {
-          return item.status === 'processing'
+          return item.status === 'in_progress'
         })
-
-        if (selected.length === onlySigned.length) {
-          this.showSend = true
-        }
 
         if (selected.length === onlyProcessing.length) {
-          this.showSign = true
+          this.showSend = true
         }
       }
     },
     onCloseRow () {
+      // FYI REASON close row doesn't work without this
       // why I need that?
-      // close row doesn't work without
     },
     onErrorModalClose () {
       this.$refs.errorModal.hide()
@@ -305,20 +310,17 @@ export default {
         case 'closed':
           badge = '<span class="badge badge-default">' + this.$t('case.status.closed') + '</span>'
           break
-        case 'signed':
-          badge = '<span class="badge badge-primary">' + this.$t('case.status.signed') + '</span>'
-          break
-        case 'new':
+        case 'assigned':
           badge = '<span class="badge badge-success">' + this.$t('case.status.new') + '</span>'
           break
         case 'sended':
           badge = '<span class="badge badge-warning">' + this.$t('case.status.sent') + '</span>'
           break
-        case 'processing':
+        case 'in_progress':
           badge = '<span class="badge badge-info">' + this.$t('case.status.processing') + '</span>'
           break
         // new by default
-        default: badge = '<span class="badge badge-danger">' + value + '</span>'
+        default: badge = '<span class="badge badge-danger" title="' + this.$t('Status not defined') + '">' + value + '</span>'
       }
 
       return badge
@@ -360,9 +362,6 @@ export default {
     },
     'vuerow:close' (data) {
       this.$refs.vuetable.hideDetailRow(data.id)
-    },
-    'vuerow:sign' (caseData) {
-      this.onSign(caseData)
     },
     'vuerow:send' (caseData) {
       this.onSend(caseData)
