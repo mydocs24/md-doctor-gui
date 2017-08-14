@@ -83,6 +83,12 @@ Vue.use(VueI18n)
 // ready translated locales
 const messages = {
   en: {
+    'Status not defined': 'Status not defined',
+    'Send Error': 'Send Error',
+    'Send selected items to the director': 'Send selected items to the director',
+    'Terms': 'Terms',
+    'Privacy': 'Privacy',
+    'Help': 'Help',
     'Cases have not been loaded': 'Cases have not been loaded',
     'Are you sure?': 'Are you sure?',
     'Yes': 'Yes',

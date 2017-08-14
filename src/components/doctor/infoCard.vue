@@ -5,7 +5,7 @@
                  :src="doctor.picture_url.length ? doctor.pricture_url : './static/camera.svg'"
                  height="100px"
                  alt="doctor.name">
-            <div class="card-block">
+            <div class="card-block m-1">
                 <h6>{{ doctor.name }}</h6>
             </div>
         </div>

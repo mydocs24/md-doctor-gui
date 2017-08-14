@@ -58,6 +58,9 @@
     },
     reject (id, commentary) {
       return Vue.axios.patch(this.getUrl() + '/' + id + '/reject', {comment: commentary})
+    },
+    sendCases (cases) {
+      return Vue.axios.post(this.getUrl() + '/send', {cases: cases})
     }
   }
 </script>

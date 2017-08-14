@@ -1,7 +1,7 @@
 <template>
     <div class="filter-component">
         <div class="card filters">
-            <div class="card-block">
+            <div class="card-block m-2">
                 <h6 class="card-title">{{ $t('Filters') }}</h6>
                 <div class="row">
                     <div class="col-sm-12">

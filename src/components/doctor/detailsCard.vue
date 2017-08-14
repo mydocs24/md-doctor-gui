@@ -1,7 +1,7 @@
 <template>
     <div>
         <div v-if="doctor" class="card card-about">
-            <div class="card-block">
+            <div class="card-block m-1">
                 <h6>{{ $t('About') }}
                     <small> · <router-link :to="'doctor/profile'">{{ $t('Edit') }}</router-link></small>
                 </h6>
@@ -66,7 +66,7 @@
           (err) => {
             this.showGowl({
               title: this.$t('Loading Error'),
-              message: this.$t('Something wrong happened on the server side'),
+              message: this.$t('Server error'),
               consoleMessage: err
             })
             this.loadingBarWrapper.ref.fail()
