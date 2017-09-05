@@ -2,7 +2,7 @@
     <top-progress ref="loadingBar" color="orange"></top-progress>
 </template>
 <script>
-  import topProgress from 'vue-top-progress'
+  import topProgress from 'vue-top-progress/src/top-progress.vue'
 
   export default {
     components: {
