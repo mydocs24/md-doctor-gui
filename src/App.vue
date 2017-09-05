@@ -3,15 +3,15 @@
     <loading-bar ref="loadingBar"></loading-bar>
 
     <div v-if="$auth.ready() && loaded">
-      <b-navbar v-if="$auth.check()" toggleable type="inverse" variant="mydoc" :class="'sticky-top'">
-
-        <b-nav-toggle target="nav_collapse"/>
+      <b-navbar v-if="$auth.check()" toggleable="md" type="inverse" variant="mydoc" :sticky="true">
 
         <div class="container">
+          <b-nav-toggle target="nav_collapse" class="text-white">&darr;</b-nav-toggle>
+
           <router-link to="/" class="navbar-brand">{{ $t("MeDoctor") }}</router-link>
 
-          <b-collapse isNav id="nav_collapse">
-            <b-nav isNavBar>
+          <b-collapse is-nav id="nav_collapse">
+            <b-nav is-nav-bar>
               <router-link to="/component1" class="nav-link">Component 1</router-link>
               <router-link to="/component2" class="nav-link">Component 2</router-link>
               <router-link to="/hello" class="nav-link">Hello</router-link>
@@ -85,7 +85,7 @@
 
 <script>
   import Vue from 'vue'
-  import LoadingBar from './components/ui/loadingBar.vue'
+  import LoadingBar from '@/components/ui/loadingBar.vue'
 
   const Providers = {
     // These need to be contained in an object because providers are not reactive.

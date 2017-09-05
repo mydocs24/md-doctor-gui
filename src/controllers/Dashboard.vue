@@ -20,28 +20,27 @@
     </div>
 </template>
 <script>
-import DoctorInfoCard from '../components/doctor/infoCard.vue'
-import DoctorDetailsCard from '../components/doctor/detailsCard.vue'
-import CasesTable from '../components/cases/CasesTable'
-import CopyrightCard from '../components/layout/copyrightCard.vue'
-import AlertsList from '../components/layout/alerts.vue'
+  import DoctorInfoCard from '../components/doctor/infoCard.vue'
+  import DoctorDetailsCard from '../components/doctor/detailsCard.vue'
+  import CasesTable from '../components/cases/CasesTable'
+  import CopyrightCard from '../components/layout/copyrightCard.vue'
+  import AlertsList from '../components/layout/alerts.vue'
 
-export default {
-  components: {
-    DoctorInfoCard,
-    DoctorDetailsCard,
-    CasesTable,
-    CopyrightCard,
-    AlertsList
-  },
-  data () {
-    return {
-      countActive: 10,
-      caseUrl: false
+  export default {
+    components: {
+      DoctorInfoCard,
+      DoctorDetailsCard,
+      CasesTable,
+      CopyrightCard,
+      AlertsList
+    },
+    data () {
+      return {
+        countActive: 10,
+        caseUrl: false
+      }
+    },
+    methods: {
     }
-  },
-  methods: {
   }
-}
-
 </script>

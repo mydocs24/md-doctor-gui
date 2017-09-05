@@ -6,13 +6,13 @@
 </template>
 
 <script>
-export default {
-  name: 'authenticate',
-  data () {
-    return {
-      login: '',
-      password: ''
+  export default {
+    name: 'authenticate',
+    data () {
+      return {
+        login: '',
+        password: ''
+      }
     }
   }
-}
 </script>
