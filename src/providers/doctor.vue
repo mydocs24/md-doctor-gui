@@ -5,6 +5,7 @@
   import Vue from 'vue'
 
   const doctorUrl = 'doctor/me'
+  const langUrl = 'doctor/lang/'
 
   export default {
     getUrl () {
@@ -15,6 +16,9 @@
     },
     save (data) {
       return Vue.axios.put(this.getUrl(), data)
+    },
+    lang (lang) {
+      return Vue.axios.get(langUrl + lang)
     }
   }
 </script>
