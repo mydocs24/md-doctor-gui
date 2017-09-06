@@ -135,7 +135,10 @@
         this.$i18n.locale = loc
         Providers.loadingBarWrapper.ref.start()
         DoctorProvider.lang(loc)
-          .then(() => Providers.loadingBarWrapper.ref.done())
+          .then(() => {
+            Providers.loadingBarWrapper.ref.done()
+            this.$i18n.locale = loc
+          })
           .catch(() => Providers.loadingBarWrapper.ref.fail())
       },
       logout () {
