@@ -19,10 +19,9 @@
             <b-nav is-nav-bar class="ml-auto">
 
               <!-- Navbar dropdowns -->
-              <b-nav-item-dropdown text="Lang" right>
-                <b-dropdown-item to="#">EN</b-dropdown-item>
-                <b-dropdown-item to="#">ES</b-dropdown-item>
-                <b-dropdown-item to="#">RU</b-dropdown-item>
+              <b-nav-item-dropdown :text="$t('Lang')" right>
+                <b-dropdown-item @click="setLang('en')">EN</b-dropdown-item>
+                <b-dropdown-item @click="setLang('ru')">RU</b-dropdown-item>
               </b-nav-item-dropdown>
 
               <b-nav-item-dropdown right>
@@ -121,6 +120,9 @@
       }, 500)
     },
     methods: {
+      setLang (loc) {
+        this.$i18n.locale = loc
+      },
       logout () {
         this.$auth.logout({
           makeRequest: true,
