@@ -23,7 +23,6 @@ Vue.use(BootstrapVue)
 Vue.use(VueEvents)
 
 /* eslint-disable no-new */
-/* window.vm = */
 new Vue({
   el: '#app',
   template: '<App/>',

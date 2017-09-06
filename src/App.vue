@@ -46,8 +46,7 @@
 
     <div v-if="!$auth.ready() || !loaded">
       <div style="text-align:center; padding-top:50px;">
-        Loading site...
-        will show loading picture here
+        Site loading...
       </div>
     </div>
   </div>
@@ -85,6 +84,7 @@
 <script>
   import Vue from 'vue'
   import LoadingBar from '@/components/ui/loadingBar.vue'
+  import DoctorProvider from '@/providers/doctor.vue'
 
   const Providers = {
     // These need to be contained in an object because providers are not reactive.
@@ -114,14 +114,29 @@
       // Emit the app-ready event via the Event Bus
       Providers.EventBus.$emit('app-ready')
 
+      this.initLang()
+
       // Set up $auth.ready with other arbitrary loaders (ex: language file).
       setTimeout(function () {
         _this.loaded = true
       }, 500)
     },
     methods: {
+      initLang () {
+        Providers.loadingBarWrapper.ref.start()
+        DoctorProvider.get()
+          .then((res) => {
+            Providers.loadingBarWrapper.ref.done()
+            this.$i18n.locale = res.data.data.lang
+          })
+          .catch(() => Providers.loadingBarWrapper.ref.fail())
+      },
       setLang (loc) {
         this.$i18n.locale = loc
+        Providers.loadingBarWrapper.ref.start()
+        DoctorProvider.lang(loc)
+          .then(() => Providers.loadingBarWrapper.ref.done())
+          .catch(() => Providers.loadingBarWrapper.ref.fail())
       },
       logout () {
         this.$auth.logout({
