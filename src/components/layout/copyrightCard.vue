@@ -1,6 +1,6 @@
 <template>
     <div class="card card-copy">
-        <div class="card-block m-1">
+        <div class="card-block m-2">
             @ 2017 MyDoctor <a href="/about">{{ $t('About') }}</a>
             <a href="/help">{{ $t('Help') }}</a>
             <a href="/privacy">{{ $t('Privacy') }}</a>

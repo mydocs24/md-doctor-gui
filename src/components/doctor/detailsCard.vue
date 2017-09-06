@@ -1,7 +1,7 @@
 <template>
     <div>
         <div v-if="doctor" class="card card-about">
-            <div class="card-block m-1">
+            <div class="card-block m-2">
                 <h6>{{ $t('About') }}
                     <small> · <router-link :to="'doctor/profile'">{{ $t('Edit') }}</router-link></small>
                 </h6>
