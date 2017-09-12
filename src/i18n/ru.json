@@ -139,5 +139,8 @@
   "Documents": "Документы",
   "Lang": "Язык",
   "Statistics": "Статистика",
-  "Profile": "Настройка"
+  "Profile": "Настройка",
+  "No Data Available": "Ничего не найдено",
+  "No relevant data": "Нет данных",
+  "Displaying {from} to {to} of {total} items": "Показаны с {from} по {to} из {total}"
 }

@@ -1,7 +1,7 @@
 <template>
     <div class="card card-copy">
         <div class="card-block m-2">
-            @ 2017 MyDoctor <a href="/about">{{ $t('About') }}</a>
+            @ 2017 MyDoctors <a href="/about">{{ $t('About') }}</a>
             <a href="/help">{{ $t('Help') }}</a>
             <a href="/privacy">{{ $t('Privacy') }}</a>
             <a href="/terms">{{ $t('Terms') }}</a>

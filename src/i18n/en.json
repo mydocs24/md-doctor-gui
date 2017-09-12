@@ -139,5 +139,8 @@
   "Documents": "Documents",
   "Lang": "Lang",
   "Statistics": "Statistics",
-  "Profile": "Profile"
+  "Profile": "Profile",
+  "No Data Available": "No Data Available",
+  "No relevant data": "No relevant data",
+  "Displaying {from} to {to} of {total} items": "Displaying {from} to {to} of {total} items"
 }

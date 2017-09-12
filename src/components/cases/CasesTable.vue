@@ -35,6 +35,7 @@
                           :per-page="20"
                           :sort-order="sortOrder"
                           detail-row-component="my-detail-row"
+                          :no-data-template="$t('No Data Available')"
                           :appendParams="moreParams"
                           @vuetable:pagination-data="onPaginationData"
                           @vuetable:cell-clicked="onCellClicked"
@@ -55,6 +56,8 @@
                                 ></vuetable-pagination>
                                 <vuetable-pagination-info
                                         ref="paginationInfo"
+                                        :no-data-template="$t('No relevant data')"
+                                        :info-template="$t('Displaying {from} to {to} of {total} items')"
                                 ></vuetable-pagination-info>
                             </div>
                         </div>
