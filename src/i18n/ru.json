@@ -49,7 +49,7 @@
   "Logout": "Выход",
   "Medical Board Number": "Номер MBN",
   "MBN": "MBN",
-  "MeDoctor": "MeDoctor",
+  "MeDoctor": "яВрач",
   "Log In": "Войти",
   "Forgot Password": "Забыл пароль",
   "Login Failed": "Ошибка входа",
@@ -137,5 +137,7 @@
   "Take a photo": "Сделать фото",
   "Take a new photo": "Сделать новое фото",
   "Documents": "Документы",
-  "Lang": "Язык"
+  "Lang": "Язык",
+  "Statistics": "Статистика",
+  "Profile": "Настройка"
 }

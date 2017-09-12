@@ -12,9 +12,7 @@
 
           <b-collapse is-nav id="nav_collapse">
             <b-nav is-nav-bar>
-              <router-link to="/component1" class="nav-link">Component 1</router-link>
-              <router-link to="/component2" class="nav-link">Component 2</router-link>
-              <router-link to="/hello" class="nav-link">Hello</router-link>
+              <router-link to="/statistics" class="nav-link">{{ $t('Statistics') }}</router-link>
             </b-nav>
             <b-nav is-nav-bar class="ml-auto">
 
@@ -30,7 +28,7 @@
                   <span style="font-weight: bold;">{{ $auth.user().email }}</span>
                 </template>
 
-                <b-dropdown-item to="#">Profile</b-dropdown-item>
+                <b-dropdown-item to="/profile">{{ $t('Profile') }}</b-dropdown-item>
                 <b-dropdown-item v-if="$auth.check()" v-on:click="$auth.logout()">{{ $t('Logout') }}</b-dropdown-item>
               </b-nav-item-dropdown>
 
