@@ -6,7 +6,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
-import Hello from '@/controllers/Hello.vue'
+import StatisticsComponent from '@/controllers/StatisticsComponent.vue'
 import NotFoundComponent from '@/controllers/system/404.vue'
 import AccessDeniedComponent from '@/controllers/system/403.vue'
 import ServerErrorComponent from '@/controllers/system/502.vue'
@@ -31,10 +31,6 @@ const Profile = resolve => {
   })
 }
 
-// routes
-const Foo = {template: '<div>foo</div>'}
-const Bar = {template: '<div>bar</div>'}
-
 Vue.use(Router)
 
 const routes = [
@@ -46,11 +42,9 @@ const routes = [
     component: LoginComponent,
     meta: {auth: false}
   },
-  { path: '/doctor/accidents/:id', component: Accident, meta: {auth: true} },
-  { path: '/doctor/profile', component: Profile, meta: {auth: true} },
-  { path: '/component1', component: Foo }, // worked without authentication
-  { path: '/component2', component: Bar, meta: {auth: true} },
-  { path: '/hello', component: Hello },
+  { path: '/accidents/:id', component: Accident, meta: {auth: true} },
+  { path: '/profile', component: Profile, meta: {auth: true} },
+  { path: '/statistics', component: StatisticsComponent, meta: {auth: true} },
   {
     path: '/404',
     name: 'error-404',
