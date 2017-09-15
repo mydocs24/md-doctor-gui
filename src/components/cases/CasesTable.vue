@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="case-table-component">
         <div v-if="showFilters" class="row mb-3">
             <div class="col-sm-12">
                 <filter-bar></filter-bar>
@@ -31,8 +31,9 @@
                           :http-options="httpOptions"
                           :class="css.tableClass"
                           :fields="fields"
-                          pagination-path=""
-                          :per-page="20"
+                          pagination-path="pagination"
+                          data-path="list"
+                          :per-page="10"
                           :sort-order="sortOrder"
                           detail-row-component="my-detail-row"
                           :no-data-template="$t('No Data Available')"
@@ -80,58 +81,79 @@
 <style lang="scss">
     @import "../../sass/variables";
 
-    .page-item {
-        cursor: pointer;
-    }
-    .pagination-block {
-        float: right;
-    }
-    .pagination {
-        margin-bottom: 0;
-    }
-
-    .vuetable {
-        tbody > tr {
+    .case-table-component {
+        .filter-control {
+            float: right;
             cursor: pointer;
         }
-        .vuetable-detail-row {
-            cursor: default;
-            background-color: #f5f8fa;
-            &:hover {
-                background-color: #f5f8fa;
+        .pagination-block {
+            float: right;
+
+            .pagination {
+                margin-bottom: 0;
+                .page-item {
+                    cursor: pointer;
+
+                    &.disabled {
+                        cursor: default;
+                        .page-link {
+                            color: $text-muted;
+                            cursor: default;
+                        }
+                    }
+                    &.active {
+                        .page-link {
+                            background-color: #3097D1;
+                            color: $white;
+                        }
+                    }
+                }
             }
         }
-    }
 
-    .vuetable-pagination-info {
-        float: right;
-        font-size: $font-size-sm;
-        color: $gray-lighter;
-    }
-
-    a:not([href]):not([tabindex]) {
-        color: $teal;
-        cursor: pointer;
-        &:hover,
-        &:focus,
-        &:active {
-            color: $blue;
+        .vuetable {
+            tbody > tr {
+                cursor: pointer;
+            }
+            .vuetable-detail-row {
+                cursor: default;
+                background-color: #f5f8fa;
+                &:hover {
+                    background-color: #f5f8fa;
+                }
+            }
         }
-    }
 
-    .case-control {
-        text-align: right;
-        padding-bottom: .5rem;
-        .item {
-            margin-right: .5rem;
+        .vuetable-pagination-info {
+            float: right;
+            font-size: $font-size-sm;
+            color: $gray-lighter;
         }
-    }
 
-    .total {
-        float: right;;
-        font-size: $font-size-lg;
-        font-weight: $font-weight-bold;
-        margin-bottom: $offset-bottom;
+        a:not([href]):not([tabindex]) {
+            color: $teal;
+            cursor: pointer;
+            &:hover,
+            &:focus,
+            &:active {
+                color: $blue;
+            }
+        }
+
+        .case-control {
+            text-align: right;
+            padding-bottom: .5rem;
+            .item {
+                margin-right: .5rem;
+            }
+        }
+
+        .total {
+            float: right;;
+            font-size: $font-size-lg;
+            font-weight: $font-weight-bold;
+            margin-bottom: $offset-bottom;
+        }
     }
 </style>
 
@@ -351,6 +373,29 @@ export default {
     },
     onLoading () {
       this.loadingBarWrapper.ref.start()
+    },
+    transform (data) {
+      let transformed = {}
+
+      let to = data.meta.pagination.current_page * data.meta.pagination.per_page
+      if (to > data.meta.pagination.total) {
+        to = data.meta.pagination.total
+      }
+
+      transformed.pagination = {
+        total: data.meta.pagination.total,
+        per_page: data.meta.pagination.per_page,
+        current_page: data.meta.pagination.current_page,
+        last_page: data.meta.pagination.total_pages,
+        next_page_url: data.meta.pagination.links.next,
+        prev_page_url: data.meta.pagination.links.prev,
+        from: (data.meta.pagination.current_page - 1) * data.meta.pagination.per_page + 1,
+        to: to
+      }
+
+      transformed.list = data.data
+
+      return transformed
     }
   },
   events: {
