@@ -45,6 +45,9 @@ const routes = [
   { path: '/accidents/:id', component: Accident, meta: {auth: true} },
   { path: '/profile', component: Profile, meta: {auth: true} },
   { path: '/statistics', component: StatisticsComponent, meta: {auth: true} },
+  /*  { path: '/about', component: StatisticsComponent, meta: {auth: true} },
+  { path: '/privacy', component: StatisticsComponent, meta: {auth: true} },
+  { path: '/help', component: StatisticsComponent, meta: {auth: true} }, */
   {
     path: '/404',
     name: 'error-404',

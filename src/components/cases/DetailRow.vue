@@ -4,7 +4,7 @@
             <div class="col-sm-12 text-right control-links">
                 <a @click="onClose" class="close-link">&times; {{ $t('Close') }}</a>
                 <a @click="onSend" class="send-link" v-if="rowData.status === 'in_progress'">{{ $t('Send') }}</a>
-                <router-link :to="'doctor/accidents/'+rowData.id" class="proceed-link">{{ $t('Open') }} &rarr;</router-link>
+                <router-link :to="'/accidents/'+rowData.id" class="proceed-link">{{ $t('Open') }} &rarr;</router-link>
             </div>
         </div>
         <div class="row">

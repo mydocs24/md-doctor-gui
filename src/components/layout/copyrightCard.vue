@@ -1,10 +1,11 @@
 <template>
     <div class="card card-copy">
         <div class="card-block m-2">
-            @ 2017 MyDoctors <a href="/about">{{ $t('About') }}</a>
-            <a href="/help">{{ $t('Help') }}</a>
-            <a href="/privacy">{{ $t('Privacy') }}</a>
-            <a href="/terms">{{ $t('Terms') }}</a>
+            @ 2017 MyDoctors
+            <router-link to="/about">{{ $t('About') }}</router-link>
+            <router-link to="/help">{{ $t('Help') }}</router-link>
+            <router-link to="/privacy">{{ $t('Privacy') }}</router-link>
+            <router-link to="/terms">{{ $t('Terms') }}</router-link>
         </div>
     </div>
 </template>

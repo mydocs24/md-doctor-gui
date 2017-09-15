@@ -33,13 +33,13 @@
                     </li>
                 </template>
             </template>
-            <li :class="[css.pageClass, isOnLastPage ? css.activeClass : '']">
+            <li :class="[css.pageClass, isOnLastPage ? css.disabledClass : '']">
                 <a @click="loadPage('next')"
                    :class="['btn-nav', css.linkClass]">
                     <span>&rsaquo;&nbsp;</span>
                 </a>
             </li>
-            <li :class="[css.pageClass, isOnLastPage ? css.activeClass : '']">
+            <li :class="[css.pageClass, isOnLastPage ? css.disabledClass : '']">
                 <a @click="loadPage(totalPage)"
                    :class="['btn-nav', css.linkClass]">
                     <span>&raquo;</span>

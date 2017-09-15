@@ -56,11 +56,11 @@
   "Failed to authenticate": "Ошибка авторизации",
   "case": {
     "status": {
-      "closed": "закрыто",
-      "signed": "подписано",
-      "sent": "отправлено",
-      "new": "новая",
-      "processing": "в обработке"
+      "closed": "Закрыта",
+      "signed": "Подписана",
+      "sent": "Отправлена",
+      "new": "Новая",
+      "processing": "Открыта"
     }
   },
   "Date": "Дата",
@@ -79,6 +79,7 @@
   "First Appointment": "Первое обращение",
   "Reiterative Appointment": "Повторное обращение",
   "About": "О нас",
+  "My Data": "Мои данные",
   "Edit": "Редактировать",
   "City": "Город",
   "Reject": "Отказ",

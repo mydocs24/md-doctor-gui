@@ -121,13 +121,18 @@
     },
     methods: {
       initLang () {
-        Providers.loadingBarWrapper.ref.start()
-        DoctorProvider.get()
-          .then((res) => {
-            Providers.loadingBarWrapper.ref.done()
-            this.$i18n.locale = res.data.data.lang
-          })
-          .catch(() => Providers.loadingBarWrapper.ref.fail())
+        if (this.$auth.check()) {
+          Providers.loadingBarWrapper.ref.start()
+          DoctorProvider.get()
+            .then((res) => {
+              Providers.loadingBarWrapper.ref.done()
+              this.$i18n.locale = res.data.data.lang
+            })
+            .catch(() => Providers.loadingBarWrapper.ref.fail())
+        } else {
+          const lng = navigator.language || navigator.userLanguage
+          this.$i18n.locale = lng.substr(0, 2)
+        }
       },
       setLang (loc) {
         this.$i18n.locale = loc
