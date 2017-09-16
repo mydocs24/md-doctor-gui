@@ -121,14 +121,8 @@
     },
     methods: {
       initLang () {
-        if (this.$auth.check()) {
-          Providers.loadingBarWrapper.ref.start()
-          DoctorProvider.get()
-            .then((res) => {
-              Providers.loadingBarWrapper.ref.done()
-              this.$i18n.locale = res.data.data.lang
-            })
-            .catch(() => Providers.loadingBarWrapper.ref.fail())
+        if (localStorage.getItem('lang')) {
+          this.$i18n.locale = localStorage.getItem('lang')
         } else {
           const lng = navigator.language || navigator.userLanguage
           this.$i18n.locale = lng.substr(0, 2)
@@ -141,6 +135,7 @@
           .then(() => {
             Providers.loadingBarWrapper.ref.done()
             this.$i18n.locale = loc
+            localStorage.setItem('lang', loc)
           })
           .catch(() => Providers.loadingBarWrapper.ref.fail())
       },
@@ -148,6 +143,7 @@
         this.$auth.logout({
           makeRequest: true,
           success () {
+            localStorage.clear()
             console.log('success ' + this.context)
           },
           error () {

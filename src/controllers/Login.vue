@@ -169,7 +169,8 @@
           // redirect: {name: redirect ? redirect.from.name : 'account'},
           fetchUser: this.data.fetchUser,
           success (res) {
-            // console.log('success 2 ' + this.context)
+            localStorage.setItem('lang', res.data.lang)
+            this.$i18n.locale = res.data.lang
           },
           error (res) {
             this.showLoginError({
