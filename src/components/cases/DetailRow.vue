@@ -1,7 +1,10 @@
 <template>
     <div class="case-details">
         <div class="row">
-            <div class="col-sm-12 text-right control-links">
+            <div class="col-sm-6 small text-muted">
+                {{ rowData.created_at }}
+            </div>
+            <div class="col-sm-6 text-right control-links">
                 <a @click="onClose" class="close-link">&times; {{ $t('Close') }}</a>
                 <a @click="onSend" class="send-link" v-if="rowData.status === 'in_progress'">{{ $t('Send') }}</a>
                 <router-link :to="'/accidents/'+rowData.id" class="proceed-link">{{ $t('Open') }} &rarr;</router-link>
