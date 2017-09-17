@@ -15,12 +15,12 @@ Vue.use(VueAuth, {
   logoutData: {url: 'logout', redirect: '/login'},
   fetchData: {url: 'user', method: 'GET', enabled: true},
   authRedirect: {path: '/login'},
-  tokenExpired: () => false,
+  // tokenExpired: () => false, // turned off data refreshing
   refreshData: {
     url: 'token',
     method: 'GET',
     enabled: true,
-    interval: 15,
+    interval: 14,
     error: function (err) {
       if (err.response.status === 401) {
         // drop token if expired for fresh
