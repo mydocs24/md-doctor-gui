@@ -1,0 +1,75 @@
+/*!
+ * Copyright (c) 2017. Blog-Tree.com
+ *
+ * @author Alexander Zagovorichev <zagovorichev@gmail.com>
+ */
+
+@import "variables";
+
+body {
+  background-color: $body-bg;
+}
+
+.link {
+  color: $teal;
+  cursor: pointer;
+  &:hover,
+  &:focus,
+  &:active {
+    color: $blue;
+  }
+}
+
+.btn {
+  cursor: pointer;
+}
+
+.input-sm {
+  font-size: $font-size-sm;
+}
+
+.offset-bottom {
+  margin-bottom: $offset-bottom;
+}
+
+.icon {
+  &.chevron.down:before {
+    content: "\2191";
+  }
+
+  &.chevron.up:before {
+    content: '\2193';
+  }
+}
+
+.alert-warning {
+  border-color: #e6d0a1;
+}
+
+.card {
+  .text-edit {
+    cursor: pointer;
+    font-weight: $font-weight-bold;
+    color: $gray-text;
+  }
+}
+
+.card-blue {
+  border: 1px solid $blue;
+}
+
+.card-orange {
+  border: 1px solid $orange;
+}
+
+.form {
+  .label {
+    font-weight: $font-weight-bold;
+    color: $gray-light;
+    margin-bottom: 0;
+  }
+}
+
+.modal {
+  display: block;
+}
