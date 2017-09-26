@@ -1,5 +1,9 @@
 import Vue from 'vue'
-import Hello from 'src/components/Hello'
+import VueI18n from 'vue-i18n'
+
+Vue.use(VueI18n)
+
+import Hello from 'src/controllers/Hello'
 
 describe('Hello.vue', () => {
   it('should render correct contents', () => {
@@ -8,6 +12,6 @@ describe('Hello.vue', () => {
       render: (h) => h(Hello)
     })
     expect(vm.$el.querySelector('.hello h1').textContent)
-      .to.equal('Welcome to Your Vue.js App')
+      .to.equal('Welcome to Your Vue.js App message.hello')
   })
 })
