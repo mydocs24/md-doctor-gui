@@ -1,4 +1,11 @@
 {
+  "Doctor": "Доктор",
+  "E-Mail": "Е-Мейл",
+  "Password": "Пароль",
+  "Medical Company": "Медицинская компания",
+  "Please wait, loading...": "Подождите, пожалуйста, идет загрузка...",
+  "Doctor's office": "Кабинет врача",
+  "MyDoctors24": "MyDoctors24",
   "Status not defined": "Статус не определен",
   "Send Error": "Ошибка отправки",
   "Send selected items to the director": "Отправить директору",
