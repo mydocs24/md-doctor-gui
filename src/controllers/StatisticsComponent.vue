@@ -1,5 +1,5 @@
 <template>
-  <div class="hello">
+  <div class="main">
     <h1>{{ msg }} {{ $t("message.hello") }}</h1>
     <h2>Essential Links</h2>
     <ul>
