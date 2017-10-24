@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="main">
         <div v-if="doctor" class="card">
             <div class="row">
                 <div class="col-sm-5 doctor-info">

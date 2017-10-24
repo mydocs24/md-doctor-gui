@@ -1,47 +1,49 @@
 <template>
-    <div v-if="doctorCase">
-        <div class="row">
-            <div class="col-sm-12 col-lg-9 mx-auto">
-                <breadcrumbs :items="bcItems"></breadcrumbs>
-                <div class="row mb-4">
-                    <div class="col-sm-8 col-md-7 col-lg-6">
-                        <patient-info-card
-                                ref="patientInfoCard"
-                                :doctor-case-id="doctorCase.id"
-                                @on-edit="openPatientEditor"
-                        ></patient-info-card>
+    <div class="main">
+        <div v-if="doctorCase">
+            <div class="row">
+                <div class="col-sm-12 col-lg-9 mx-auto">
+                    <breadcrumbs :items="bcItems"></breadcrumbs>
+                    <div class="row mb-4">
+                        <div class="col-sm-8 col-md-7 col-lg-6">
+                            <patient-info-card
+                                    ref="patientInfoCard"
+                                    :doctor-case-id="doctorCase.id"
+                                    @on-edit="openPatientEditor"
+                            ></patient-info-card>
+                        </div>
+                        <div class="col-sm-4 col-lg-5 col-lg-6">
+                            <accident-regularity-status
+                                class="text-right mb-1"
+                                :id="doctorCase.id"
+                            ></accident-regularity-status>
+                            <patient-documents-loader
+                                :id="doctorCase.id"
+                                :uploadUrl="uploadUrl"
+                            ></patient-documents-loader>
+                        </div>
                     </div>
-                    <div class="col-sm-4 col-lg-5 col-lg-6">
-                        <accident-regularity-status
-                            class="text-right mb-1"
-                            :id="doctorCase.id"
-                        ></accident-regularity-status>
-                        <patient-documents-loader
-                            :id="doctorCase.id"
-                            :uploadUrl="uploadUrl"
-                        ></patient-documents-loader>
-                    </div>
+
+                    <case-edit-form
+                        :doctorCase="doctorCase"
+                        @accepted="onAccepted"
+                        @rejected="onRejected"
+                    ></case-edit-form>
+
+                    <footer class="footer">
+                        <p class="mb-3 mt-2 text-center">
+                            &copy; 2017 <a :href="$t('root_url')">{{ $t('MyDoctors24.com') }}</a>
+                        </p>
+                    </footer>
                 </div>
-
-                <case-edit-form
-                    :doctorCase="doctorCase"
-                    @accepted="onAccepted"
-                    @rejected="onRejected"
-                ></case-edit-form>
-
-                <footer class="footer">
-                    <p class="mb-3 mt-2 text-center">
-                        &copy; 2017 <a :href="$t('root_url')">{{ $t('MyDoctors24.com') }}</a>
-                    </p>
-                </footer>
             </div>
-        </div>
 
-        <patient-editor
-                ref="patientEditor"
-                :doctorCaseId="doctorCase.id"
-                @updated="patientUpdated"
-        ></patient-editor>
+            <patient-editor
+                    ref="patientEditor"
+                    :doctorCaseId="doctorCase.id"
+                    @updated="patientUpdated"
+            ></patient-editor>
+        </div>
     </div>
 </template>
 
