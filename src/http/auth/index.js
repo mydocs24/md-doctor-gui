@@ -24,6 +24,7 @@ Vue.use(VueAuth, {
     error: function (err) {
       if (err.response.status === 401) {
         // drop token if expired for fresh
+        localStorage.clear()
         Vue.router.push({path: '/login'})
         console.log('Token could not be updated because current token is failed')
       }

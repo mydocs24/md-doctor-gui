@@ -37,14 +37,23 @@
         </div>
       </b-navbar>
 
-      <div class="container main">
+      <div class="container">
         <router-view></router-view>
       </div>
     </div>
 
     <div v-if="!$auth.ready() || !loaded">
-      <div style="text-align:center; padding-top:50px;">
-        Site loading...
+      <div class="site-loader">
+        <img src="../static/mc_240.png" width="240" height="240" :alt="$t('Medical Company')">
+        <div class="loader-text">
+          {{ $t('Please wait, loading...') }}
+        </div>
+
+        <div class="spinner">
+          <div class="bounce1"></div>
+          <div class="bounce2"></div>
+          <div class="bounce3"></div>
+        </div>
       </div>
     </div>
   </div>
