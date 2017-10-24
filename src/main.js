@@ -10,12 +10,13 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 
 // needed by auth
-// todo provide prod mode
-// axios.defaults.baseURL = 'http://127.0.0.1:8000/api'
+axios.defaults.baseURL = 'http://127.0.0.1:8000/api'
 // prod server
-axios.defaults.baseURL = 'http://api.medical.company.dhv24.com'
+// axios.defaults.baseURL = 'http://api.medical.company.dhv24.com'
 // dev nginx address
 // axios.defaults.baseURL = 'http://mydoctors24.api.loc'
+console.log(process)
+// axios.defaults.baseURL = process.env.API_URL
 Vue.use(VueAxios, axios)
 
 // needed by auth
