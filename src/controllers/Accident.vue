@@ -31,7 +31,7 @@
                     ></case-edit-form>
 
                     <footer class="footer">
-                        <p class="mb-3 mt-2 text-center">
+                        <p class="mb-3 mt-2 text-center small">
                             &copy; 2017 <a :href="$t('root_url')">{{ $t('MyDoctors24.com') }}</a>
                         </p>
                     </footer>
@@ -77,7 +77,7 @@
         doctorCase: null,
         bcItems: [{
           text: this.$t('Main'),
-          link: '/doctor'
+          link: '/'
         }],
         uploadUrl: ''
       }
