@@ -2,22 +2,22 @@
     <div>
         <div v-if="doctor" class="card card-about">
             <div class="card-block m-2">
-                <h6>{{ $t('My Data') }}
+                <h6 class="mb-2">{{ $t('My Data') }}
                     <small> · <router-link :to="'/profile'">{{ $t('Edit') }}</router-link></small>
                 </h6>
-                <div class="row">
+                <div class="row mb-2">
                     <div class="col-12">
                         <b>{{ $t('City') }}</b>
                         <br><span class="ml-1">{{ doctor.city ? doctor.city : $t('Not set') }}</span>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row mb-2">
                     <div class="col-12">
                         <b>{{ $t('Phone') }}</b>
                         <br><span class="ml-1">{{ doctor.phones ? doctor.phones : $t('Not set') }}</span>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row mb-2">
                     <div class="col-12">
                         <b :title="$t('Medical Board Number')">{{ $t('MBN') }}</b>
                         <br><span class="ml-1">{{ doctor.mbn ? doctor.mbn : $t('Not set') }}</span>
