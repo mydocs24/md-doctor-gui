@@ -105,8 +105,7 @@
   export default {
     data () {
       return {
-        loaded: false,
-        user: null
+        loaded: false
       }
     },
     // Allows descendants to inject everything in the Providers object.
@@ -116,7 +115,6 @@
     },
     mounted () {
       let _this = this
-
       Providers.loadingBarWrapper.ref = this.$refs.loadingBar
       // Emit the app-ready event via the Event Bus
       Providers.EventBus.$emit('app-ready')

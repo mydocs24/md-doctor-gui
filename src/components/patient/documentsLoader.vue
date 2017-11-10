@@ -1,5 +1,6 @@
 <template>
     <div>
+        <h4 class="text-muted">{{ $t('Documents') }}</h4>
         <div class="row justify-content-around">
             <div class="col-6 col-sm-12 col-lg-6 flex-lg-last">
                 <table class="table">

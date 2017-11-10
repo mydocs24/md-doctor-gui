@@ -1,13 +1,13 @@
 <template>
     <div class="case-details">
-        <div class="row">
-            <div class="col-sm-6 small text-muted">
+        <div class="row mb-3">
+            <div class="col-sm-3 small text-muted">
                 {{ rowData.created_at }}
             </div>
-            <div class="col-sm-6 text-right control-links">
-                <a @click="onClose" class="close-link">&times; {{ $t('Close') }}</a>
-                <a @click="onSend" class="send-link" v-if="rowData.status === 'in_progress'">{{ $t('Send') }}</a>
-                <router-link :to="'/accidents/'+rowData.id" class="proceed-link">{{ $t('Open') }} &rarr;</router-link>
+            <div class="col-sm-9 text-right control-links">
+                <a @click="onSend" class="send-link" v-if="rowData.status === 'in_progress'">{{ $t('Send to director') }}</a>
+                <router-link :to="'/accidents/'+rowData.id" class="proceed-link ml-2">{{ $t('Open case') }} &rarr;</router-link>
+                <a @click="onClose" class="close-link text-muted ml-2">&times; {{ $t('Close details') }}</a>
             </div>
         </div>
         <div class="row">
