@@ -2,17 +2,34 @@
     <div class="login-container">
         <div class="login-content">
             <form v-on:submit.prevent="login()" class="login-form">
-                <a href="#main" class="login-brand">{{ $t('MyDoctors24.com') }}</a>
-
-                <div class="login-email">
-                    <input type="text" class="form-control" placeholder="E-Mail" v-model="data.body.email">
+                <div class="row mb-4">
+                    <div class="col-sm-3 text-right">
+                        <img src="../../static/doctor_72.png" height="32" :alt="$t('Doctor')">
+                    </div>
+                    <div class="col-sm-9 text-left">
+                        <h3 class="text-muted mb-4 login-title">{{ $t('Doctor\'s office') }}</h3>
+                    </div>
                 </div>
 
-                <div class="login-email">
-                    <input type="password" class="form-control" placeholder="Password" v-model="data.body.password">
+                <div class="row mb-3">
+                    <div class="col-sm-2">
+                        <label class="control-label">{{ $t('E-Mail') }}</label>
+                    </div>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" :placeholder="$t('E-Mail')" v-model="data.body.email">
+                    </div>
                 </div>
 
-                <div class="login-buttons">
+                <div class="row mb-3">
+                    <div class="col-sm-2">
+                        <label class="control-label label">{{ $t('Password') }}</label>
+                    </div>
+                    <div class="col-sm-10">
+                        <input type="password" class="form-control" :placeholder="$t('Password')" v-model="data.body.password">
+                    </div>
+                </div>
+
+                <div class="mb-5">
                     <button
                             type="submit"
                             class="btn btn-info"
@@ -20,19 +37,22 @@
                     >{{ $t('Log In') }}</button>
                 </div>
 
+                <hr class="mb-5">
+
                 <footer class="login-footer">
-                    <a href="#forgot">{{ $t('Forgot Password') }}</a>
+                    &copy; 2017 {{ $t('MyDoctors24') }}
+                    <img class="ml-3" width="120" src="../../static/mc_240.png" :alt="$t('Medical Company')">
                 </footer>
             </form>
         </div>
     </div>
 </template>
 <style type="scss">
-    .login-footer > a {
+
+    .login-footer {
         color: #636c72 !important;
-        &:hover {
-            color: #4b5257 !important;
-        }
+        font-size: 1.1em;
+        font-weight: bolder;
     }
 
     .login-container {
@@ -47,6 +67,20 @@
         margin-right: auto;
         padding-right: 15px;
         padding-left: 15px;
+    }
+
+    .login-content {
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+    .login-form {
+        margin-top: -60px;
+        text-align: center !important;
+        margin-right: auto !important;
+        margin-left: auto !important;
+        width: 540px;
+        border-radius: 5px;
     }
 
     @media (min-width: 576px) {
@@ -77,37 +111,9 @@
         }
     }
 
-    .login-content {
-        display: table-cell;
-        vertical-align: middle;
-    }
-
-    .login-form {
-        max-width: 280px;
-        margin-top: -60px;
-        text-align: center !important;
-        margin-right: auto !important;
-        margin-left: auto !important;
-    }
-
-    .login-brand {
-        width: 40%;
-        display: inline-block;
-        margin-bottom: 3rem !important;
-    }
-
-    .login-email {
-        margin-bottom: 1rem;
-    }
-
-    .login-buttons {
-        margin-bottom: 3rem;
-    }
-
     .enter-btn {
         color: #fff;
         background-color: #3097D1;
-        border-color: #3097D1;
         display: inline-block;
         font-weight: normal;
         line-height: 1.25;
@@ -118,7 +124,7 @@
         -moz-user-select: none;
         -ms-user-select: none;
         user-select: none;
-        border: 1px solid transparent;
+        border: 1px #3097D1 solid;
         padding: 0.5rem 1rem;
         font-size: 1rem;
         border-radius: 0.25rem;

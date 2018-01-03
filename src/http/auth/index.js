@@ -22,10 +22,10 @@ Vue.use(VueAuth, {
     enabled: true,
     interval: 14,
     error: function (err) {
-      if (err.response.status === 401) {
+      if (err.response.status === 401 || err.response.status === 402 || err.response.status === 403) {
         // drop token if expired for fresh
+        localStorage.clear()
         Vue.router.push({path: '/login'})
-        console.log('Token could not be updated because current token is failed')
       }
     }}
 })
