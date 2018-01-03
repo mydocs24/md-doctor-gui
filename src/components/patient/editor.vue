@@ -10,11 +10,11 @@
                     <div class="col-12">
                         <label class="label">{{ $t('Name') }}</label>
                         <input
-                                @change="onChange"
                                 type="text"
                                 class="form-control"
                                 v-model="patient.name"
                                 :placeholder="$t('Patient Name')"
+                                @input="onChangeName($event, patient, 'name')"
                                 required>
                     </div>
                 </div>
@@ -24,7 +24,6 @@
                     <div class="col-12">
                         <label class="label">{{ $t('Address') }}</label>
                         <input
-                                @change="onChange"
                                 class="form-control"
                                 v-model="patient.address"
                                 :placeholder="$t('Patient Address')"
@@ -37,7 +36,6 @@
                     <div class="col-12">
                         <label class="label">{{ $t('About patient') }}</label>
                         <textarea
-                                @change="onChange"
                                 class="form-control"
                                 v-model="patient.comment"
                                 :placeholder="$t('Information about patient')"
@@ -93,6 +91,7 @@
       onSave () {
         if (this.isValid()) {
           this.loadingBarWrapper.ref.start()
+          this.patient.name = this.patient.name.trim()
           AccidentProvider.patchPatient(this.doctorCaseId, this.patient).then(
             response => {
               this.$emit('updated', this.patient)
@@ -127,8 +126,13 @@
           }
         )
       },
-      onChange () {
-        // console.log('changed')
+      onChangeName (e, o, prop) {
+        const start = e.target.selectionStart
+        e.target.value = e.target.value.toUpperCase()
+        e.target.value = e.target.value.replace(/[^A-Z\s]/g, '')
+        e.target.value = e.target.value.replace(/\s+/g, ' ')
+        this.$set(o, prop, e.target.value)
+        e.target.setSelectionRange(start, start)
       }
     }
   }

@@ -1,21 +1,23 @@
 <template>
-    <div class="row">
-        <div class="col-lg-2 hidden-md-down">
-            <div class="row">
-                <div class="col-6 col-sm-12 mb-3">
-                    <doctor-info-card></doctor-info-card>
-                </div>
-                <div class="col-6 col-sm-12">
-                    <doctor-details-card></doctor-details-card>
+    <div class="main">
+        <div class="row">
+            <div class="col-lg-2 hidden-md-down">
+                <div class="row">
+                    <div class="col-6 col-sm-12 mb-3">
+                        <doctor-info-card></doctor-info-card>
+                    </div>
+                    <div class="col-6 col-sm-12">
+                        <doctor-details-card></doctor-details-card>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="col-sm-8 col-lg-7 col-lg-7 flex-xs-last">
-            <cases-table></cases-table>
-        </div>
-        <div class="col-sm-4 col-lg-3">
-            <alerts-list></alerts-list>
-            <copyright-card></copyright-card>
+            <div class="col-sm-8 col-lg-7 col-lg-7 flex-xs-last">
+                <cases-table></cases-table>
+            </div>
+            <div class="col-sm-4 col-lg-3">
+                <alerts-list></alerts-list>
+                <copyright-card></copyright-card>
+            </div>
         </div>
     </div>
 </template>
