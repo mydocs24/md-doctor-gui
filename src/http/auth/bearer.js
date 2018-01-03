@@ -6,6 +6,6 @@ module.exports = {
 
   response: function (res) {
     let body = this.options.http._httpData(res)
-    return body.token
+    return body.access_token
   }
 }

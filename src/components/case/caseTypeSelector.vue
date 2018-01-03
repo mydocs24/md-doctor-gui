@@ -38,6 +38,10 @@
         CaseTypeProvider.get().then(
           (response) => {
             this.options = response.data.data
+            // translate all case types
+            this.options.map((row) => {
+              row.title = this.$t(row.title)
+            })
             this.loadingBarWrapper.ref.done()
           },
           (err) => {
