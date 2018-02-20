@@ -11,10 +11,10 @@
           <router-link to="/" class="navbar-brand">{{ $t("MeDoctor") }}</router-link>
 
           <b-collapse is-nav id="nav_collapse">
-            <b-nav is-nav-bar>
+            <b-navbar-nav>
               <router-link to="/statistics" class="nav-link">{{ $t('Statistics') }}</router-link>
-            </b-nav>
-            <b-nav is-nav-bar class="ml-auto">
+            </b-navbar-nav>
+            <b-navbar-nav class="ml-auto">
 
               <!-- Navbar dropdowns -->
               <b-nav-item-dropdown :text="$t('Lang')" right>
@@ -32,7 +32,7 @@
                 <b-dropdown-item v-if="$auth.check()" v-on:click="$auth.logout()">{{ $t('Logout') }}</b-dropdown-item>
               </b-nav-item-dropdown>
 
-            </b-nav>
+            </b-navbar-nav>
           </b-collapse>
         </div>
       </b-navbar>
