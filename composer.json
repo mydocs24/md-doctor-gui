@@ -1,6 +1,6 @@
 {
 	"name": "mydocs24/md-doctor-gui",
-	"license": "GNU-2",
+	"license": "GPL-2.0-only",
 	"description": "GUI for a doctor",
 	"keywords": ["doctor", "mydoctors24"],
 	"minimum-stability": "dev",
