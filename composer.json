@@ -1,0 +1,18 @@
+{
+	"name": "mydocs24/md-doctor-gui",
+	"license": "GNU-2",
+	"description": "GUI for a doctor",
+	"keywords": ["doctor", "mydoctors24"],
+	"minimum-stability": "dev",
+	"type": "mydoctors24-extension",
+    "extra": {
+        "mydoctors24-extension-name": "guiDoctor"
+    },
+    "require": {
+        "mydocs24/lib-installer": "~0.0.1"
+    },
+    "config": {
+        "preferred-install": "dist",
+        "sort-packages": true
+    }
+}
