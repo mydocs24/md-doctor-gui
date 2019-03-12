@@ -1,15 +1,15 @@
 {
-	"name": "medcenter24/md-doctor-gui",
-	"license": "GPL-2.0-only",
-	"description": "GUI for a doctor",
-	"keywords": ["doctor", "mydoctors24", "medcenter24"],
-	"minimum-stability": "dev",
-	"type": "mydoctors24-extension",
+    "name": "medcenter24/md-doctor-gui",
+    "license": "GPL-2.0-only",
+    "description": "GUI for a doctor",
+    "keywords": ["doctor", "medcenter24"],
+    "minimum-stability": "dev",
+    "type": "medcenter24-extension",
     "extra": {
-        "mydoctors24-extension-name": "guiDoctor"
+        "medcenter24-extension-name": "guiDoctor"
     },
     "require": {
-        "medcenter24/lib-installer": "~0.1"
+        "medcenter24/lib-installer": "~1.0"
     },
     "config": {
         "preferred-install": "dist",
