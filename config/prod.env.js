@@ -1,4 +1,6 @@
+import { env } from "../../settings/guiDoctor/environments/production";
+
 module.exports = {
-  NODE_ENV: '"production"',
-  API_URL: '"http://api.medical.company.dhv24.com"',
-}
+  NODE_ENV: env.mode || '"production"',
+  API_URL: env.apiHost || '"http://api.medcenter24.com"',
+};
