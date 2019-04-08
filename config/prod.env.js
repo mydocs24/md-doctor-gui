@@ -1,4 +1,4 @@
-import { env } from "../../settings/guiDoctor/environments/production";
+const env = require('../../settings/guiDoctor/environments/production');
 
 module.exports = {
   NODE_ENV: env.mode || '"production"',

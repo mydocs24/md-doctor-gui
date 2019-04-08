@@ -1,7 +1,6 @@
-import { env } from "../../settings/guiDoctor/environments/development";
-
 const merge = require('webpack-merge');
 const prodEnv = require('./prod.env');
+const env = require('../../settings/guiDoctor/environments/development');
 
 module.exports = merge(prodEnv, {
   NODE_ENV: env.mode || '"development"',
