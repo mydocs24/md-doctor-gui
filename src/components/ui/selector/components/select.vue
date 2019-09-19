@@ -40,13 +40,7 @@
       getItems () {
         let data = this.items
         data = _.filter(data, (row) => {
-          let found = false
-          _.forEach(this.excluded, (excluded) => {
-            if (_.isEqual(row, excluded)) {
-              found = true
-            }
-          })
-          return !found
+          return _.findIndex(this.excluded, excluded => excluded.id === row.id) === -1
         })
 
         return data

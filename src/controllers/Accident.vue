@@ -131,7 +131,7 @@
             this.doctorCase = response.data.data
             // put it into breadcrumbs
             this.bcItems.push({
-              text: this.doctorCase.ref_num,
+              text: this.doctorCase.refNum,
               active: true
             })
             this.uploadUrl = axios.defaults.baseURL + AccidentProvider.getDocumentsUrl(this.doctorCase.id)

@@ -262,7 +262,7 @@ export default {
       }
 
       const titles = []
-      selected.map(row => titles.push(row.ref_num))
+      selected.map(row => titles.push(row.refNum))
 
       this.$refs.dialogConfirm.show(this.$t('Confirmation'), msg, titles, () => {
         this.send(selected)
