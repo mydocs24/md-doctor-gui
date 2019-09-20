@@ -160,7 +160,6 @@
 
       showDocuments (mode) {
         this.modalDocShow = true
-        this.documentsMode = mode
         this.$root.$emit('show::modal', 'documents')
       },
 
