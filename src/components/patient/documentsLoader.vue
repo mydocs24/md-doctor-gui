@@ -37,7 +37,7 @@
         </div>
 
         <!-- Modal Component -->
-        <b-modal id="documents" :title="$t('Documents')" @shown="onModalShown" size="lg" :okOnly="true" :okTitle="$t('Close')">
+        <b-modal v-model="modalDocShow" :title="$t('Documents')" @shown="onModalShown" size="lg" :okOnly="true" :okTitle="$t('Close')">
             <div v-if="!passports.length && !insurances.length">{{ $t('This patient has no documents. You need to load them firstly.') }}</div>
             <div class="row">
                 <div class="col-sm-6 mb-3" v-if="passports.length" v-for="passport in passports">
@@ -115,7 +115,8 @@
       return {
         insurances: [],
         passports: [],
-        shouldShowDeleteConfirmation: []
+        shouldShowDeleteConfirmation: [],
+        modalDocShow: false
       }
     },
 
@@ -153,9 +154,12 @@
         )
       },
 
-      onModalShown () {},
+      onModalShown () {
+        console.log('shown modal')
+      },
 
       showDocuments (mode) {
+        this.modalDocShow = true
         this.documentsMode = mode
         this.$root.$emit('show::modal', 'documents')
       },
