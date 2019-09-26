@@ -15,7 +15,7 @@
                 <cases-table></cases-table>
             </div>
             <div class="col-sm-4 col-lg-3">
-                <alerts-list></alerts-list>
+                <!--<alerts-list></alerts-list>-->
                 <copyright-card></copyright-card>
             </div>
         </div>

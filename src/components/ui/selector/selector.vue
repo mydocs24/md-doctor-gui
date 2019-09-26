@@ -36,7 +36,7 @@
                     <tr v-for="item in selectedItems" :class="isHighlighted(item) ? 'table-danger' : ''">
                         <td>{{ item.title }}</td>
                         <td>{{ item.description }}</td>
-                        <td>
+                        <td class="text-center">
                             <button class="btn btn-danger btn-sm" @click="onDelete(item)">{{ $t('Delete') }}</button>
                         </td>
                     </tr>
