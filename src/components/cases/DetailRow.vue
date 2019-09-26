@@ -2,7 +2,7 @@
     <div class="case-details">
         <div class="row mb-3">
             <div class="col-sm-3 small text-muted">
-                {{ rowData.created_at }}
+                {{ rowData.createdAt }}
             </div>
             <div class="col-sm-9 text-right control-links">
                 <a @click="onSend" class="send-link" v-if="rowData.status === 'in_progress'">{{ $t('Send to director') }}</a>
@@ -13,7 +13,7 @@
         <div class="row">
             <div class="col-sm-6">
                 <label>{{ $t('Referral Number') }}</label>
-                <h5 class="case-item">{{ rowData.ref_num }}</h5>
+                <h5 class="case-item">{{ rowData.refNum }}</h5>
             </div>
             <div class="col-sm-6" v-if="rowData.city">
                 <label>{{ $t('City') }}</label>

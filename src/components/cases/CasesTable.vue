@@ -199,17 +199,17 @@ export default {
       showFilters: false,
       fields: [
         {
-          name: 'created_at',
+          name: 'createdAt',
           title: this.$t('Date'),
-          sortField: 'created_at',
+          sortField: 'createdAt',
           callback: 'formatDate|DD.MM.YYYY',
           titleClass: 'hidden-sm-down',
           dataClass: 'hidden-sm-down'
         },
         {
-          name: 'ref_num',
+          name: 'refNum',
           title: this.$t('Referral Num'),
-          sortField: 'ref_num'
+          sortField: 'refNum'
         },
         {
           name: 'city',
@@ -232,8 +232,8 @@ export default {
       ],
       sortOrder: [
         {
-          field: 'created_at',
-          sortField: 'created_at',
+          field: 'createdAt',
+          sortField: 'createdAt',
           direction: 'asc'
         }
       ],
@@ -262,7 +262,7 @@ export default {
       }
 
       const titles = []
-      selected.map(row => titles.push(row.ref_num))
+      selected.map(row => titles.push(row.refNum))
 
       this.$refs.dialogConfirm.show(this.$t('Confirmation'), msg, titles, () => {
         this.send(selected)
