@@ -1,7 +1,7 @@
 <template>
     <div class="card card-copy">
         <div class="card-block m-2">
-            @ 2017 MyDoctors
+            @ {{ year }} MedCenter24
             <router-link to="/about">{{ $t('About') }}</router-link>
             <router-link to="/help">{{ $t('Help') }}</router-link>
             <router-link to="/privacy">{{ $t('Privacy') }}</router-link>
@@ -19,7 +19,9 @@
   export default {
     components: {},
     data () {
-      return {}
+      return {
+        year: (new Date()).getFullYear()
+      }
     }
   }
 </script>

@@ -8,7 +8,7 @@
 <script>
   /**
    * Get all alerts and show them to doctor
-   * When doctor check it as readed (close alert) - send status 'closed' for the alert
+   * When doctor check it as read (close alert) - send status 'closed' for the alert
    */
   export default {
     components: {},

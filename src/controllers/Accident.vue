@@ -25,6 +25,9 @@
                         </div>
                     </div>
 
+                    <div class="text-muted small" v-if="handlingTime.length">
+                      {{ $t('Handling time') }}: {{ handlingTime }}
+                    </div>
                     <div class="card-group mb-4 extra-information" v-if="doctorCase.contacts.length || doctorCase.symptoms.length">
                         <div class="card text-white bg-dark">
                             <div class="card-header">
@@ -52,7 +55,7 @@
 
                     <footer class="footer">
                         <p class="mb-3 mt-2 text-center small">
-                            &copy; 2017 <a :href="$t('root_url')">{{ $t('MyDoctors24.com') }}</a>
+                            &copy; {{ curYear }} <a href="https://medcenter24.com">MedCenter24.com</a>
                         </p>
                     </footer>
                 </div>
@@ -91,6 +94,7 @@
   import AccidentProvider from '../providers/accident.vue'
   import PatientEditor from '../components/patient/editor.vue'
   import axios from 'axios'
+  import moment from 'moment'
 
   export default {
     inject: ['loadingBarWrapper'],
@@ -110,7 +114,9 @@
           text: this.$t('Main'),
           link: '/'
         }],
-        uploadUrl: ''
+        uploadUrl: '',
+        curYear: (new Date()).getFullYear(),
+        handlingTime: ''
       }
     },
     created: function () {
@@ -129,6 +135,8 @@
         AccidentProvider.getAccident(this.$route.params.id).then(
           (response) => {
             this.doctorCase = response.data.data
+            this.handlingTime = moment(this.doctorCase.handlingTime, 'YYYY-MM-DD hh:mm:ss').format('DD.MM.YYYY hh:mm')
+
             // put it into breadcrumbs
             this.bcItems.push({
               text: this.doctorCase.refNum,

@@ -2,6 +2,18 @@
     <div class="card">
         <div class="card-body">
             <div class="form">
+              <div class="row mt-4">
+                <div class="col-11 col-sm-10 mx-auto">
+                  <div class="row">
+                    <div class="col-3">
+                      <label class="label">{{ $t('Visit time') }}</label>
+                    </div>
+                    <div class="col-7">
+                      <masked-input v-model="visitDateTime" mask="11 / 11 / 1111 11:11" placeholder="dd / mm / yyyy hh:ii" /> <span class="btn btn-secondary btn-sm" @click="setCurrentTime">{{ $t('Set current time') }}</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             <div class="row mt-4">
                 <div class="col-11 col-sm-10 mx-auto">
                     <div class="row">
@@ -115,13 +127,16 @@
   import DiagnosticProvider from '../../providers/diagnostic.vue'
   import SurveyProvider from '../../providers/survey.vue'
   import ServiceProvider from '../../providers/service.vue'
+  import MaskedInput from 'vue-masked-input'
+  import moment from 'moment'
 
   export default {
     inject: ['loadingBarWrapper'],
     components: {
       AccidentProvider,
       CaseSelector,
-      SelectComponent
+      SelectComponent,
+      MaskedInput
     },
     mounted: function () {
       this.fetchData()
@@ -152,6 +167,8 @@
         // text
         diagnose: '',
         investigation: '',
+        // visit time
+        visitDateTime: '',
         // selectorHighlighter
         checkHighlighting: function (item) {
           return item && item.type === 'doctor'
@@ -168,6 +185,9 @@
         this.id = +this.doctorCase.id
         this.diagnose = this.doctorCase.diagnose
         this.investigation = this.doctorCase.investigation
+
+        let date = moment(this.doctorCase.visitTime, 'YYYY/MM/DD hh:mm:ss')
+        this.visitDateTime = date.format('DD / MM / YYYY hh:mm')
 
         this.loadingBarWrapper.ref.start()
         started++
@@ -194,7 +214,9 @@
         started++
         AccidentProvider.getCaseType(this.id).then(
           response => {
-            this.$refs.caseType.select(response.data.data)
+            const caseType = response.data.data
+            caseType.title = this.$t(caseType.title)
+            this.$refs.caseType.select(caseType)
             if (--started <= 0) {
               this.loadingBarWrapper.ref.done()
             }
@@ -373,13 +395,16 @@
         let diagnostics = []
         this.selectedDiagnostics.map(diagnostic => diagnostics.push(diagnostic.id))
 
+        let date = moment(this.visitDateTime, 'DD / MM / YYYY hh:mm')
+
         AccidentProvider.save(this.id, {
           services: services,
           surveys: surveys,
           diagnostics: diagnostics,
           caseType: this.selectedCaseType,
           diagnose: this.diagnose,
-          investigation: this.investigation
+          investigation: this.investigation,
+          visitDateTime: date.format('YYYY/MM/DD hh:mm:00')
         }).then(
           () => {
             this.showGrowl({
@@ -470,6 +495,10 @@
 
       onCaseTypeChanged (data) {
         this.selectedCaseType = data.id
+      },
+
+      setCurrentTime () {
+        this.visitDateTime = moment().format('DD / MM / YYYY hh:mm')
       }
     }
   }

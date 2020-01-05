@@ -1,5 +1,8 @@
 <template>
     <div>
+        <b-alert :show="noDoctorFound" variant="warning">
+            {{ $t('Please, check that doctor was assigned to this account') }}
+        </b-alert>
         <div v-if="doctor" class="card card-about">
             <div class="card-block m-2">
                 <h6 class="mb-2">{{ $t('My Data') }}
@@ -51,7 +54,8 @@
     },
     data () {
       return {
-        doctor: null
+        doctor: null,
+        noDoctorFound: false
       }
     },
     methods: {
@@ -70,6 +74,7 @@
               consoleMessage: err
             })
             this.loadingBarWrapper.ref.fail()
+            this.noDoctorFound = true
           }
         )
       }
