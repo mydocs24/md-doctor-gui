@@ -18,7 +18,9 @@ miniToastr.init({types: toastTypes})
 
 // Here we setup messages output to `mini-toastr`
 function toast ({title, message, type, timeout, cb, consoleMessage}) {
-  if (consoleMessage) console[type](consoleMessage)
+  if (consoleMessage) {
+    console[type](consoleMessage)
+  }
   return miniToastr[type](message, title, timeout, cb)
 }
 

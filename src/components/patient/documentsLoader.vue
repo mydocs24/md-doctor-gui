@@ -155,7 +155,7 @@
       },
 
       onModalShown () {
-        console.log('shown modal')
+        // console.log('shown modal')
       },
 
       showDocuments (mode) {
