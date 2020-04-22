@@ -2,7 +2,7 @@
   "name": "my-doctor",
   "version": "0.0.1",
   "description": "User interface of the doctors CRM",
-  "author": "zagovorichev <zagovorichev@gmail.com>",
+  "author": "MedCenter24 <dev@medcenter24.com>",
   "private": true,
   "scripts": {
     "dev": "node build/dev-server.js",

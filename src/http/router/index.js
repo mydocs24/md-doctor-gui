@@ -1,8 +1,3 @@
-/**
- * @author A.Zagovorichev <zagovorichev@gmail.com>
- * 9/5/2017.
- */
-
 import Vue from 'vue'
 import Router from 'vue-router'
 
