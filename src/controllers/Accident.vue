@@ -89,7 +89,7 @@
   import Breadcrumbs from '../components/layout/breadcrumbs.vue'
   import PatientInfoCard from '../components/patient/infoCard.vue'
   import PatientDocumentsLoader from '../components/patient/documentsLoader.vue'
-  import AccidentRegularityStatus from '../components/accdident/regularityStatus.vue'
+  import AccidentRegularityStatus from '../components/accident/regularityStatus.vue'
   import CaseEditForm from '../components/case/caseEditFormComponent.vue'
   import AccidentProvider from '../providers/accident.vue'
   import PatientEditor from '../components/patient/editor.vue'

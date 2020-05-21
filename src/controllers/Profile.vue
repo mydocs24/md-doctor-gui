@@ -5,11 +5,11 @@
                 <div class="col-sm-5 doctor-info">
                     <div class="card-block text-center">
                         <img class="card-img-top"
-                             :src="doctor.picture_url.length ? doctor.pricture_url : '../static/camera.svg'"
+                             :src="doctor && doctor.hasOwnProperty('picture_url') ? doctor['picture_url'] : '../static/camera.svg'"
                              height="100px"
                              :alt="doctor.name">
                         <br>
-                        <span class="text-muted">{{ $t('Load photo') }}</span>
+                        <!--span class="text-muted">{{ $t('Load photo') }}</span-->
                     </div>
                 </div>
                 <div class="col-sm-7">
@@ -23,6 +23,12 @@
                       <div class="col-9">
                         <label class="label">{{ $t("Phone") }}</label>
                         <input type="text" class="form-control" v-model="doctor.phones">
+                      </div>
+                    </div>
+                    <div class="row mb-2">
+                      <div class="col-9">
+                        <b>{{ $t("Medical Board Number") }}</b>
+                        {{ doctor.medical_board_num }}
                       </div>
                     </div>
                     <div class="row">
@@ -52,7 +58,7 @@
       }
     },
     notifications: {
-      showGowl: {
+      showGrowl: {
         type: 'error'
       }
     },
@@ -62,40 +68,39 @@
         this.doctor = null
         DoctorProvider.get().then(
           (response) => {
-            this.doctor = response.data.data
             this.loadingBarWrapper.ref.done()
+            this.doctor = response.data.data
           },
           (err) => {
+            this.loadingBarWrapper.ref.fail()
             this.showGowl({
               title: this.$t('Loading Error'),
               message: this.$t('Something wrong happened on the server side'),
               consoleMessage: err
             })
-            this.loadingBarWrapper.ref.fail()
           }
         )
       },
-
       doSave () {
         this.loadingBarWrapper.ref.start()
         DoctorProvider.save(this.doctor).then(
           () => {
+            this.loadingBarWrapper.ref.done()
             this.showGrowl({
               title: this.$t('Success'),
               message: this.$t('Accident saved'),
               type: 'success'
             })
-            this.loadingBarWrapper.ref.done()
           }
         ).catch(
           err => {
+            this.loadingBarWrapper.ref.done()
             this.showGrowl({
               title: this.$t('API Error'),
               message: this.$t('Can\'t save profile'),
               consoleMessage: err.message,
               type: 'error'
             })
-            this.loadingBarWrapper.ref.done()
           }
         )
       }

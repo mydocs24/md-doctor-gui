@@ -2,7 +2,7 @@
     <div>
         <div v-if="doctor" class="card doctor-info">
             <img class="card-img-top"
-                 :src="doctor.picture_url.length ? doctor.pricture_url : './static/camera.svg'"
+                 :src="doctor && doctor.hasOwnProperty('picture_url') ? doctor.pricture_url : './static/camera.svg'"
                  height="100px"
                  alt="doctor.name">
             <div class="card-block m-2">

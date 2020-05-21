@@ -85,3 +85,10 @@ body {
     font-weight: 500;
   }
 }
+
+.dropdown-menu {
+  &:focus { outline: none; }
+  .dropdown-item.router-link-active {
+    color: #212529;
+  }
+}
