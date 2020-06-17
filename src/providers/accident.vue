@@ -19,7 +19,7 @@
       return Vue.axios.get(this.getUrl() + '/' + id)
     },
     save (id, data) {
-      return Vue.axios.patch(this.getUrl() + '/' + id, data)
+      return Vue.axios.post(this.getUrl() + '/' + id, data)
     },
 
     /**
@@ -57,7 +57,7 @@
       return Vue.axios.post(this.getUrl() + '/' + id + '/services', data)
     },
     reject (id, commentary) {
-      return Vue.axios.patch(this.getUrl() + '/' + id + '/reject', {comment: commentary})
+      return Vue.axios.post(this.getUrl() + '/' + id + '/reject', {comment: commentary})
     },
     sendCases (cases) {
       return Vue.axios.post(this.getUrl() + '/send', {cases: cases})
