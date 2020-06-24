@@ -217,9 +217,9 @@ export default {
           sortField: 'city'
         },
         {
-          name: 'statusTitle',
+          name: 'status',
           title: this.$t('Status'),
-          sortField: 'statusTitle',
+          sortField: 'status',
           titleClass: 'center aligned',
           dataClass: 'center aligned',
           callback: 'statusBadge'
