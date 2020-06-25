@@ -9,10 +9,6 @@ install:
   - yarn
   - yarn install
 
-script:
-  - yarn test
-  - yarn run build --prod --aot
-
 notifications:
   email:
     recipients:
