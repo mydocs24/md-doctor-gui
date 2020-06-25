@@ -1,6 +1,5 @@
 {
   "name": "my-doctor",
-  "version": "0.0.1",
   "description": "User interface of the doctors CRM",
   "author": "MedCenter24 <dev@medcenter24.com>",
   "private": true,
