@@ -9,6 +9,9 @@ install:
   - yarn
   - yarn install
 
+# script:
+#  - node build/build.js
+
 notifications:
   email:
     recipients:
