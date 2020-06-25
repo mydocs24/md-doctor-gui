@@ -40,7 +40,7 @@
                 <hr class="mb-5">
 
                 <footer class="login-footer">
-                    &copy; 2017 {{ $t('MyDoctors24') }}
+                    &copy; {{ new Date().getFullYear() }} {{ $t('MyDoctors24') }}
                     <img class="ml-3" width="120" src="../../static/mc_240.png" :alt="$t('Medical Company')">
                 </footer>
             </form>

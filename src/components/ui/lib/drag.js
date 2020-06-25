@@ -1,9 +1,3 @@
-/*
- * Copyright (c) 2017. Blog-Tree.com
- *
- * @author Alexander Zagovorichev <zagovorichev@gmail.com>
- */
-
 import helper from './helper'
 
 const isMobile = helper.isMobile

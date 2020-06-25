@@ -23,7 +23,7 @@
                 <div class="row mb-2">
                     <div class="col-12">
                         <b :title="$t('Medical Board Number')">{{ $t('MBN') }}</b>
-                        <br><span class="ml-1">{{ doctor.mbn ? doctor.mbn : $t('Not set') }}</span>
+                        <br><span class="ml-1">{{ doctor.medical_board_num ? doctor.medical_board_num : $t('Not set') }}</span>
                     </div>
                 </div>
             </div>

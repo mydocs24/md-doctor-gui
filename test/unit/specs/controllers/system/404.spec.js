@@ -1,8 +1,3 @@
-/**
- * @author A.Zagovorichev <zagovorichev@gmail.com>
- * 2/1/2017.
- */
-
 import Vue from 'vue'
 import ControllerSystem404 from 'src/controllers/system/404.vue'
 

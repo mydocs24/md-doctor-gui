@@ -1,9 +1,3 @@
-/*
- * Copyright (c) 2017. Blog-Tree.com
- *
- * @author Alexander Zagovorichev <zagovorichev@gmail.com>
- */
-
 import Vue from 'vue'
 import LoginComponent from 'src/components/auth/Login.vue'
 

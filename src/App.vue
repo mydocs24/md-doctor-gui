@@ -12,7 +12,9 @@
 
           <b-collapse is-nav id="nav_collapse">
             <b-navbar-nav>
+              <!-- todo
               <router-link to="/statistics" class="nav-link">{{ $t('Statistics') }}</router-link>
+              -->
             </b-navbar-nav>
             <b-navbar-nav class="ml-auto">
 

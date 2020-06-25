@@ -149,7 +149,7 @@
         }
 
         .total {
-            float: right;;
+            float: right;
             font-size: $font-size-lg;
             font-weight: $font-weight-bold;
             margin-bottom: $offset-bottom;
@@ -330,7 +330,6 @@ export default {
     },
     statusBadge (value) {
       let badge = ''
-
       switch (value) {
         case 'closed':
           badge = '<span class="badge badge-default">' + this.$t('case.status.closed') + '</span>'
