@@ -183,7 +183,7 @@
         let started = 0
 
         this.id = +this.doctorCase.id
-        this.diagnose = this.doctorCase.diagnose
+        this.diagnose = this.doctorCase.recommendation
         this.investigation = this.doctorCase.investigation
 
         let date = moment(this.doctorCase.visitTime, 'YYYY/MM/DD hh:mm:ss')
@@ -402,7 +402,7 @@
           surveys: surveys,
           diagnostics: diagnostics,
           caseType: this.selectedCaseType,
-          diagnose: this.diagnose,
+          recommendation: this.diagnose,
           investigation: this.investigation,
           visitDateTime: date.format('YYYY/MM/DD hh:mm:00')
         }).then(
