@@ -1,4 +1,4 @@
-# my-doctor
+# Medical Company 24. Doctors interface.
 
 > User interface of the doctors CRM
 
@@ -26,5 +26,3 @@ npm test
 
 # Event bus
 `app-ready` - on application mounted
-
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
