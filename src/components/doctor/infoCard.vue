@@ -2,9 +2,9 @@
     <div>
         <div v-if="doctor" class="card doctor-info">
             <img class="card-img-top"
-                 :src="doctor && doctor.hasOwnProperty('picture_url') ? doctor.pricture_url : './static/camera.svg'"
-                 height="100px"
+                 :src="doctor && doctor.hasOwnProperty('thumb200') ? doctor.thumb200 : './static/camera.svg'"
                  alt="doctor.name">
+
             <div class="card-block m-2">
                 <h6>{{ doctor.name }}</h6>
             </div>

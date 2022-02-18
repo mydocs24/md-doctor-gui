@@ -42,7 +42,7 @@
             <div class="row">
                 <div class="col-sm-6 mb-3" v-if="passports.length" v-for="passport in passports">
                     <div class="card card-blue">
-                        <img class="card-img-top" :src="'data:image/jpg;base64, ' + passport.b64thumb" :alt="passport.title">
+                        <img class="card-img-top" :src="passport.b64thumb" :alt="passport.title">
                         <div class="card-block">
                             <h6 class="card-title m-1 text-info">{{ $t('Passport') }} <small class="link" @click="moveTo(passport, 'insurance')">&rarr; {{ $t('Mark as insurance') }}</small> </h6>
                             <p class="card-text m-1">{{ passport.title }}</p>
@@ -65,7 +65,7 @@
                 </div>
                 <div class="col-sm-6 mb-3" v-if="insurances.length" v-for="insurance in insurances">
                     <div class="card card-orange">
-                        <img class="card-img-top" :src="'data:image/jpg;base64, ' + insurance.b64thumb" :alt="insurance.title">
+                        <img class="card-img-top" :src="insurance.b64thumb" :alt="insurance.title">
                         <div class="card-block">
                             <h6 class="card-title m-1 text-warning">{{ $t('Insurance') }} <small class="link" @click="moveTo(insurance, 'passport')">&rarr; {{ $t('Mark as passport') }}</small> </h6>
                             <p class="card-text m-1">{{ insurance.title }}</p>

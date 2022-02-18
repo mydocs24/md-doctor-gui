@@ -1,10 +1,9 @@
 <template>
     <div>
         <v-select
-                :clearSearchOnSelect="true"
-                :value.sync="selected"
+                v-model="selected"
                 :options="options"
-                :on-change="onChange"
+                @input="onChange"
                 label="title"
                 :placeholder="$t('Case type')"
         ></v-select>
@@ -13,6 +12,7 @@
 <script>
   import vSelect from 'vue-select'
   import CaseTypeProvider from '../../providers/caseType.vue'
+  import 'vue-select/dist/vue-select.css'
 
   export default {
     inject: ['loadingBarWrapper'],

@@ -3,7 +3,7 @@
             v-if="getItems().length"
             :clearSearchOnSelect="true"
             :options="getItems()"
-            :on-change="onSelected"
+            @input="onSelected"
             :resetOnOptionsChange="true"
             label="title"
             :placeholder="$t('Choose')"
@@ -14,6 +14,7 @@
 <script>
   import _ from 'lodash'
   import vSelect from 'vue-select'
+  import 'vue-select/dist/vue-select.css'
 
   export default {
     components: {

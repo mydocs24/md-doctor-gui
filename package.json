@@ -27,7 +27,7 @@
     "vue-masked-input": "^0.5.2",
     "vue-notifications": "^0.9.0",
     "vue-router": "^3.0.1",
-    "vue-select": "^2.4.0",
+    "vue-select": "^3.18.1",
     "vuetable-2": "^1.7.5"
   },
   "devDependencies": {

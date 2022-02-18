@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="row">
-            <div class="col-sm-7">
+            <div class="col-sm-9">
                 <label class="label">{{ label }}</label>
                 <select-component
                     :excluded="selectedItems"
@@ -9,7 +9,7 @@
                     :items="items"
                 ></select-component>
             </div>
-            <div class="col-sm-5">
+            <div class="col-sm-3">
                 <div class="mt-sm-4 text-right">
                     <editor-component
                         :editorTitle="title"
